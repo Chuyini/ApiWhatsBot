@@ -39,9 +39,9 @@ const VerifyToken=(req=request, res=response) => {
 const Recived=(req=request, res=response)=>{
 
     try{
-        var entry=(req.bod["entry"])[0];
-        var changes=(req.bod["changes"])[0];
-        var val = changes["value"];
+        var entry=(req.body["entry"])[0];
+        var changes=(entry["changes"])[0];
+        var value = changes["value"];
         var messageObjet = value["messages"];
 
         myConsole.log(messageObjet);
@@ -52,7 +52,8 @@ const Recived=(req=request, res=response)=>{
 
     }catch(e){
 
-        res.send("EVENT_RECIVED");
+        res.status(401).send("EVENT_RECIVED");
+        myConsole.log(e);
     }
     res.send("Hola recived");
 }
