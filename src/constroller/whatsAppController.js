@@ -1,8 +1,8 @@
 const {request, response}=require("express");
 
-const fs= require("fs");
+//const fs= require("fs");
 
-const myConsole=new console.Console(fs.createWriteStream("./logs.txt"));
+//const myConsole=new console.Console(fs.createWriteStream("./logs.txt"));
 
 const VerifyToken=(req=request, res=response) => {
 
@@ -44,7 +44,7 @@ const Recived=(req=request, res=response)=>{
         var value = changes["value"];
         var messageObjet = value["messages"];
 
-        myConsole.log(messageObjet);
+       // myConsole.log(messageObjet);
 
 
 
@@ -53,7 +53,7 @@ const Recived=(req=request, res=response)=>{
     }catch(e){
 
         res.status(401).send("EVENT_RECIVED");
-        myConsole.log(e);
+       // myConsole.log(e);
     }
     res.send("Hola recived");
 }
