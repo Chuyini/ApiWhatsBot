@@ -44,12 +44,13 @@ const Recived=(req=request, res=response)=>{
         var value = changes["value"];
         var messageObjet = value["messages"];
 
-        console.log(messageObjet);
+        
        // myConsole.log(messageObjet);
 
 
 
         res.send("EVENT_RECIVED");
+        res.json(messageObjet);
 
     }catch(e){
 
