@@ -45,8 +45,7 @@ const Recived=(req=request, res=response)=>{
         var messageObjet = value["messages"];
 
         
-       // myConsole.log(messageObjet);
-
+       
 
 
         res.send("EVENT_RECIVED");
