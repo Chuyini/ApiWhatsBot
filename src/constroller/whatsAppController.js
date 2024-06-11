@@ -44,12 +44,17 @@ const Recived=(req=request, res=response)=>{
         var value = changes["value"];
         var messageObjet = value["messages"];
 
+        var messages = messageObjet[0];
+        var text=GetTextUser(messages);
+        //myConsole.log(Text);
         
-       
+        
+       // myConsole.log(messageObjet);
+
 
 
         res.send("EVENT_RECIVED");
-        res.json(messageObjet);
+       
 
     }catch(e){
 
@@ -57,6 +62,45 @@ const Recived=(req=request, res=response)=>{
        // myConsole.log(e);
     }
     res.send("Hola recived");
+}
+
+function GetTextUser(message){
+
+
+    var text= message;
+    var typeMesage=message["type"];
+    
+    if(typeMesage=="text"){
+
+        text=(message["text"])["body"];
+
+    }else if(typeMesage=="Interactive"){
+        
+
+        var interactiveObject=message["interactive"];
+        var typeInteractive=interactive["type"];
+
+        //myConsole.log(interactiveObject);
+
+
+        if(typeInteractive=="button_replay"){//quiere decir que el usuario presiono un usuario
+
+            text=(interactiveObject["button_replay"])["title"];
+        }else if("list_replay"){
+
+
+            text=(interactiveObject["list_replay"])["title"];
+
+       }else{
+
+        //myConsole.log("Sin mensaje");
+       }
+
+    }else{
+
+        //myConsole.log("Sin mensaje");
+    }
+    return text
 }
 
 module.exports={
