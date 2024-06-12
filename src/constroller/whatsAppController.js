@@ -80,7 +80,7 @@ function GetTextUser(message){
         var interactiveObject=message["interactive"];
         var typeInteractive=interactive["type"];
 
-        //myConsole.log(interactiveObject);
+        //mConsole.log(interactiveObject);
 
 
         if(typeInteractive=="button_replay"){//quiere decir que el usuario presiono un usuario
