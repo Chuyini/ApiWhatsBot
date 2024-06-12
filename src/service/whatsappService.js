@@ -1,5 +1,11 @@
 const https = require("https");
 
+const agent = new https.Agent({
+    keepAlive: true, // Mantener conexiones abiertas para reutilizarlas
+    maxSockets: 10, // Número máximo de sockets simultáneos
+    freeSockets: 5, // Número mínimo de sockets libres
+  });
+
 function SendMessageWhatsApp(textResponse, number) {
     console.log("hasta aqui bien v2");
     const data = JSON.stringify({
