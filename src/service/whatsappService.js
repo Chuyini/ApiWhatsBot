@@ -22,6 +22,7 @@ function SendMessageWhatsApp(textResponse, number) {
         }
     };
 
+    console.log("hasta aqui bien");
     const req = https.request(options, res => {
         let responseData = '';
 
