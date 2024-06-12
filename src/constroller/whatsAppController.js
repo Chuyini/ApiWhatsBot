@@ -1,5 +1,5 @@
 const { request, response } = require("express");
-const whatsappService = require("../services/whatsappService");
+const whatsappService = require("../service/whatsappService");
 
 const VerifyToken = (req = request, res = response) => {
     try {
