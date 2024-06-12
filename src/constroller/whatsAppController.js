@@ -1,5 +1,5 @@
 const { request, response } = require("express");
-const whatsappService = require("../service/whatsappService");
+const whatsappService = require("../services/whatsappService");
 
 const VerifyToken = (req = request, res = response) => {
     try {
@@ -25,13 +25,13 @@ const Recived = async (req = request, res = response) => {
         const value = changes.value;
         const messageObject = value.messages;
 
-        if (messageObject) {
+        if (messageObject && messageObject.length > 0) {
             const messages = messageObject[0];
             const number = messages.from;
             const text = GetTextUser(messages);
 
             console.log(`Sending message: "El usuario dijo: ${text}" to number: ${number}`);
-            whatsappService.SendMessageWhatsApp("El usuario dijo: " + text, number);
+            await whatsappService.SendMessageWhatsApp("El usuario dijo: " + text, number);
         }
 
         return res.status(200).send("EVENT_RECEIVED");
