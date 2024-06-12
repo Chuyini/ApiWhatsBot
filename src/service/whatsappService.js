@@ -4,7 +4,7 @@ function SendMessageWhatsApp(textResponse, number) {
     const data = JSON.stringify({
         "messaging_product": "whatsapp",
         "recipient_type": "individual",
-        "to": number,
+        "to": "524401050937",
         "type": "text",
         "text": {
             "preview_url": false,
