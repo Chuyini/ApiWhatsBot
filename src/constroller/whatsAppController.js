@@ -1,71 +1,67 @@
-const https = require('https');
+const { request, response } = require("express");
+const whatsappService = require("../service/whatsappService");
 
-// Crear un agente HTTP reutilizable
-const agent = new https.Agent({
-    keepAlive: true,
-    maxSockets: 10,
-    freeSockets: 5,
-});
-
-// Función asíncrona para enviar mensajes a WhatsApp
-async function SendMessageWhatsApp(textResponse, number) {
-    console.log("hasta aquí bien v2");
-    const data = JSON.stringify({
-        "messaging_product": "whatsapp",
-        "recipient_type": "individual",
-        "to": "524401050937",
-        "type": "text",
-        "text": {
-            "preview_url": false,
-            "body": textResponse
-        }
-    });
-
-    const options = {
-        host: "graph.facebook.com",
-        path: "/v19.0/321806707686253/messages",
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer EAAGeKA2VNZBEBO4QRYJRofcoZBBF8opzbqrSnsqXm0MpaDqMvp53KRRn3euZBISAHeLb0wsqsSzCWnjayUSxOr0yVYaCGfKEnQxwkqSvUi0LuuRmiRYqonrHSdxZBv0LjDIsS1MfnnW1pyo9ejnUYDPTBpojLEt5ZBAgZCCbUQ9Eof1xnsr8h9d0b3bWY6b6aNqrOTZA7jZC5gKZApbZB0"
-        }
-    };
-
+const VerifyToken = (req = request, res = response) => {
     try {
-        const res = await new Promise((resolve, reject) => {
-            const req = https.request(options, res => {
-                let responseData = '';
+        const accesToken = "rwer23werw";
+        const token = req.query["hub.verify_token"];
+        const challenge = req.query["hub.challenge"];
 
-                console.log(`Status Code: ${res.statusCode}`);
-
-                res.on("data", chunk => {
-                    responseData += chunk;
-                });
-
-                res.on("end", () => {
-                    resolve(res);
-                });
-            });
-
-            req.on("error", error => {
-                reject(error);
-            });
-
-            req.write(data);
-            req.end();
-        });
-
-        console.log("Response from server:", res.statusCode);
-        
-        if (res.statusCode !== 200) {
-            console.error(`Failed to send message. Status Code: ${res.statusCode}`);
-            console.error(`Response: ${responseData}`);
+        if (challenge != null && token != null && token === accesToken) {
+            return res.status(200).send(challenge);
         } else {
-            console.log("Message sent successfully!");
+            return res.status(400).send("Invalid token or challenge.");
         }
     } catch (error) {
-        console.error("Error sending message:", error);
+        console.error("Error verifying token:", error);
+        return res.status(500).send("Server error.");
     }
+};
+
+const Recived = async (req = request, res = response) => {
+    try {
+        const entry = req.body.entry[0];
+        const changes = entry.changes[0];
+        const value = changes.value;
+        const messageObject = value.messages;
+
+        if (messageObject && messageObject.length > 0) {
+            const messages = messageObject[0];
+            const number = messages.from;
+            const text = GetTextUser(messages);
+
+            console.log(`Sending message: "El usuario dijo: ${text}" to number: ${number}`);
+           await whatsappService.SendMessageWhatsApp("El usuario dijo: " + text, number);
+        }
+
+        return res.status(200).send("EVENT_RECEIVED");
+    } catch (error) {
+        console.error("Error in Recived function:", error);
+        return res.status(500).send("Error processing event.");
+    }
+};
+
+function GetTextUser(message) {
+    let text = message;
+    const typeMessage = message.type;
+
+    if (typeMessage === "text") {
+        text = message.text.body;
+    } else if (typeMessage === "interactive") {
+        const interactiveObject = message.interactive;
+        const typeInteractive = interactiveObject.type;
+
+        if (typeInteractive === "button_reply") {
+            text = interactiveObject.button_reply.title;
+        } else if (typeInteractive === "list_reply") {
+            text = interactiveObject.list_reply.title;
+        }
+    }
+
+    return text;
 }
 
-module.exports = { SendMessageWhatsApp };
+module.exports = {
+    VerifyToken,
+    Recived
+};
