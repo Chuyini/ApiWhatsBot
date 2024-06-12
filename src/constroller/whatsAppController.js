@@ -1,5 +1,6 @@
 const {request, response}=require("express");
 
+const whatsAppService=require("../service/whatsappService");
 //const fs= require("fs");
 
 //const myConsole=new console.Console(fs.createWriteStream("./logs.txt"));
@@ -47,7 +48,8 @@ const Recived=(req=request, res=response)=>{
         var messages = messageObjet[0];
         var text=GetTextUser(messages);
         //myConsole.log(Text);
-        
+        var number=messages["from"];
+        whatsAppService.SendMessageWhatsApp("El usuario dijo "+text,number);
         
        // myConsole.log(messageObjet);
 
@@ -78,7 +80,7 @@ function GetTextUser(message){
         
 
         var interactiveObject=message["interactive"];
-        var typeInteractive=interactive["type"];
+        var typeInteractive=interactiveObject["type"];
 
         //mConsole.log(interactiveObject);
 
