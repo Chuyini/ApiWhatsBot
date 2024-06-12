@@ -1,6 +1,7 @@
 const https = require("https");
 
 function SendMessageWhatsApp(textResponse, number) {
+    console.log("hasta aqui bien v2");
     const data = JSON.stringify({
         "messaging_product": "whatsapp",
         "recipient_type": "individual",
