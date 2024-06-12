@@ -1,112 +1,66 @@
-const {request, response}=require("express");
+const { request, response } = require("express");
+const whatsappService = require("../services/whatsappService");
 
-const whatsAppService=require("../service/whatsappService");
-//const fs= require("fs");
+const VerifyToken = (req = request, res = response) => {
+    try {
+        const accesToken = "rwer23werw";
+        const token = req.query["hub.verify_token"];
+        const challenge = req.query["hub.challenge"];
 
-//const myConsole=new console.Console(fs.createWriteStream("./logs.txt"));
-
-const VerifyToken=(req=request, res=response) => {
-
-    //req es lo que nos envia whastapp
-    //res es lo que nosotros podemos respondemos
-
-    //la documentaciion nos exigue que que siempre respondamos con un valor definido
-
-    try{
-
-        var accesToken = "rwer23werw";
-
-
-        var token = req.query["hub.verify_token"];
-        var challenge = req.query["hub.challenge"];
-
-
-        if(challenge!=null && token!=null && token==accesToken){
-
-            res.status(200).send(challenge);
-        }else{
-
-            res.status(400).send();
+        if (challenge != null && token != null && token === accesToken) {
+            return res.status(200).send(challenge);
+        } else {
+            return res.status(400).send();
         }
-
-
-    }catch(error){
-
-        res.status(401).send();
+    } catch (error) {
+        return res.status(401).send();
     }
-    res.send("hola Verify token");
 };
 
-const Recived=(req=request, res=response)=>{
+const Recived = async (req = request, res = response) => {
+    try {
+        const entry = req.body.entry[0];
+        const changes = entry.changes[0];
+        const value = changes.value;
+        const messageObjet = value.messages;
 
-    try{
-        var entry=(req.body["entry"])[0];
-        var changes=(entry["changes"])[0];
-        var value = changes["value"];
-        var messageObjet = value["messages"];
+        if (messageObjet) {
+            const messages = messageObjet[0];
+            const number = messages.from;
+            const text = GetTextUser(messages);
 
-        var messages = messageObjet[0];
-        var text=GetTextUser(messages);
-        //myConsole.log(Text);
-        var number=messages["from"];
-        whatsAppService.SendMessageWhatsApp("El usuario dijo "+text,number);
-        
-       // myConsole.log(messageObjet);
+            console.log(`Sending message: "${text}" to number: ${number}`);
+            await whatsappService.SendMessageWhatsApp("El usuario dijo: " + text, number);
+        }
 
-
-
-        res.send("EVENT_RECIVED");
-       
-
-    }catch(e){
-
-        res.status(401).send("EVENT_RECIVED");
-       // myConsole.log(e);
+        res.send("EVENT_RECEIVED");
+    } catch (e) {
+        console.error("Error in Recived function:", e);
+        res.status(500).send("Error processing event");
     }
-    res.send("Hola recived");
-}
+};
 
-function GetTextUser(message){
+function GetTextUser(message) {
+    let text = message;
+    const typeMessage = message.type;
 
+    if (typeMessage === "text") {
+        text = message.text.body;
+    } else if (typeMessage === "interactive") {
+        const interactiveObject = message.interactive;
+        const typeInteractive = interactiveObject.type;
 
-    var text= message;
-    var typeMesage=message["type"];
-    
-    if(typeMesage=="text"){
-
-        text=(message["text"])["body"];
-
-    }else if(typeMesage=="Interactive"){
-        
-
-        var interactiveObject=message["interactive"];
-        var typeInteractive=interactiveObject["type"];
-
-        //mConsole.log(interactiveObject);
-
-
-        if(typeInteractive=="button_replay"){//quiere decir que el usuario presiono un usuario
-
-            text=(interactiveObject["button_replay"])["title"];
-        }else if("list_replay"){
-
-
-            text=(interactiveObject["list_replay"])["title"];
-
-       }else{
-
-        //myConsole.log("Sin mensaje");
-       }
-
-    }else{
-
-        //myConsole.log("Sin mensaje");
+        if (typeInteractive === "button_reply") {
+            text = interactiveObject.button_reply.title;
+        } else if (typeInteractive === "list_reply") {
+            text = interactiveObject.list_reply.title;
+        }
     }
-    return text
+
+    return text;
 }
 
-module.exports={
-
-    VerifyToken, Recived
-
-}
+module.exports = {
+    VerifyToken,
+    Recived
+};
