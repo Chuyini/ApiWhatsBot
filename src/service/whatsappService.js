@@ -2,7 +2,7 @@ const https = require("https");
 
 function SendMessageWhatsApp(textResponse, number) {
     const data = JSON.stringify({
-        "messaging_product": "whatsapp",    
+        "messaging_product": "whatsapp",
         "recipient_type": "individual",
         "to": number,
         "type": "text",
@@ -24,6 +24,8 @@ function SendMessageWhatsApp(textResponse, number) {
 
     const req = https.request(options, res => {
         let responseData = '';
+
+        console.log(`Status Code: ${res.statusCode}`);
         
         res.on("data", chunk => {
             responseData += chunk;
@@ -31,6 +33,13 @@ function SendMessageWhatsApp(textResponse, number) {
 
         res.on("end", () => {
             console.log("Response from server:", responseData);
+
+            if (res.statusCode !== 200) {
+                console.error(`Failed to send message. Status Code: ${res.statusCode}`);
+                console.error(`Response: ${responseData}`);
+            } else {
+                console.log("Message sent successfully!");
+            }
         });
     });
 
