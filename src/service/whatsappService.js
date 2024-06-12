@@ -1,4 +1,6 @@
+const { request, response } = require("express");
 const https = require("https");
+const { GetTextUser } = require("../constroller/whatsAppController");
 
 const agent = new https.Agent({
     keepAlive: true, // Mantener conexiones abiertas para reutilizarlas
@@ -59,4 +61,26 @@ function SendMessageWhatsApp(textResponse, number) {
     req.end();
 }
 
-module.exports = { SendMessageWhatsApp };
+module.exports = { SendMessageWhatsApp };const Recived = async (req = request, res = response) => {
+    try {
+        const entry = req.body.entry[0];
+        const changes = entry.changes[0];
+        const value = changes.value;
+        const messageObject = value.messages;
+
+        if (messageObject && messageObject.length > 0) {
+            const messages = messageObject[0];
+            const number = messages.from;
+            const text = GetTextUser(messages);
+
+            console.log(`Sending message: "El usuario dijo: ${text}" to number: ${number}`);
+            await whatsappService.SendMessageWhatsApp("El usuario dijo: " + text, number);
+        }
+
+        return res.status(200).send("EVENT_RECEIVED");
+    } catch (error) {
+        console.error("Error in Recived function:", error);
+        return res.status(500).send("Error processing event.");
+    }
+};
+
