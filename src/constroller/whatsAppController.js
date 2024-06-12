@@ -10,10 +10,11 @@ const VerifyToken = (req = request, res = response) => {
         if (challenge != null && token != null && token === accesToken) {
             return res.status(200).send(challenge);
         } else {
-            return res.status(400).send();
+            return res.status(400).send("Invalid token or challenge.");
         }
     } catch (error) {
-        return res.status(401).send();
+        console.error("Error verifying token:", error);
+        return res.status(500).send("Server error.");
     }
 };
 
@@ -22,21 +23,21 @@ const Recived = async (req = request, res = response) => {
         const entry = req.body.entry[0];
         const changes = entry.changes[0];
         const value = changes.value;
-        const messageObjet = value.messages;
+        const messageObject = value.messages;
 
-        if (messageObjet) {
-            const messages = messageObjet[0];
+        if (messageObject) {
+            const messages = messageObject[0];
             const number = messages.from;
             const text = GetTextUser(messages);
 
-            console.log(`Sending message: "${text}" to number: ${number}`);
+            console.log(`Sending message: "El usuario dijo: ${text}" to number: ${number}`);
             await whatsappService.SendMessageWhatsApp("El usuario dijo: " + text, number);
         }
 
-        res.send("EVENT_RECEIVED");
-    } catch (e) {
-        console.error("Error in Recived function:", e);
-        res.status(500).send("Error processing event");
+        return res.status(200).send("EVENT_RECEIVED");
+    } catch (error) {
+        console.error("Error in Recived function:", error);
+        return res.status(500).send("Error processing event.");
     }
 };
 
