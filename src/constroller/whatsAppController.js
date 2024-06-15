@@ -28,13 +28,13 @@ const Recived = async (req = request, res = response) => {
 
         if (messageObject && messageObject.length > 0) {
             const messages = messageObject[0];
-            let number = messages.from;
+            var number = messages.from;
             const text = GetTextUser(messages);
             number = "52" + number.slice(3);
 
             console.log(`Sending message: "El usuario dijo: ${text}" to number: ${number}`);
 
-            let data;
+            var data;
             switch (text.toLowerCase()) {
                 case "text":
                     data = samples.SampleText("Hola usuario",number);
