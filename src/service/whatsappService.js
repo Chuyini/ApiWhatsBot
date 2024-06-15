@@ -31,6 +31,7 @@ async function SendMessageWhatsApp(data) {
                 reject(error);
             });
 
+            console.log("Data being sent:", data);
             req.write(data);
             req.end();
         });
