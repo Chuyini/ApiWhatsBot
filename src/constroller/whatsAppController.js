@@ -37,6 +37,7 @@ const Recived = async (req = request, res = response) => {
             switch (text.toLowerCase()) {
                 case "text":
                     data = samples.SampleText("Hola usuario", number);
+                    console.log("Texto entro");
                     break;
                 case "image":
                     data = samples.SampleImage(number);
