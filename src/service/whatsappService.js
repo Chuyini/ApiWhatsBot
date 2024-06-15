@@ -1,16 +1,6 @@
-const https = require('https');
+const https = require("https");
 
-// Crear un agente HTTP reutilizable
-const agent = new https.Agent({
-    keepAlive: true,
-    maxSockets: 10,
-    freeSockets: 5,
-});
-
-// Función síncrona para enviar mensajes a WhatsApp
 async function SendMessageWhatsApp(data) {
-    
-
     const options = {
         host: "graph.facebook.com",
         path: "/v19.0/321806707686253/messages",
@@ -33,7 +23,7 @@ async function SendMessageWhatsApp(data) {
                 });
 
                 res.on("end", () => {
-                    resolve(res);
+                    resolve({statusCode: res.statusCode, responseData});
                 });
             });
 
@@ -46,10 +36,10 @@ async function SendMessageWhatsApp(data) {
         });
 
         console.log("Response from server:", res.statusCode);
-        
+
         if (res.statusCode !== 200) {
             console.error(`Failed to send message. Status Code: ${res.statusCode}`);
-            console.error(`Response: ${responseData}`);
+            console.error(`Response: ${res.responseData}`);
         } else {
             console.log("Message sent successfully!");
         }
@@ -58,4 +48,6 @@ async function SendMessageWhatsApp(data) {
     }
 }
 
-module.exports = { SendMessageWhatsApp };
+module.exports = {
+    SendMessageWhatsApp
+};
