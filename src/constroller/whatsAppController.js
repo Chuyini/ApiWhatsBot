@@ -36,7 +36,7 @@ const Recived = async (req = request, res = response) => {
             let data;
             switch (text.toLowerCase()) {
                 case "text":
-                    data = samples.SampleText("Hola usuario", number);
+                    data = samples.SampleText("Hola usuario");
                     console.log("Texto entro");
                     break;
                 case "image":
@@ -61,7 +61,7 @@ const Recived = async (req = request, res = response) => {
                     data = samples.SampleLocation(number);
                     break;
                 default:
-                    data = samples.SampleText("No entiendo", number);
+                    data = samples.SampleText("No entiendo");
                     break;
             }
 
