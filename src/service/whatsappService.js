@@ -7,19 +7,9 @@ const agent = new https.Agent({
     freeSockets: 5,
 });
 
-// Función asíncrona para enviar mensajes a WhatsApp
-async function SendMessageWhatsApp(textResponse, number) {
-    console.log("hasta aquí bien v2");
-    const data = JSON.stringify({
-        "messaging_product": "whatsapp",
-        "recipient_type": "individual",
-        "to": "524401050937",
-        "type": "text",
-        "text": {
-            "preview_url": false,
-            "body": textResponse
-        }
-    });
+// Función síncrona para enviar mensajes a WhatsApp
+async function SendMessageWhatsApp(data) {
+    
 
     const options = {
         host: "graph.facebook.com",

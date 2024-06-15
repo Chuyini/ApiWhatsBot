@@ -1,5 +1,7 @@
 const { request, response } = require("express");
 const whatsappService = require("../service/whatsappService");
+const samples= require("../shared/sampleModes");
+
 
 const VerifyToken = (req = request, res = response) => {
     try {
@@ -31,7 +33,45 @@ const Recived = async (req = request, res = response) => {
             const text = GetTextUser(messages);
 
             console.log(`Sending message: "El usuario dijo: ${text}" to number: ${number}`);
-           await whatsappService.SendMessageWhatsApp("El usuario dijo: " + text, number);
+
+            if(text == "text"){
+                var data=samples.SampleText("Hola usuario",number);
+                await whatsappService.SendMessageWhatsApp(data);
+                
+            }else if(text == "image"){
+                var data=samples.SampleImage(number);
+                await whatsappService.SendMessageWhatsApp(data);
+
+            }else if(text == "video"){
+                var data=samples.SampleVideo(number);
+                await whatsappService.SendMessageWhatsApp(data);
+
+            }else if(text == "audio"){
+                var data=samples.SampleAudio(number);
+                await whatsappService.SendMessageWhatsApp(data);
+
+            }else if(text == "document"){
+                var data=samples.SampleDocument(number);
+                await whatsappService.SendMessageWhatsApp(data);
+
+            }else if(text == "button"){
+                var data=samples.SampleButtons(number);
+                await whatsappService.SendMessageWhatsApp(data);
+
+            }else if(text == "List"){
+                var data=samples.SampleText(number);
+                await whatsappService.SendMessageWhatsApp(data);
+
+            }else if(text == "location"){
+                var data=samples.SampleLocation(number);
+                await whatsappService.SendMessageWhatsApp(data);
+
+            }else{
+
+                var data=samples.SampleText("No entiendo");
+                await whatsappService.SendMessageWhatsApp(data);
+
+            }
         }
 
         return res.status(200).send("EVENT_RECEIVED");
