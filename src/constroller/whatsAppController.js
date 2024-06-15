@@ -66,6 +66,7 @@ const Recived = async (req = request, res = response) => {
                     break;
             }
 
+            console.log(data);
             await whatsappService.SendMessageWhatsApp(data);
             return res.status(200).send("EVENT_RECEIVED");
         }
