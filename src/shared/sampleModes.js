@@ -5,8 +5,8 @@ function SampleText(textResponse,number) {
     const data = JSON.stringify({
         "messaging_product": "whatsapp",
         "recipient_type": "individual",
-        "to": "524401050937",
-        "type": number,
+        "to": number,
+        "type": "text",
         "text": {
             "preview_url": false,
             "body": textResponse
