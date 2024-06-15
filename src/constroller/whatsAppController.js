@@ -34,44 +34,43 @@ const Recived = async (req = request, res = response) => {
 
             console.log(`Sending message: "El usuario dijo: ${text}" to number: ${number}`);
 
-            if(text == "text"){
-                var data=samples.SampleText("Hola usuario",number);
+            if (text === "text") {
+                var data = samples.SampleText("Hola usuario", number);
                 await whatsappService.SendMessageWhatsApp(data);
-                
-            }else if(text == "image"){
-                var data=samples.SampleImage(number);
+            
+            } else if (text === "image") {
+                var data = samples.SampleImage(number);
                 await whatsappService.SendMessageWhatsApp(data);
-
-            }else if(text == "video"){
-                var data=samples.SampleVideo(number);
+            
+            } else if (text === "video") {
+                var data = samples.SampleVideo(number);
                 await whatsappService.SendMessageWhatsApp(data);
-
-            }else if(text == "audio"){
-                var data=samples.SampleAudio(number);
+            
+            } else if (text === "audio") {
+                var data = samples.SampleAudio(number);
                 await whatsappService.SendMessageWhatsApp(data);
-
-            }else if(text == "document"){
-                var data=samples.SampleDocument(number);
+            
+            } else if (text === "document") {
+                var data = samples.SampleDocument(number);
                 await whatsappService.SendMessageWhatsApp(data);
-
-            }else if(text == "button"){
-                var data=samples.SampleButtons(number);
+            
+            } else if (text === "button") {
+                var data = samples.SampleButtons(number);
                 await whatsappService.SendMessageWhatsApp(data);
-
-            }else if(text == "List"){
-                var data=samples.SampleText(number);
+            
+            } else if (text.toLowerCase() === "list") {
+                var data = samples.SampleList(number); // Asumiendo que quieres enviar una lista, no un texto.
                 await whatsappService.SendMessageWhatsApp(data);
-
-            }else if(text == "location"){
-                var data=samples.SampleLocation(number);
+            
+            } else if (text === "location") {
+                var data = samples.SampleLocation(number);
                 await whatsappService.SendMessageWhatsApp(data);
-
-            }else{
-
-                var data=samples.SampleText("No entiendo");
+            
+            } else {
+                var data = samples.SampleText("No entiendo", number); // Agregado el segundo parámetro.
                 await whatsappService.SendMessageWhatsApp(data);
-
             }
+            
         }
 
         return res.status(200).send("EVENT_RECEIVED");
