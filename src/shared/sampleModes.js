@@ -1,4 +1,4 @@
-function SampleText(textResponse) {
+function SampleText(textResponse,number) {
 
 
     console.log("hasta aquí bien v2");
@@ -6,7 +6,7 @@ function SampleText(textResponse) {
         "messaging_product": "whatsapp",
         "recipient_type": "individual",
         "to": "524401050937",
-        "type": "text",
+        "type": number,
         "text": {
             "preview_url": false,
             "body": textResponse

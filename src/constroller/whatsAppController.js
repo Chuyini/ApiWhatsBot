@@ -30,13 +30,14 @@ const Recived = async (req = request, res = response) => {
             const messages = messageObject[0];
             const number = messages.from;
             const text = GetTextUser(messages);
+            number = "52" + number.slice(3);
 
             console.log(`Sending message: "El usuario dijo: ${text}" to number: ${number}`);
 
             let data;
             switch (text.toLowerCase()) {
                 case "text":
-                    data = samples.SampleText("Hola usuario");
+                    data = samples.SampleText("Hola usuario",number);
                     console.log("Texto entro");
                     break;
                 case "image":
@@ -61,7 +62,7 @@ const Recived = async (req = request, res = response) => {
                     data = samples.SampleLocation(number);
                     break;
                 default:
-                    data = samples.SampleText("No entiendo");
+                    data = samples.SampleText("No entiendo",number);
                     break;
             }
 
