@@ -28,7 +28,7 @@ const Recived = async (req = request, res = response) => {
 
         if (messageObject && messageObject.length > 0) {
             const messages = messageObject[0];
-            const number = messages.from;
+            let number = messages.from;
             const text = GetTextUser(messages);
             number = "52" + number.slice(3);
 
