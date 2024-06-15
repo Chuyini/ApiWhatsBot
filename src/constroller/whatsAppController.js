@@ -34,7 +34,7 @@ const Recived = async (req = request, res = response) => {
 
             console.log(`Sending message: "El usuario dijo: ${text}" to number: ${number}`);
 
-            if (text === "text") {
+            if ("text" === "text") {
                 var data = samples.SampleText("Hola usuario", number);
                 await whatsappService.SendMessageWhatsApp(data);
                 return res.status(200).send("EVENT_RECEIVED");
