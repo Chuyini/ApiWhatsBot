@@ -1,4 +1,4 @@
-function SampleText(textResponse,number) {
+function SampleText(textResponse, number) {
 
 
     console.log("hasta aquí bien v2");
@@ -103,7 +103,7 @@ function SampleButtons(number) { //lo vamos a dejar solo para una imagen
     const data = JSON.stringify({
         "messaging_product": "whatsapp",
         "recipient_type": "individual",
-        "to": number,
+        "to": "524401050937",
         "type": "interactive",
         "interactive": {
             "type": "button",
@@ -111,8 +111,7 @@ function SampleButtons(number) { //lo vamos a dejar solo para una imagen
                 "text": "Confirmas tu registro"
             },
             "action": {
-                "buttons": [
-                    {
+                "buttons": [{
                         "type": "reply",
                         "reply": {
                             "id": "001",
@@ -128,6 +127,41 @@ function SampleButtons(number) { //lo vamos a dejar solo para una imagen
                     }
                 ]
             }
+        }
+    });
+
+    return data;
+
+}
+
+function SampleList(number) { //lo vamos a dejar solo para una imagen
+
+
+
+    const data = JSON.stringify({
+        "messaging_product": "whatsapp",
+        "recipient_type": "individual",
+        "to": number,
+        "type": "interactive",
+        "body": {
+            "text": "Confirmas tu registro"
+        },
+        "action": {
+            "buttons": [{
+                    "type": "reply",
+                    "reply": {
+                        "id": "001",
+                        "title": "🛍️Si"
+                    }
+                },
+                {
+                    "type": "reply",
+                    "reply": {
+                        "id": "002",
+                        "title": "🛍️No"
+                    }
+                }
+            ]
         }
     });
     return data;
