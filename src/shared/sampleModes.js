@@ -105,60 +105,29 @@ function SampleButtons(number) { //lo vamos a dejar solo para una imagen
         "recipient_type": "individual",
         "to": number,
         "type": "interactive",
-        "body": {
-            "text": "Confirmas tu registro"
-        },
-        "action": {
-            "buttons": [{
-                    "type": "reply",
-                    "reply": {
-                        "id": "001",
-                        "title": "🛍️Si"
+        "interactive": {
+            "type": "button",
+            "body": {
+                "text": "Confirmas tu registro"
+            },
+            "action": {
+                "buttons": [
+                    {
+                        "type": "reply",
+                        "reply": {
+                            "id": "001",
+                            "title": "🛍️Si"
+                        }
+                    },
+                    {
+                        "type": "reply",
+                        "reply": {
+                            "id": "002",
+                            "title": "🛍️No"
+                        }
                     }
-                },
-                {
-                    "type": "reply",
-                    "reply": {
-                        "id": "002",
-                        "title": "🛍️No"
-                    }
-                }
-            ]
-        }
-    });
-
-    return data;
-
-}
-
-function SampleList(number) { //lo vamos a dejar solo para una imagen
-
-
-
-    const data = JSON.stringify({
-        "messaging_product": "whatsapp",
-        "recipient_type": "individual",
-        "to": number,
-        "type": "interactive",
-        "body": {
-            "text": "Confirmas tu registro"
-        },
-        "action": {
-            "buttons": [{
-                    "type": "reply",
-                    "reply": {
-                        "id": "001",
-                        "title": "🛍️Si"
-                    }
-                },
-                {
-                    "type": "reply",
-                    "reply": {
-                        "id": "002",
-                        "title": "🛍️No"
-                    }
-                }
-            ]
+                ]
+            }
         }
     });
     return data;
