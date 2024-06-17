@@ -28,16 +28,16 @@ const Recived = async (req = request, res = response) => {
 
         if (messageObject && messageObject.length > 0) {
             const messages = messageObject[0];
-            var number = messages.from;
+            let number = messages.from;
             const text = GetTextUser(messages);
-            number = "52" + number.slice(3);//quita los 3 primero digitos y agrega el 52
+            number = "52" + number.slice(3); // Quita los 3 primeros dígitos y agrega el 52
 
             console.log(`Sending message: "El usuario dijo: ${text}" to number: ${number}`);
 
-            var data;
+            let data;
             switch (text.toLowerCase()) {
                 case "text":
-                    data = samples.SampleText("Hola usuario",number);
+                    data = samples.SampleText("Hola usuario", number);
                     console.log("Texto entro");
                     break;
                 case "image":
@@ -62,13 +62,17 @@ const Recived = async (req = request, res = response) => {
                     data = samples.SampleLocation(number);
                     break;
                 default:
-                    data = samples.SampleText("No entiendo",number);
+                    data = samples.SampleText("No entiendo", number);
                     break;
             }
 
-            console.log(data);
+            console.log("Data being sent:", data);
             await whatsappService.SendMessageWhatsApp(data);
+            console.log("Message sent successfully.");
             return res.status(200).send("EVENT_RECEIVED");
+        } else {
+            console.log("No message object found in request.");
+            return res.status(400).send("No message object found.");
         }
     } catch (error) {
         console.error("Error in Recived function:", error);

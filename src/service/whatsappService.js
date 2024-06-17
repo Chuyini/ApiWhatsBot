@@ -8,7 +8,8 @@ async function SendMessageWhatsApp(data) {
         headers: {
             "Content-Type": "application/json",
             "Authorization": "Bearer EAAGeKA2VNZBEBO4QRYJRofcoZBBF8opzbqrSnsqXm0MpaDqMvp53KRRn3euZBISAHeLb0wsqsSzCWnjayUSxOr0yVYaCGfKEnQxwkqSvUi0LuuRmiRYqonrHSdxZBv0LjDIsS1MfnnW1pyo9ejnUYDPTBpojLEt5ZBAgZCCbUQ9Eof1xnsr8h9d0b3bWY6b6aNqrOTZA7jZC5gKZApbZB0"
-        }
+        },
+        timeout: 5000 // Timeout de 5 segundos
     };
 
     try {
@@ -29,6 +30,11 @@ async function SendMessageWhatsApp(data) {
 
             req.on("error", error => {
                 reject(error);
+            });
+
+            req.on("timeout", () => {
+                req.abort();
+                reject(new Error("Request timed out"));
             });
 
             console.log("Data being sent:", data);
@@ -52,3 +58,4 @@ async function SendMessageWhatsApp(data) {
 module.exports = {
     SendMessageWhatsApp
 };
+
