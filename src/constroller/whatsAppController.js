@@ -21,7 +21,7 @@ const VerifyToken = (req = request, res = response) => {
 
 const Recived = async (req = request, res = response) => {
     try {
-        console.log("Request body:", req.body);
+        console.log("Request body:", JSON.stringify(req.body, null, 2));
 
         const entry = req.body.entry && req.body.entry[0];
         if (!entry) {
