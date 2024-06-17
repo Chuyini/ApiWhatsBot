@@ -139,7 +139,7 @@ function SampleList(number) { //lo vamos a dejar solo para una imagen
     const data = JSON.stringify({
         "messaging_product": "whatsapp",
         "recipient_type": "individual",
-        "to": "524401050937",
+        "to": number,
         "type": "interactive",
         "interactive": {
             "type": "list",

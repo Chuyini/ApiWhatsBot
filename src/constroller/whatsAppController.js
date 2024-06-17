@@ -30,7 +30,7 @@ const Recived = async (req = request, res = response) => {
             const messages = messageObject[0];
             var number = messages.from;
             const text = GetTextUser(messages);
-            number = "52" + number.slice(3);
+            number = "52" + number.slice(3);//quita los 3 primero digitos y agrega el 52
 
             console.log(`Sending message: "El usuario dijo: ${text}" to number: ${number}`);
 
