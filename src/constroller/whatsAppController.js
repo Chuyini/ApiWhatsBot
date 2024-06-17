@@ -21,8 +21,20 @@ const VerifyToken = (req = request, res = response) => {
 
 const Recived = async (req = request, res = response) => {
     try {
-        const entry = req.body.entry[0];
-        const changes = entry.changes[0];
+        console.log("Request body:", req.body);
+
+        const entry = req.body.entry && req.body.entry[0];
+        if (!entry) {
+            console.error("No entry found in request.");
+            return res.status(400).send("No entry found in request.");
+        }
+
+        const changes = entry.changes && entry.changes[0];
+        if (!changes) {
+            console.error("No changes found in entry.");
+            return res.status(400).send("No changes found in entry.");
+        }
+
         const value = changes.value;
         const messageObject = value.messages;
 
