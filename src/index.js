@@ -1,14 +1,23 @@
-const express=require("express");
+const express = require("express");
+const apiRouter = require("./routes/routes");
 
-const apiRouter=require("./routes/routes");
+const app = express();
 
-const app=express();
+const PORT = process.env.PORT || 3000;
 
-const PORT =process.env.PORT||3000;
-
+// Middleware para parsear JSON
 app.use(express.json());
 
+// Rutas
 app.use("/whatsapp", apiRouter);
 
-app.listen(PORT,()=>{console.log("El puerto es "+PORT)});
+// Manejador de errores global
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Something broke!');
+});
 
+// Iniciar el servidor
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
