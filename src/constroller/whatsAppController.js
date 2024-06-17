@@ -37,6 +37,7 @@ const Recived = async (req = request, res = response) => {
 
         const value = changes.value;
         const messageObject = value.messages;
+        const statusObject = value.statuses;
 
         if (messageObject && messageObject.length > 0) {
             const messages = messageObject[0];
@@ -82,9 +83,12 @@ const Recived = async (req = request, res = response) => {
             await whatsappService.SendMessageWhatsApp(data);
             console.log("Message sent successfully.");
             return res.status(200).send("EVENT_RECEIVED");
+        } else if (statusObject && statusObject.length > 0) {
+            console.log("Received a status update:", statusObject);
+            return res.status(200).send("STATUS_RECEIVED");
         } else {
-            console.log("No message object found in request.");
-            return res.status(400).send("No message object found.");
+            console.log("No message or status object found in request.");
+            return res.status(400).send("No message or status object found.");
         }
     } catch (error) {
         console.error("Error in Recived function:", error);
