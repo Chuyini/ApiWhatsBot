@@ -1,5 +1,4 @@
 const { request, response } = require("express");
-
 const processMessage = require("../shared/process");
 
 const VerifyToken = (req = request, res = response) => {
@@ -47,13 +46,10 @@ const Recived = async (req = request, res = response) => {
 
             console.log(`Sending message: "El usuario dijo: ${text}" to number: ${number}`);
 
-            // Preparar el mensaje de respuesta
-          
+            // Llama a la función Process de manera asincrónica
+            await processMessage.Process(text, number);
 
-            // Enviar el mensaje de respuesta
-            console.log("Data being sent:", text);
-            
-            
+            return res.status(200).send("EVENT_RECEIVED");  
         } else if (statusObject && statusObject.length > 0) {
             console.log("Received a status update:", statusObject);
             return res.status(200).send("STATUS_RECEIVED");
