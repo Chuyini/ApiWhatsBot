@@ -58,7 +58,7 @@ const Recived = (req = request, res = response) => {
 
             //Una vez procesado se manda la contestación
             console.log("Data being sent:", text);
-            SendMessageWhatsApp(data)
+            whatsappService(data)
                 .then(response => {
                     console.log("Message processed successfully.");
                     console.log("Response from server:", response.statusCode, response.responseData);
