@@ -53,9 +53,7 @@ const Recived = async (req = request, res = response) => {
             // Enviar el mensaje de respuesta
             console.log("Data being sent:", text);
             
-            processMessage.Process(text,number);
-            console.log("Message sent successfully.");
-            return res.status(200).send("EVENT_RECEIVED");
+            
         } else if (statusObject && statusObject.length > 0) {
             console.log("Received a status update:", statusObject);
             return res.status(200).send("STATUS_RECEIVED");

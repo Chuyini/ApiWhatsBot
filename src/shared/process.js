@@ -19,11 +19,15 @@ async function Process(textUser, number) {
 
     try {
         for (const element of models) {
-            await whatsAppService.SendMessageWhatsApp(element);
+            const response =await whatsAppService.SendMessageWhatsApp(element);
+            console.log("Message processed successfully.");
+            console.log("Response from server:", response.statusCode, response.responseData);
+            processMessage.Process(text,number);
+            console.log("Message sent successfully.");
+            return res.status(200).send("EVENT_RECEIVED")
         }
         
-        console.log("Message processed successfully.");
-        console.log("Response from server:", response.statusCode, response.responseData);
+        
     } catch (error) {
         console.error("Error sending message:", error);
     }
