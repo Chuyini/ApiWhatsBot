@@ -2,7 +2,7 @@ function SampleText(textResponse, number) {
 
 
     console.log("hasta aquí bien v2");
-    const data = JSON.stringify({
+    let data = JSON.stringify({
         "messaging_product": "whatsapp",
         "recipient_type": "individual",
         "to": number,

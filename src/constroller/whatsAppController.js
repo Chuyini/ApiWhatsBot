@@ -52,7 +52,7 @@ const Recived = (req = request, res = response) => {
             console.log(`Sending message: "El usuario dijo: ${text}" to number: ${number}`);
 
             //apartir de aqui solo le mandamos lo que el usuario dijo a ciertas funciones 
-            let data =samples.SampleText(number,"Como te llamas?");
+            let data =samples.SampleText("Como te llamas?",number);
 
 
 
