@@ -1,6 +1,5 @@
 const { request, response } = require("express");
-const whatsappService = require("../service/whatsappService");
-const samples = require("../shared/sampleModes");
+
 const processMessage = require("../shared/process");
 
 const VerifyToken = (req = request, res = response) => {
@@ -49,18 +48,12 @@ const Recived = async (req = request, res = response) => {
             console.log(`Sending message: "El usuario dijo: ${text}" to number: ${number}`);
 
             // Preparar el mensaje de respuesta
-            let data = samples.SampleText("Como te llamas?", number);
+          
 
             // Enviar el mensaje de respuesta
             console.log("Data being sent:", text);
-            try {
-                const response = await whatsappService.SendMessageWhatsApp(data);
-                console.log("Message processed successfully.");
-                console.log("Response from server:", response.statusCode, response.responseData);
-            } catch (error) {
-                console.error("Error sending message:", error);
-            }
-
+            
+            processMessage.Process(text,number);
             console.log("Message sent successfully.");
             return res.status(200).send("EVENT_RECEIVED");
         } else if (statusObject && statusObject.length > 0) {

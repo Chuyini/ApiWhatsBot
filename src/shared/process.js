@@ -1,39 +1,8 @@
+const whatsAppModel = require("../shared/modelsWhatsApp");
+const whatsAppService = require("../service/whatsappService");
 
-function Process(textUser) {
-    
-
-    textUser = textUser.toLowerCase(); //convierte el texto en minúsculas
-    let models = []; //arreglo de modelos
-    let model;
-    if (textUser.includes("hola")) {
-        //SALUDAR
-        model = whatsappModel.MessageText("Hola un gusto saludarte", number);
-        models.push(model);
-    } else if (textUser.includes("gracias")) {
-        //AGRADECIMIENTO 
-        model = whatsappModel.MessageText("Gracias a ti :)", number);
-        models.push(model);
-    } else if (textUser.includes("adios") || textUser.includes("bye") || textUser.includes("me voy")) {
-        model = whatsappModel.MessageText("Ve con cuidado", number);
-        models.push(model);
-    } else {
-        model = whatsappModel.MessageText("No entiendo lo que dices", number);
-        models.push(model);
-    }
-
-    return model;
-    
-   
-}
-
-module.exports={Process}
-
-
-
-
-/*
 async function Process(textUser, number) {
-    console.time("Process Time");
+
 
     textUser = textUser.toLowerCase(); //convierte el texto en minúsculas
     let models = []; //arreglo de modelos
@@ -42,27 +11,30 @@ async function Process(textUser, number) {
         //SALUDAR
         let model = whatsappModel.MessageText("Hola un gusto saludarte", number);
         models.push(model);
-    } else if (textUser.includes("gracias")) {
-        //AGRADECIMIENTO 
-        let model = whatsappModel.MessageText("Gracias a ti :)", number);
-        models.push(model);
-    } else if (textUser.includes("adios") || textUser.includes("bye") || textUser.includes("me voy")) {
-        let model = whatsappModel.MessageText("Ve con cuidado", number);
-        models.push(model);
+
     } else {
         let model = whatsappModel.MessageText("No entiendo lo que dices", number);
         models.push(model);
     }
 
-    
     try {
-        await Promise.all(models.map(model => whatsappService.SendMessageWhatsApp(model)));
-        console.log("All messages sent successfully");
+        for (const element of models) {
+            await whatsAppService.SendMessageWhatsApp(data);
+        }
+        
+        console.log("Message processed successfully.");
+        console.log("Response from server:", response.statusCode, response.responseData);
     } catch (error) {
-        console.error("Error sending one or more messages:", error);
+        console.error("Error sending message:", error);
     }
-    console.timeEnd("Sending Messages Time");
 
-    console.timeEnd("Process Time");
+
+
+
+
+
 }
-*/
+
+module.exports = {
+    Process
+}
