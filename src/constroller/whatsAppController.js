@@ -1,6 +1,7 @@
 const { request, response } = require("express");
 const whatsappService = require("../service/whatsappService");
 const samples = require("../shared/sampleModes");
+const processMessage=require("../shared/process");
 
 const VerifyToken = (req = request, res = response) => {
     try {
@@ -47,40 +48,14 @@ const Recived = async (req = request, res = response) => {
 
             console.log(`Sending message: "El usuario dijo: ${text}" to number: ${number}`);
 
-            let data;
-            switch (text.toLowerCase()) {
-                case "text":
-                    data = samples.SampleText("Hola usuario", number);
-                    console.log("Texto entro");
-                    break;
-                case "image":
-                    data = samples.SampleImage(number);
-                    break;
-                case "video":
-                    data = samples.SampleVideo(number);
-                    break;
-                case "audio":
-                    data = samples.SampleAudio(number);
-                    break;
-                case "document":
-                    data = samples.SampleDocument(number);
-                    break;
-                case "button":
-                    data = samples.SampleButtons(number);
-                    break;
-                case "list":
-                    data = samples.SampleList(number); // Asumiendo que Quieres enviar una lista, no un texto.
-                    break;
-                case "location":
-                    data = samples.SampleLocation(number);
-                    break;
-                default:
-                    data = samples.SampleText("No entiendo", number);
-                    break;
-            }
+           //apartir de aqui solo le mandamos lo que el usuario dijo a ciertas funciones 
+            let data =processMessage(text);
 
+            
+
+           //Una vez procesado se manda la contestación
             console.log("Data being sent:", data);
-            await whatsappService.SendMessageWhatsApp(data);
+            await whatsappService.SendMessageWhatsApp(data);//esta funcion que manda los datos ya no debe moverse
             console.log("Message sent successfully.");
             return res.status(200).send("EVENT_RECEIVED");
         } else if (statusObject && statusObject.length > 0) {
