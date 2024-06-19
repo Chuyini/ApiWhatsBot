@@ -9,11 +9,11 @@ async function Process(textUser, number) {
 
     if (textUser.includes("hola")) {
         //SALUDAR
-        let model = whatsappModel.MessageText("Hola un gusto saludarte", number);
+        let model = whatsAppModel.MessageText("Hola un gusto saludarte", number);
         models.push(model);
 
     } else {
-        let model = whatsappModel.MessageText("No entiendo lo que dices", number);
+        let model = whatsAppModel.MessageText("No entiendo lo que dices", number);
         models.push(model);
     }
 
