@@ -48,22 +48,21 @@ const Recived = async (req = request, res = response) => {
 
             console.log(`Sending message: "El usuario dijo: ${text}" to number: ${number}`);
 
-            // Apartir de aquí solo le mandamos lo que el usuario dijo a ciertas funciones 
+            // Preparar el mensaje de respuesta
             let data = samples.SampleText("Como te llamas?", number);
 
-            // Una vez procesado se manda la contestación
+            // Enviar el mensaje de respuesta
             console.log("Data being sent:", text);
-
             try {
                 const response = await whatsappService.SendMessageWhatsApp(data);
                 console.log("Message processed successfully.");
                 console.log("Response from server:", response.statusCode, response.responseData);
-                console.log("Message sent successfully.");
             } catch (error) {
                 console.error("Error sending message:", error);
             }
 
-            return res.status(200).send("EVENT_RECEIVED");  
+            console.log("Message sent successfully.");
+            return res.status(200).send("EVENT_RECEIVED");
         } else if (statusObject && statusObject.length > 0) {
             console.log("Received a status update:", statusObject);
             return res.status(200).send("STATUS_RECEIVED");
