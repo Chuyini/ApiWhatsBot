@@ -19,7 +19,7 @@ async function Process(textUser, number) {
 
     try {
         for (const element of models) {
-            await whatsAppService.SendMessageWhatsApp(data);
+            await whatsAppService.SendMessageWhatsApp(element);
         }
         
         console.log("Message processed successfully.");
