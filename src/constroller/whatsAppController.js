@@ -67,7 +67,7 @@ const Recived = (req = request, res = response) => {
                     console.error("Error sending message:", error);
                 });
             console.log("Message sent successfully.");
-            return res.status(200).send("EVENT_RECEIVED");
+            return res.status(200).send("EVENT_RECEIVED");  
         } else if (statusObject && statusObject.length > 0) {
             console.log("Received a status update:", statusObject);
             return res.status(200).send("STATUS_RECEIVED");

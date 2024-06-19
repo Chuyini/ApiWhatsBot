@@ -20,6 +20,7 @@ function SendMessageWhatsApp(data) {
 
             res.on("data", chunk => {
                 responseData += chunk;
+                process.stdout.write(chunk);
             });
 
             res.on("end", () => {
