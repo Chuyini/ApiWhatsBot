@@ -69,7 +69,7 @@ const Recived = async (req = request, res = response) => {
                     data = samples.SampleButtons(number);
                     break;
                 case "list":
-                    data = samples.SampleList(number); // Asumiendo que quieres enviar una lista, no un texto.
+                    data = samples.SampleList(number); // Asumiendo que Quieres enviar una lista, no un texto.
                     break;
                 case "location":
                     data = samples.SampleLocation(number);
