@@ -4,24 +4,24 @@ function Process(textUser) {
 
     textUser = textUser.toLowerCase(); //convierte el texto en minúsculas
     let models = []; //arreglo de modelos
-
+    let model;
     if (textUser.includes("hola")) {
         //SALUDAR
-        let model = whatsappModel.MessageText("Hola un gusto saludarte", number);
+        model = whatsappModel.MessageText("Hola un gusto saludarte", number);
         models.push(model);
     } else if (textUser.includes("gracias")) {
         //AGRADECIMIENTO 
-        let model = whatsappModel.MessageText("Gracias a ti :)", number);
+        model = whatsappModel.MessageText("Gracias a ti :)", number);
         models.push(model);
     } else if (textUser.includes("adios") || textUser.includes("bye") || textUser.includes("me voy")) {
-        let model = whatsappModel.MessageText("Ve con cuidado", number);
+        model = whatsappModel.MessageText("Ve con cuidado", number);
         models.push(model);
     } else {
-        let model = whatsappModel.MessageText("No entiendo lo que dices", number);
+        model = whatsappModel.MessageText("No entiendo lo que dices", number);
         models.push(model);
     }
 
-    return models;
+    return model;
     
    
 }
