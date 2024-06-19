@@ -49,12 +49,12 @@ const Recived = async (req = request, res = response) => {
             console.log(`Sending message: "El usuario dijo: ${text}" to number: ${number}`);
 
            //apartir de aqui solo le mandamos lo que el usuario dijo a ciertas funciones 
-            let data =processMessage(text);
+            //let data =processMessage(text);
 
-            
+
 
            //Una vez procesado se manda la contestación
-            console.log("Data being sent:", data);
+            console.log("Data being sent:", text);
             await whatsappService.SendMessageWhatsApp(data);//esta funcion que manda los datos ya no debe moverse
             console.log("Message sent successfully.");
             return res.status(200).send("EVENT_RECEIVED");
