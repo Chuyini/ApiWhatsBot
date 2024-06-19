@@ -1,6 +1,6 @@
 const https = require("https");
 
-async function SendMessageWhatsApp(data) {
+function SendMessageWhatsApp(data) {
     const options = {
         host: "graph.facebook.com",
         path: "/v19.0/321806707686253/messages",
@@ -12,50 +12,39 @@ async function SendMessageWhatsApp(data) {
         timeout: 5000 // Timeout de 5 segundos
     };
 
-    try {
-        const res = await new Promise((resolve, reject) => {
-            const req = https.request(options, res => {
-                let responseData = '';
+    return new Promise((resolve, reject) => {
+        const req = https.request(options, res => {
+            let responseData = '';
 
-                console.log(`Status Code: ${res.statusCode}`);
+            console.log(`Status Code: ${res.statusCode}`);
 
-                res.on("data", chunk => {
-                    responseData += chunk;
+            res.on("data", chunk => {
+                responseData += chunk;
+            });
+
+            res.on("end", () => {
+                resolve({
+                    statusCode: res.statusCode,
+                    responseData
                 });
-
-                res.on("end", () => {
-                    resolve({statusCode: res.statusCode, responseData});
-                });
             });
-
-            req.on("error", error => {
-                reject(error);
-            });
-
-            req.on("timeout", () => {
-                req.abort();
-                reject(new Error("Request timed out"));
-            });
-
-            console.log("Data being sent:", data);
-            req.write(data);
-            req.end();
         });
 
-        console.log("Response from server:", res.statusCode);
+        req.on("error", error => {
+            reject(error);
+        });
 
-        if (res.statusCode !== 200) {
-            console.error(`Failed to send message. Status Code: ${res.statusCode}`);
-            console.error(`Response: ${res.responseData}`);
-        } else {
-            console.log("Message sent successfully!");
-        }
-    } catch (error) {
-        console.error("Error sending message:", error);
-    }
+        req.on("timeout", () => {
+            req.abort();
+            reject(new Error("Request timed out"));
+        });
+
+        console.log("Data being sent:", data);
+        req.write(data);
+        req.end();
+    });
 }
 
 module.exports = {
     SendMessageWhatsApp
 };
-
