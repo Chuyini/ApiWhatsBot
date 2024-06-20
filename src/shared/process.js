@@ -6,20 +6,43 @@ async function Process(textUser, number) {
     let models = []; // Arreglo de modelos
 
     if (textUser.includes("hola")) {
-        // SALUDAR
+        // comprar
         let model = whatsAppModel.MessageText("Hola un gusto saludarte", number);
         models.push(model);
-        
-    } else if(textUser.includes("gracias")){
-        let model = whatsAppModel.MessageText("De nada fue un gusto servirte", number);
+
+    }else if (textUser.includes("Registrarse")) {
+
+        //vender
+
+        let model = whatsAppModel.MessageText("Registrate en el siguiente formulario para poder evaluarte link", number);
+        //El link debe estar activo en true
         models.push(model);
         let modelList = whatsAppModel.MessageList(number);
         models.push(modelList);
 
+    } 
+    else if (textUser.includes("vender")) {
+
+        //vender
+
+        let modelVender = whatsAppModel.modelVender(number);
+        //El link debe estar activo en true
+        models.push(modelVender);
+       
+
+    } else if (textUser.includes("comprar")) {
+
+        //comprar
+
+        let modelComprar = whatsAppModel.MessageComprar(number);
+        //El link debe estar activo en true
+        models.push(modelComprar);
+        
+
     }else {
         let model = whatsAppModel.MessageText("No te entiendo", number);
         models.push(model);
-        
+
     }
 
     try {

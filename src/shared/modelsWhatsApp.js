@@ -76,4 +76,43 @@ function MessageList(number) { //lo vamos a dejar solo para una imagen
     return data;
 }
 
-module.exports={MessageText, MessageList}
+
+function MessageComprar(number) { //lo vamos a dejar solo para una imagen
+
+
+
+    const data = JSON.stringify({
+        "messaging_product": "whatsapp",
+        "recipient_type": "individual",
+        "to": number,
+        "type": "interactive",
+        "interactive": {
+            "type": "button",
+            "body": {
+                "text": "Selecciona uno de los productos "
+            },
+            "action": {
+                "buttons": [{
+                        "type": "reply",
+                        "reply": {
+                            "id": "option-laptop",
+                            "title": "🛍️ Laptop"
+                        }
+                    },
+                    {
+                        "type": "reply",
+                        "reply": {
+                            "id": "option-computadora",
+                            "title": "🛍️Computadora"
+                        }
+                    }
+                ]
+            }
+        }
+    });
+
+    return data;
+
+}
+
+module.exports={MessageText, MessageList, MessageComprar}
