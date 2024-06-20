@@ -47,7 +47,7 @@ const Recived = async (req = request, res = response) => {
             console.log(`Sending message: "El usuario dijo: ${text}" to number: ${number}`);
 
             // Llama a la función Process de manera asincrónica
-            await processMessage.Process(text, number);
+            await processMessage.Process(text, number);//se tiene que esperar a que termine
 
             return res.status(200).send("EVENT_RECEIVED");  
         } else if (statusObject && statusObject.length > 0) {
