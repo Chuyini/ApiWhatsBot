@@ -25,7 +25,7 @@ async function Process(textUser, number) {
 
         //vender
 
-        let modelVender = whatsAppModel.modelVender(number);
+        let modelVender = whatsAppModel.MessageVender(number);
         //El link debe estar activo en true
         models.push(modelVender);
        
