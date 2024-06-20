@@ -154,6 +154,35 @@ function MessageVender(number) { //lo vamos a dejar solo para una imagen
 
 }
 
+function MessageLocation(number) { //lo vamos a dejar solo para location
 
 
-module.exports={MessageText, MessageList, MessageComprar, MessageVender}
+
+    const data = JSON.stringify({
+        "messaging_product": "whatsapp",
+        "recipient_type": "individual",
+        "to": number,
+        "type": "location",
+        "location": {
+
+            "latitude": "22.152226",
+            "longitude": "-100.9717975",
+            "name": "Centro Historico",
+            "address": "Centro historico del centro XD"
+
+        }
+    });
+
+    return data;
+
+}
+
+
+
+module.exports = {
+    MessageText,
+    MessageList,
+    MessageComprar,
+    MessageVender,
+    MessageLocation
+}

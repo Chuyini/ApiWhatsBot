@@ -39,7 +39,17 @@ async function Process(textUser, number) {
         models.push(modelComprar);
         
 
-    }else {
+    } else if (textUser.includes("agencia")) {
+
+        let model = whatsAppModel.MessageLocation(number);
+        models.push(model);
+
+    }else if (textUser.includes("contacto")){
+
+        let model = whatsAppModel.MessageText("*Centro de contacto* : \n4434629327",number);
+        models.push(model);
+
+    }else{
         let model = whatsAppModel.MessageText("No te entiendo", number);
         models.push(model);
 
