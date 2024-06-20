@@ -11,12 +11,15 @@ async function Process(textUser, number) {
         models.push(model);
         
     } else if(textUser.includes("Gracias")){
-
-    }else {
         let model = whatsAppModel.MessageText("De nada fue un gusto servirte", number);
         models.push(model);
         let modelList = whatsAppModel.MessageList(number);
         models.push(modelList);
+
+    }else {
+        let model = whatsAppModel.MessageText("No te entiendo", number);
+        models.push(model);
+        
     }
 
     try {
