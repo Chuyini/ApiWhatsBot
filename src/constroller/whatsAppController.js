@@ -43,7 +43,8 @@ const Recived = async (req = request, res = response) => {
             let number = messages.from;
             const text = GetTextUser(messages);
             number = "52" + number.slice(3); // Quita los 3 primeros dígitos y agrega el 52
-
+            console.log(text);
+            console.log(number);
             console.log(`Sending message: "El usuario dijo: ${text}" to number: ${number}`);
 
             // Llama a la función Process de manera asincrónica
