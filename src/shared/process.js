@@ -10,7 +10,7 @@ async function Process(textUser, number) {
         let model = whatsAppModel.MessageText("Hola un gusto saludarte", number);
         models.push(model);
         
-    } else if(textUser.includes("Gracias")){
+    } else if(textUser.includes("gracias")){
         let model = whatsAppModel.MessageText("De nada fue un gusto servirte", number);
         models.push(model);
         let modelList = whatsAppModel.MessageList(number);
