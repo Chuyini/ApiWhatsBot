@@ -6,6 +6,7 @@ const app = express();
 
 const PORT = process.env.PORT || 3000;
 
+
 // Middleware para parsear JSON
 app.use(express.json());
 
@@ -21,4 +22,6 @@ app.use((err, req, res, next) => {
 // Iniciar el servidor
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
+    console.log("OpenAI API Key:", process.env.OPENAI_API_KEY);
+
 });
