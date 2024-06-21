@@ -12,6 +12,6 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.19.2",
-    "openai": "^3.0.0"
+    "openai": "^4.52.0"
   }
 }
