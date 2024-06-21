@@ -10,7 +10,7 @@ async function Process(textUser, number) {
 
     const resultChatGPT = await chatGPTService.GetMessageChatGPT(textUser);
 
-
+//ok
     if (resultChatGPT != null) {
 
         let model = whatsAppModel.MessageText(resultChatGPT,number);
