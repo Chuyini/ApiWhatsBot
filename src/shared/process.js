@@ -1,10 +1,26 @@
 const whatsAppModel = require("../shared/modelsWhatsApp");
 const whatsAppService = require("../service/whatsappService");
+const chatGPTService = require("../service/chatGPT-service");
+
 
 async function Process(textUser, number) {
     textUser = textUser.toLowerCase(); // Convierte el texto en minúsculas
     let models = []; // Arreglo de modelos
 
+
+    const resultChatGPT = await chatGPTService.GetMessageChatGPT(textUser);
+
+
+    if (resultChatGPT != null) {
+
+        let model = whatsAppModel.MessageText(resultChatGPT,number);
+        models.push(model);
+    }else{
+
+        let model = whatsAppModel.MessageText("Hubo un error con la respuesta",number);
+        models.push(model);
+    }
+    /*
     if (textUser.includes("hola")) {
         // comprar
         let model = whatsAppModel.MessageText("Hola un gusto saludarte", number);
@@ -52,8 +68,8 @@ async function Process(textUser, number) {
     }else{
         let model = whatsAppModel.MessageText("No te entiendo", number);
         models.push(model);
+    }*/
 
-    }
 
     try {
         for (const element of models) {
@@ -65,6 +81,7 @@ async function Process(textUser, number) {
     } catch (error) {
         console.error("Error sending message:", error);
     }
+
 }
 
 module.exports = {

@@ -17,7 +17,7 @@ function SendMessageWhatsApp(data) {
             let responseData = '';
 
             console.log(`Status Code: ${res.statusCode}`);
-
+        
             res.on("data", chunk => {
                 responseData += chunk;
                 process.stdout.write(chunk);
