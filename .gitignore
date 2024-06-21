@@ -4,7 +4,7 @@
 # Ignore node_modules directory
 node_modules
 
-# Ignore other potential files/directories
+# Ignore other potential files/directoriess
 .DS_Store
 .idea
 .vscode
