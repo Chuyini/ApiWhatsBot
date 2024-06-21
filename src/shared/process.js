@@ -68,7 +68,7 @@ async function Process(textUser, number) {
     }else{
         let model = whatsAppModel.MessageText("No te entiendo", number);
         models.push(model);
-    }*/
+    }
 
 
     try {
@@ -80,7 +80,7 @@ async function Process(textUser, number) {
         }
     } catch (error) {
         console.error("Error sending message:", error);
-    }
+    }*/
 
 }
 
