@@ -1,2 +1,11 @@
 # Ignore environment variable files
 .env
+
+# Ignore node_modules directory
+node_modules
+
+# Ignore other potential files/directories
+.DS_Store
+.idea
+.vscode
+dist
