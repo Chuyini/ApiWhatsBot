@@ -1,9 +1,15 @@
 const express = require("express");
-require('dotenv').config();
+
+//l
 const apiRouter = require("./routes/routes");
 
 const app = express();
 
+if(process.env.NODE_ENV != 'production'){
+
+    require("dotenv").config();
+
+}
 const PORT = process.env.PORT || 3000;
 
 
@@ -22,6 +28,7 @@ app.use((err, req, res, next) => {
 // Iniciar el servidor
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
-    console.log("OpenAI API Key:", process.env.OPENAI_API_KEY);
+    console.log("OpenAI API Key:", process.env.OPENAI_API_KEY
+    );
 
 });
