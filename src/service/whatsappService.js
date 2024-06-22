@@ -7,7 +7,7 @@ function SendMessageWhatsApp(data) {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "Authorization": "Bearer EAAGeKA2VNZBEBO4QRYJRofcoZBBF8opzbqrSnsqXm0MpaDqMvp53KRRn3euZBISAHeLb0wsqsSzCWnjayUSxOr0yVYaCGfKEnQxwkqSvUi0LuuRmiRYqonrHSdxZBv0LjDIsS1MfnnW1pyo9ejnUYDPTBpojLEt5ZBAgZCCbUQ9Eof1xnsr8h9d0b3bWY6b6aNqrOTZA7jZC5gKZApbZB0"
+            "Authorization": "Bearer "+process.env.WHATSAPP_API_KEY
         },
         timeout: 5000 // Timeout de 5 segundoss
     };
