@@ -6,6 +6,7 @@ const apiRouter = require("./routes/routes");
 const app = express();
 
 app.get('/favicon.ico', (req, res) => res.status(204).end());
+app.get('/favicon.png', (req, res) => res.status(204).end());
 
 
 if(process.env.NODE_ENV !== 'production'){
