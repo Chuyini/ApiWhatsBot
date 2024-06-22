@@ -4,7 +4,7 @@ const express = require("express");
 const apiRouter = require("./routes/routes");
 
 const app = express();
-
+app.use(bodyParser.urlencoded({ extended: true }));
 app.get('/favicon.ico', (req, res) => res.status(204).end());
 app.get('/favicon.png', (req, res) => res.status(204).end());
 
