@@ -9,7 +9,7 @@ function SendMessageWhatsApp(data) {
             "Content-Type": "application/json",
             "Authorization": "Bearer EAAGeKA2VNZBEBO4QRYJRofcoZBBF8opzbqrSnsqXm0MpaDqMvp53KRRn3euZBISAHeLb0wsqsSzCWnjayUSxOr0yVYaCGfKEnQxwkqSvUi0LuuRmiRYqonrHSdxZBv0LjDIsS1MfnnW1pyo9ejnUYDPTBpojLEt5ZBAgZCCbUQ9Eof1xnsr8h9d0b3bWY6b6aNqrOTZA7jZC5gKZApbZB0"
         },
-        timeout: 5000 // Timeout de 5 segundos
+        timeout: 5000 // Timeout de 5 segundoss
     };
 
     return new Promise((resolve, reject) => {
