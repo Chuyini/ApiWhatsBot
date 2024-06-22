@@ -1,33 +1,51 @@
-if (process.env.NODE_ENV != 'production') {
-    require("dotenv").config();
-}
+const https = require("https");
 
-const OpenAI = require("openai");
+function SendMessageWhatsApp(data) {
+    const options = {
+        host: "graph.facebook.com",
+        path: "/v19.0/321806707686253/messages",
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer EAAGeKA2VNZBEBO4QRYJRofcoZBBF8opzbqrSnsqXm0MpaDqMvp53KRRn3euZBISAHeLb0wsqsSzCWnjayUSxOr0yVYaCGfKEnQxwkqSvUi0LuuRmiRYqonrHSdxZBv0LjDIsS1MfnnW1pyo9ejnUYDPTBpojLEt5ZBAgZCCbUQ9Eof1xnsr8h9d0b3bWY6b6aNqrOTZA7jZC5gKZApbZB0"
+        },
+        timeout: 5000 // Timeout de 5 segundoss
+    };
 
-const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY
-});
+    return new Promise((resolve, reject) => {
+        const req = https.request(options, res => {
+            let responseData = '';
 
-async function GetMessageChatGPT(text) {
-    try {
-        const response = await openai.chat.completions.create({
-            model: "gpt-3.5-turbo",
-            messages: [{
-                role: "user",
-                content: text
-            }]
+            console.log(`Status Code: ${res.statusCode}`);
+        
+            res.on("data", chunk => {
+                responseData += chunk;
+                process.stdout.write(chunk);
+            });
+
+            res.on("end", () => {
+                resolve({
+                    statusCode: res.statusCode,
+                    responseData
+                });
+            });
         });
 
-        // Procesa la respuesta en lugar de intentar iterar sobre ella
-        let responseText = response.choices[0].message.content;
+        req.on("error", error => {
+            reject(error);
+        });
 
-        return responseText;
-    } catch (error) {
-        console.error("Error fetching response from OpenAI:", error);
-        return null;
-    }
+        req.on("timeout", () => {
+            req.abort();
+            reject(new Error("Request timed out"));
+        });
+
+        console.log("Data being sent:", data);
+        req.write(data);
+        req.end();
+    });
 }
 
 module.exports = {
-    GetMessageChatGPT
+    SendMessageWhatsApp
 };

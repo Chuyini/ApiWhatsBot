@@ -1,4 +1,4 @@
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV != 'production') {
     require("dotenv").config();
 }
 
@@ -12,13 +12,14 @@ async function GetMessageChatGPT(text) {
     try {
         const response = await openai.chat.completions.create({
             model: "gpt-3.5-turbo",
-            messages: [{ role: "user", content: text }],
+            messages: [{
+                role: "user",
+                content: text
+            }]
         });
 
-        let responseText = '';
-        for await (const chunk of response) {
-            responseText += chunk.choices[0]?.delta?.content || "";
-        }
+        // Procesa la respuesta correctamente
+        let responseText = response.choices[0].message.content;
 
         return responseText;
     } catch (error) {
