@@ -13,7 +13,10 @@ async function Process(textUser, number) {
 //ok
     if (resultChatGPT != null) {
 
-        let model = whatsAppModel.MessageText(resultChatGPT,number);
+        //let model = whatsAppModel.MessageText(resultChatGPT,number);
+        //models.push(model);
+
+        let model = whatsAppModel.MessageText(textUser,number);
         models.push(model);
     }else{
 
