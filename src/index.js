@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 const apiRouter = require("./routes/routes");
 
 const app = express();
+
+//este de aqui interpreta el formato 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.get('/favicon.ico', (req, res) => res.status(204).end());
 app.get('/favicon.png', (req, res) => res.status(204).end());
