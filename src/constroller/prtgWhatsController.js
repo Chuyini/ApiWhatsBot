@@ -46,7 +46,9 @@ const Recived = async (req = request, res = response) => {
 
 
             console.log("Some required fields are undefined. No message sent.");
-            return res.status(400).send("Some required fields are undefined.");
+            return res.status(200).send("----------aqui------------------------");
+
+           
 
         }
 
