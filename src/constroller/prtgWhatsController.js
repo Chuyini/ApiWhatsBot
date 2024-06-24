@@ -1,8 +1,5 @@
-const {
-    request,
-    response
-} = require("express");
-const processMessage = require("../shared/process");
+const { request, response } = require("express");
+const processMessage = require("../shared/processToPrtg");
 
 const Recived = async (req = request, res = response) => {
     try {
@@ -21,42 +18,27 @@ const Recived = async (req = request, res = response) => {
         const deviceName = sensorData.device;
         const status = sensorData.status;
         const deviceIP = sensorData.deviceip;
-
+        const deviceURL = sensorData.deviceurl;
+        const sensorURL = sensorData.sensorurl;
 
         // Crear el mensaje a enviar
+        const text = `Sensor Alert:
+        Sensor: ${sensorName}
+        Device: ${deviceName}
+        Status: ${status}
+        IP: ${deviceIP}
+        Device URL: ${deviceURL}
+        Sensor URL: ${sensorURL}`;
 
-        if (sensorName != undefined && deviceName != undefined && status != undefined && deviceIP != undefined) {
+        // Reemplaza con el número de teléfono de destino
+        const number = "524401050937";
 
-            const text = `Sensor Alert:
-            Sensor: ${sensorName}
-            Device: ${deviceName}
-            Status: ${status}
-            IP: ${deviceIP}`;
+        console.log(`Sending message: "${text}" to number: ${number}`);
 
-            // Reemplaza con el número de teléfono de destino
-            const number = "524401050937";
+        // Llama a la función Process de manera asincrónica
+        await processMessage.ProcessToPrtg(text, number);
 
-            console.log(`Sending message: "${text}" to number: ${number}`);
-
-            // Llama a la función Process de manera asincrónica
-            await processMessage.Process(text, number);
-            return res.status(200).send("EVENT_RECEIVED");
-
-        } else {
-
-
-            console.log("Some required fields are undefined. No message sent.");
-            return res.status(200).send("----------aqui------------------------");
-
-           
-
-        }
-
-
-
-
-
-
+        return res.status(200).send("EVENT_RECEIVED");
     } catch (error) {
         console.error("Error in Recived function:", error);
         return res.status(500).send("Error processing event.");
