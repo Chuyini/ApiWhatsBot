@@ -23,7 +23,8 @@ const Recived = async (req = request, res = response) => {
         console.log("Request body:", JSON.stringify(req.body, null, 2));
 
         const entry = req.body.entry && req.body.entry[0];
-        const sensorData = req.body.sensor;
+        const sensorData = req.body;
+        console.log(req.body);
 
         if (!sensorData) {
             console.error("No sensor data found in request.");
