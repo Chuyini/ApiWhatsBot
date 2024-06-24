@@ -25,7 +25,7 @@ const Recived = async (req = request, res = response) => {
 
         // Crear el mensaje a enviar
 
-        if (sensorName && deviceName && status && deviceIP) {
+        if (sensorName != undefined && deviceName != undefined && status != undefined && deviceIP != undefined) {
 
             const text = `Sensor Alert:
             Sensor: ${sensorName}
@@ -33,7 +33,7 @@ const Recived = async (req = request, res = response) => {
             Status: ${status}
             IP: ${deviceIP}`;
 
-        }else{
+        } else {
 
             return res.status(500).send("incorrect data");
 
