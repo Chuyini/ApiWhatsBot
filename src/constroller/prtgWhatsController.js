@@ -1,4 +1,7 @@
-const { request, response } = require("express");
+const {
+    request,
+    response
+} = require("express");
 const processMessage = require("../shared/process");
 
 const Recived = async (req = request, res = response) => {
@@ -18,15 +21,25 @@ const Recived = async (req = request, res = response) => {
         const deviceName = sensorData.device;
         const status = sensorData.status;
         const deviceIP = sensorData.deviceip;
-        
+
 
         // Crear el mensaje a enviar
-        const text = `Sensor Alert:
-        Sensor: ${sensorName}
-        Device: ${deviceName}
-        Status: ${status}
-        IP: ${deviceIP}`;
-        
+
+        if (sensorName && deviceName && status && deviceIP) {
+
+            const text = `Sensor Alert:
+            Sensor: ${sensorName}
+            Device: ${deviceName}
+            Status: ${status}
+            IP: ${deviceIP}`;
+
+        }else{
+
+            return res.status(500).send("incorrect data");
+
+        }
+
+
 
         // Reemplaza con el número de teléfono de destino
         const number = "524401050937";
@@ -46,5 +59,3 @@ const Recived = async (req = request, res = response) => {
 module.exports = {
     Recived
 };
-
-
