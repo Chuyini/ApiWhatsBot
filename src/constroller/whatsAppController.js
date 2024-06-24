@@ -23,6 +23,13 @@ const Recived = async (req = request, res = response) => {
         console.log("Request body:", JSON.stringify(req.body, null, 2));
 
         const entry = req.body.entry && req.body.entry[0];
+        const sensorData = req.body;
+        console.log(sensorData);
+
+        if (!sensorData) {
+            console.error("No sensor data found in request.");
+            return res.status(400).send("No sensor data found in request.");
+        }
         if (!entry) {
             console.error("No entry found in request.");
             return res.status(400).send("No entry found in request.");
