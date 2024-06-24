@@ -23,13 +23,6 @@ const Recived = async (req = request, res = response) => {
         console.log("Request body:", JSON.stringify(req.body, null, 2));
 
         const entry = req.body.entry && req.body.entry[0];
-        const sensorData = req.body;
-        console.log(req.body);
-
-        if (!sensorData) {
-            console.error("No sensor data found in request.");
-            return res.status(400).send("No sensor data found in request.");
-        }
         if (!entry) {
             console.error("No entry found in request.");
             return res.status(400).send("No entry found in request.");
@@ -55,7 +48,7 @@ const Recived = async (req = request, res = response) => {
             console.log(`Sending message: "El usuario dijo: ${text}" to number: ${number}`);
 
             // Llama a la función Process de manera asincrónica
-            await processMessage.Process(sensorData, number);//se tiene que esperar a que termine
+            await processMessage.Process(text, number);//se tiene que esperar a que termine
 
             return res.status(200).send("EVENT_RECEIVED");  
         } else if (statusObject && statusObject.length > 0) {
