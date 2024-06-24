@@ -22,13 +22,13 @@ const Recived = async (req = request, res = response) => {
         const sensorURL = sensorData.sensorurl;
 
         // Crear el mensaje a enviar
-        const text = `Sensor Alert:
-        Sensor: ${sensorName}
-        Device: ${deviceName}
-        Status: ${status}
-        IP: ${deviceIP}
-        Device URL: ${deviceURL}
-        Sensor URL: ${sensorURL}`;
+        const text = `
+        ${sensorName}
+        ${deviceName}
+        ${status}
+        ${deviceIP}
+        ${deviceURL}
+        ${sensorURL}`;
 
         // Reemplaza con el número de teléfono de destino
         const number = "524401050937";
@@ -36,7 +36,7 @@ const Recived = async (req = request, res = response) => {
         console.log(`Sending message: "${text}" to number: ${number}`);
 
         // Llama a la función Process de manera asincrónica
-        await processMessage.ProcessToPrtg(text, number);
+        await processMessage.Process(text, number);
 
         return res.status(200).send("EVENT_RECEIVED");
     } catch (error) {
