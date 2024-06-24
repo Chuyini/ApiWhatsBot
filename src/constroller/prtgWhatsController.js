@@ -33,24 +33,28 @@ const Recived = async (req = request, res = response) => {
             Status: ${status}
             IP: ${deviceIP}`;
 
+            // Reemplaza con el número de teléfono de destino
+            const number = "524401050937";
+
+            console.log(`Sending message: "${text}" to number: ${number}`);
+
+            // Llama a la función Process de manera asincrónica
+            await processMessage.Process(text, number);
+            return res.status(200).send("EVENT_RECEIVED");
+
         } else {
 
-            
-            return ;
+
+            console.log("Some required fields are undefined. No message sent.");
+            return res.status(400).send("Some required fields are undefined.");
 
         }
 
 
 
-        // Reemplaza con el número de teléfono de destino
-        const number = "524401050937";
 
-        console.log(`Sending message: "${text}" to number: ${number}`);
 
-        // Llama a la función Process de manera asincrónica
-        await processMessage.Process(text, number);
 
-        return res.status(200).send("EVENT_RECEIVED");
     } catch (error) {
         console.error("Error in Recived function:", error);
         return res.status(500).send("Error processing event.");
