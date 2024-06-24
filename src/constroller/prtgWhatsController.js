@@ -18,17 +18,15 @@ const Recived = async (req = request, res = response) => {
         const deviceName = sensorData.device;
         const status = sensorData.status;
         const deviceIP = sensorData.deviceip;
-        const deviceURL = sensorData.deviceurl;
-        const sensorURL = sensorData.sensorurl;
+        
 
         // Crear el mensaje a enviar
         const text = `Sensor Alert:
         Sensor: ${sensorName}
         Device: ${deviceName}
         Status: ${status}
-        IP: ${deviceIP}
-        Device URL: ${deviceURL}
-        Sensor URL: ${sensorURL}`;
+        IP: ${deviceIP}`;
+        
 
         // Reemplaza con el número de teléfono de destino
         const number = "524401050937";
