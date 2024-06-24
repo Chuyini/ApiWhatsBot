@@ -35,7 +35,8 @@ const Recived = async (req = request, res = response) => {
 
         } else {
 
-            return res.status(500).send("incorrect data");
+            
+            return ;
 
         }
 
