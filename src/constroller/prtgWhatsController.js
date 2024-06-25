@@ -12,23 +12,8 @@ const Recived = async (req = request, res = response) => {
             console.error("No sensor data found in request.");
             return res.status(400).send("No sensor data found in request.");
         }
-
-        // Obtener variables de la carga útil
-        const sensorName = sensorData.sensor;
-        const deviceName = sensorData.device;
-        const status = sensorData.status;
-        const deviceIP = sensorData.deviceip;
-        const deviceURL = sensorData.deviceurl;
-        const sensorURL = sensorData.sensorurl;
-
-        // Crear el mensaje a enviar
-        const text = `
-        ${sensorName}
-        ${deviceName}
-        ${status}
-        ${deviceIP}
-        ${deviceURL}
-        ${sensorURL}`;
+        // Extraer y asignar variables de la carga útil
+        
 
         // Reemplaza con el número de teléfono de destino
         const number = "524401050937";
@@ -36,7 +21,7 @@ const Recived = async (req = request, res = response) => {
         console.log(`Sending message: "${text}" to number: ${number}`);
 
         // Llama a la función Process de manera asincrónica
-        await processMessage.Process(text, number);
+        await processMessage.ProcessToPrtg(sensorData, number);
 
         return res.status(200).send("EVENT_RECEIVED");
     } catch (error) {
