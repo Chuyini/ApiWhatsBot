@@ -14,7 +14,7 @@ const Recived = async (req = request, res = response) => {
             return res.status(400).send("No sensor data found in request.");
         }
         // Extraer y asignar variables de la carga útil
-        const sensorInfo = sensorData.sensor;
+        const sensorInfo = sensorData.info;
        
 
         // Reemplaza con el número de teléfono de destino
@@ -23,7 +23,7 @@ const Recived = async (req = request, res = response) => {
         console.log(`Sending message: "${sensorInfo}" to number: ${number}`);
 
         // Llama a la función Process de manera asincrónica
-        await processMessageR.ProcessToPrtg("Si deberia", number);
+        await processMessageR.ProcessToPrtg(sensorInfo, number);
 
         return res.status(200).send("EVENT_RECEIVED");
     } catch (error) {
