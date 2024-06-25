@@ -23,7 +23,7 @@ const Recived = async (req = request, res = response) => {
         console.log(`Sending message: "${sensorInfo}" to number: ${number}`);
 
         // Llama a la función Process de manera asincrónica
-        await processMessageR.ProcessToPrtg("gola", number);
+        await processMessageR.ProcessToPrtg(sensorInfo, number);
 
         return res.status(200).send("EVENT_RECEIVED");
     } catch (error) {
