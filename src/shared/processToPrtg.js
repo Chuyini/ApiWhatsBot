@@ -23,6 +23,7 @@ async function ProcessToPrtg(textUser, number) {
         let model = whatsAppModel.MessageText("Hubo un error con la respuesta",number);
         models.push(model);
     }
+    
     /*
     if (textUser.includes("hola")) {
         // comprar
