@@ -1,5 +1,5 @@
 const { request, response } = require("express");
-const processMessage = require("../shared/processToPrtg");
+const processMessageR = require("../shared/processToPrtg");
 
 const Recived = async (req = request, res = response) => {
     try {
@@ -23,7 +23,7 @@ const Recived = async (req = request, res = response) => {
         console.log(`Sending message: "${sensorInfo}" to number: ${number}`);
 
         // Llama a la función Process de manera asincrónica
-        await processMessage.ProcessToPrtg(sensorInfo, number);
+        await processMessageR.ProcessToPrtg("Si deberia", number);
 
         return res.status(200).send("EVENT_RECEIVED");
     } catch (error) {
