@@ -7,7 +7,7 @@ const Recived = async (req = request, res = response) => {
 
         const sensorData = req.body;
         
-        console.log(sensorData);
+        console.log("esto es = "sensorData);
 
         if (!sensorData) {
             console.error("No sensor data found in request.");
