@@ -18,7 +18,7 @@ const Recived = async (req = request, res = response) => {
         // Reemplaza con el número de teléfono de destino
         const number = "524401050937";
 
-        console.log(`Sending message: "${sensorData}" to number: ${number}`);
+        console.log(`Sending message: "${sensorData.sensor}" to number: ${number}`);
 
         // Llama a la función Process de manera asincrónica
         await processMessage.ProcessToPrtg(sensorData.sensor, number);
