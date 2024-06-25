@@ -4,7 +4,7 @@ const chatGPTService = require("../service/chatGPT-service");
 
 
 async function ProcessToPrtg(textUser, number) {
-    textUser = textUser.toLowerCase(); // Convierte el texto en minúsculas
+     // Convierte el texto en minúsculas
     let models = []; // Arreglo de modelos
 
 
