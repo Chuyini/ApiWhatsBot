@@ -15,15 +15,15 @@ const Recived = async (req = request, res = response) => {
         }
         // Extraer y asignar variables de la carga útil
         const sensorInfo = sensorData.sensor;
-        const lines = sensorInfo.split('\r\n');
+       
 
         // Reemplaza con el número de teléfono de destino
         const number = "524401050937";
 
-        console.log(`Sending message: "${lines}" to number: ${number}`);
+        console.log(`Sending message: "${sensorInfo}" to number: ${number}`);
 
         // Llama a la función Process de manera asincrónica
-        await processMessage.ProcessToPrtg(lines, number);
+        await processMessage.ProcessToPrtg(sensorInfo, number);
 
         return res.status(200).send("EVENT_RECEIVED");
     } catch (error) {
