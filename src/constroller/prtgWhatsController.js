@@ -49,7 +49,7 @@ function buildInformation(sensorData) {
     let priority = sensorData.priority;
 
 
-    const id = extractIDNumber(device);
+    const id = extractNumbersAndText(company);
 
     console.log(id);
 
@@ -86,7 +86,7 @@ function buildInformation(sensorData) {
     if (id) {
 
 
-        linkUisp = "https://uisp.elpoderdeinternet.mx/crm/client/" + id;
+        linkUisp = "https://uisp.elpoderdeinternet.mx/crm/client/service/" + id;
 
     } else {
 
@@ -111,15 +111,15 @@ function buildInformation(sensorData) {
 }
 
 
-function extractIDNumber(text) {
-    // Utilizamos una expresión regular para encontrar el patrón "- ID-XXXX"
-    const regex = /- ID-(\d+)/;
+function extractNumbersAndText(text) {
+    const match = text.match(/^(\d+)\s*-\s*(.*)/);
 
-    // Ejecutamos la expresión regular en el texto proporcionado y extraemos el grupo de captura
-    const match = regex.exec(text);
-
-    // Si se encuentra una coincidencia, devolvemos el número de ID encontrado; de lo contrario, devolvemos null
-    return match ? match[1] : null;
+    if (match) {
+        return match[1];
+    
+    } else {
+        return null; // Devuelve null si no se encuentran coincidencias
+    }
 }
 
 
