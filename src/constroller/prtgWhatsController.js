@@ -90,7 +90,7 @@ function buildInformation(sensorData) {
     if (id) {
 
 
-        linkUisp = "https://uisp.elpoderdeinternet.mx/crm/client/" + id;
+        linkUisp = "https://uisp.elpoderdeinternet.mx/crm/client/service/" + id;
 
     } else {
 
