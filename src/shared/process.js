@@ -9,6 +9,7 @@ async function Process(textUser, number) {
 
 
    const resultChatGPT = await chatGPTService.GetMessageChatGPT(textUser);
+   console.log(resultChatGPT);
 
 //ok
     if (resultChatGPT= null) {
