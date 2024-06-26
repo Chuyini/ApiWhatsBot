@@ -52,6 +52,17 @@ function buildInformation(sensorData) {
     const status = sensorData.status;
     const time = sensorData.time;
     let priority = sensorData.priority;
+    let statusEmoji = "🔴";
+
+    let lowerCaseText = sensorData.status.toLowerCase();
+
+
+    if (lowerCaseText.includes("ok")) {
+
+        statusEmoji = "🟢";
+    }
+
+
 
 
     const id = extractNumbersAndText(company);
@@ -100,7 +111,7 @@ function buildInformation(sensorData) {
     }
 
 
-    const text = `Sensor Alert:\nEMPRESA: *${company}*\n\nDISPOSITIVO: *${device}*\n\nESTADO: *${status}*\n\nIP: *${ip}* \n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}*\n\n*LINK UISP*: ${linkUisp}`
+    const text = `Sensor Alert:\n🏢EMPRESA: *${company}*\n\nDISPOSITIVO: *${device}*\n\nESTADO:${statusEmoji}*${status}*\n\nIP: 🌐*${ip}* \n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}*\n\n*🔗LINK UISP*: ${linkUisp}`
 
     return text;
 
