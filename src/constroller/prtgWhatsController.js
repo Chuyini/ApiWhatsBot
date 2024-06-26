@@ -17,14 +17,10 @@ const Recived = async (req = request, res = response) => {
             return res.status(400).send("No sensor data found in request.");
         }
         // Extraer y asignar variables de la carga útil
-
         //le daremos formato segun la informacion
-
-
         //concatenaremos los datos
 
         const sensorInfo = buildInformation(sensorData);
-
         // Reemplaza con el número de teléfono de destino
         const number = "524434629327";
 
@@ -90,7 +86,7 @@ function buildInformation(sensorData) {
     if (id) {
 
 
-        linkUisp = "https://uisp.elpoderdeinternet.mx/crm/client" + id;
+        linkUisp = "https://uisp.elpoderdeinternet.mx/crm/client/" + id;
 
     } else {
 
