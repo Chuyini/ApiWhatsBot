@@ -111,7 +111,7 @@ function buildInformation(sensorData) {
     }
 
 
-    const text = `Sensor Alert:\n🏢EMPRESA: *${company}*\n\nDISPOSITIVO: *${device}*\n\nESTADO:${statusEmoji}*${status}*\n\nIP: 🌐*${ip}* \n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}*\n\n*🔗LINK UISP*: ${linkUisp}`
+    const text = `Sensor Alert:\n🏢EMPRESA/LUGAR: *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji}ESTADO:*${status}*\n\n🌐IP: *${ip}* \n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}*\n\n*🔗LINK UISP*: ${linkUisp}`
 
     return text;
 
