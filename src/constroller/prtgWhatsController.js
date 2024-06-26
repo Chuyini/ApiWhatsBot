@@ -50,25 +50,50 @@ function buildInformation(sensorData) {
     const ip = sensorData.ip;
     const status = sensorData.status;
     const time = sensorData.time;
-    const priority = sensorData.priority;
+    let priority = sensorData.priority;
 
 
     const id = extractIDNumber(device);
+
+    console.log(id);
+
     let linkUisp;
+
+
+    switch (priority) {
+
+        case '*':
+            priority = "1";
+            break;
+        case '*':
+            priority = "2";
+            break;
+        case '*':
+            priority = "3";
+            break;
+        case '*':
+            priority = "4";
+            break;
+        case '*':
+            priority = "5 Máxima";
+            break;
+    }
+
+
 
     if (id) {
 
 
-         linkUisp = "https://uisp.elpoderdeinternet.mx/crm/client" + id;
+        linkUisp = "https://uisp.elpoderdeinternet.mx/crm/client" + id;
 
     } else {
 
-         linkUisp = "https://uisp.elpoderdeinternet.mx/crm";
+        linkUisp = "https://uisp.elpoderdeinternet.mx/crm";
 
     }
 
 
-    const text =  `Sensor Alert:\nEMPRESA: *${company}*\n\nDISPOSITIVO: ${device}\n\nESTADO: *${status}*\n\nIP: ${ip} \n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}*\n\n*LINK UISP*: ${linkUisp}`
+    const text = `Sensor Alert:\nEMPRESA: *${company}*\n\nDISPOSITIVO: ${device}\n\nESTADO: *${status}*\n\nIP: ${ip} \n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}*\n\n*LINK UISP*: ${linkUisp}`
 
     return text;
 
