@@ -22,13 +22,17 @@ const Recived = async (req = request, res = response) => {
 
         const sensorInfo = buildInformation(sensorData);
         // Reemplaza con el número de teléfono de destino
-        const number = "524434629327";
+        const number = "524434629327";//chuy personal
+        const number2 = "524401050937";//chuy trabajo
+        const number3 = "524442478574";//Ruben
+        
 
         //"524442478574"
 
         console.log(`Sending message: "${sensorInfo}" to number: ${number}`);
 
         // Llama a la función Process de manera asincrónica
+        await processMessageR.ProcessToPrtg(sensorInfo, number);
         await processMessageR.ProcessToPrtg(sensorInfo, number);
 
         return res.status(200).send("EVENT_RECEIVED");
@@ -86,7 +90,7 @@ function buildInformation(sensorData) {
     if (id) {
 
 
-        linkUisp = "https://uisp.elpoderdeinternet.mx/crm/client/service/" + id;
+        linkUisp = "https://uisp.elpoderdeinternet.mx/crm/client/" + id;
 
     } else {
 
