@@ -1,4 +1,7 @@
-const { request, response } = require("express");
+const {
+    request,
+    response
+} = require("express");
 const processMessageR = require("../shared/processToPrtg");
 
 const Recived = async (req = request, res = response) => {
@@ -6,16 +9,21 @@ const Recived = async (req = request, res = response) => {
         console.log("Request body:", JSON.stringify(req.body, null, 2));
 
         const sensorData = req.body;
-        
-        console.log("esto es = "+sensorData.sensor);
+
+        console.log("esto es = " + sensorData.sensor);
 
         if (!sensorData) {
             console.error("No sensor data found in request.");
             return res.status(400).send("No sensor data found in request.");
         }
         // Extraer y asignar variables de la carga útil
-        const sensorInfo = sensorData.info;
-       
+
+        //le daremos formato segun la informacion
+
+
+        //concatenaremos los datos
+
+        const sensorInfo = buildInformation(sensorData);
 
         // Reemplaza con el número de teléfono de destino
         const number = "524434629327";
@@ -33,6 +41,62 @@ const Recived = async (req = request, res = response) => {
         return res.status(500).send("Error processing event.");
     }
 };
+
+function buildInformation(sensorData) {
+
+
+    const company = sensorData.company;
+    const device = sensorData.device;
+    const ip = sensorData.ip;
+    const status = sensorData.status;
+    const time = sensorData.time;
+    const priority = sensorData.priority;
+
+
+    const id = extractIDNumber(device);
+    let linkUisp;
+
+    if (id) {
+
+
+         linkUisp = "https://uisp.elpoderdeinternet.mx/crm/client" + id;
+
+    } else {
+
+         linkUisp = "https://uisp.elpoderdeinternet.mx/crm";
+
+    }
+
+
+    const text =  `Sensor Alert:\n\t EMPRESA: ${company}\n\tDISPOSITIVO: ${device}\n\tESTADO: ${status}\n\tIP: ${ip} \n\tTIEMPO: ${time}\n\tPRIORIDAD: ${priority}\n\tLINK UISP: ${linkUisp}`
+
+    return text;
+
+
+
+
+
+
+
+
+
+
+}
+
+
+function extractIDNumber(text) {
+    // Utilizamos una expresión regular para encontrar el patrón "- ID-XXXX"
+    const regex = /- ID-(\d+)/;
+
+    // Ejecutamos la expresión regular en el texto proporcionado y extraemos el grupo de captura
+    const match = regex.exec(text);
+
+    // Si se encuentra una coincidencia, devolvemos el número de ID encontrado; de lo contrario, devolvemos null
+    return match ? match[1] : null;
+}
+
+
+
 
 module.exports = {
     Recived
