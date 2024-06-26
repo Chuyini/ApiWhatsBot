@@ -60,6 +60,7 @@ function buildInformation(sensorData) {
     let linkUisp;
 
 
+    console.log("prioridad: "+priority);
     switch (priority) {
 
         case '*':
