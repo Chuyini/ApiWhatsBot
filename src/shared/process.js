@@ -8,7 +8,7 @@ async function Process(textUser, number) {
     let models = []; // Arreglo de modelos
 
 
-   const resultChatGPT = await chatGPTService.GetMessageChatGPT(textUser);
+   let resultChatGPT = await chatGPTService.GetMessageChatGPT(textUser);
    console.log(resultChatGPT);
 
 //ok
