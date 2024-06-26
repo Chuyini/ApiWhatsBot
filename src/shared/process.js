@@ -8,7 +8,7 @@ async function Process(textUser, number) {
     let models = []; // Arreglo de modelos
 
 
-   let resultChatGPT = await chatGPTService.GetMessageChatGPT(textUser);
+   const resultChatGPT = await chatGPTService.GetMessageChatGPT(textUser);
    console.log(resultChatGPT);
 
 //ok
@@ -76,7 +76,7 @@ async function Process(textUser, number) {
 */
 
     try {
-        for (const element of models) {
+        for (let element of models) {
             const response = await whatsAppService.SendMessageWhatsApp(element);
             console.log("Message processed successfully.");
             console.log("Response from server:", response.statusCode, response.responseData);
