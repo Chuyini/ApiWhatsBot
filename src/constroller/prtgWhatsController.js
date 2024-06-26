@@ -22,10 +22,10 @@ const Recived = async (req = request, res = response) => {
 
         const sensorInfo = buildInformation(sensorData);
         // Reemplaza con el número de teléfono de destino
-        const number = "524434629327";//chuy personal
-        const number2 = "524401050937";//chuy trabajo
-        const number3 = "524442478574";//Ruben
-        
+        const number = "524434629327"; //chuy personal
+        const number2 = "524401050937"; //chuy trabajo
+        const number3 = "524442478574"; //Ruben
+
 
         //"524442478574"
 
@@ -82,7 +82,7 @@ function buildInformation(sensorData) {
             break;
         default:
             priority = "No se leyo la variable";
-                break;
+            break;
     }
 
 
@@ -90,7 +90,7 @@ function buildInformation(sensorData) {
     if (id) {
 
 
-        linkUisp = "https://uisp.elpoderdeinternet.mx/crm/client/service/" + id;
+        linkUisp = "https://uisp.elpoderdeinternet.mx/crm/client/" + id;
 
     } else {
 
@@ -120,7 +120,7 @@ function extractNumbersAndText(text) {
 
     if (match) {
         return match[1];
-    
+
     } else {
         return null; // Devuelve null si no se encuentran coincidencias
     }
