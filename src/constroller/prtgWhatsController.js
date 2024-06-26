@@ -63,19 +63,19 @@ function buildInformation(sensorData) {
     console.log("prioridad: "+priority);
     switch (priority) {
 
-        case '*':
+        case "*":
             priority = "Muy baja";
             break;
-        case '**':
+        case "**":
             priority = "Baja";
             break;
-        case '***':
+        case "***":
             priority = "Media";
             break;
-        case '****':
+        case "****":
             priority = "Alta";
             break;
-        case '*****':
+        case "*****":
             priority = "*MUY ALTA*";
             break;
     }
