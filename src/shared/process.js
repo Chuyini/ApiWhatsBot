@@ -8,16 +8,16 @@ async function Process(textUser, number) {
     let models = []; // Arreglo de modelos
 
 
-   // const resultChatGPT = await chatGPTService.GetMessageChatGPT(textUser);
+   const resultChatGPT = await chatGPTService.GetMessageChatGPT(textUser);
 
 //ok
-    if (/*resultChatGPT*/textUser != null) {
+    if (resultChatGPT= null) {
 
-        //let model = whatsAppModel.MessageText(resultChatGPT,number);
-        //models.push(model);
-
-        let model = whatsAppModel.MessageText(textUser,number);
+        let model = whatsAppModel.MessageText(resultChatGPT,number);
         models.push(model);
+
+       // let model = whatsAppModel.MessageText(textUser,number);
+        //models.push(model);
     }else{
 
         let model = whatsAppModel.MessageText("Hubo un error con la respuesta",number);
