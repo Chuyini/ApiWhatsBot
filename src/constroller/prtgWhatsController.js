@@ -63,19 +63,19 @@ function buildInformation(sensorData) {
     switch (priority) {
 
         case '*':
-            priority = "1";
+            priority = "Muy baja";
             break;
-        case '*':
-            priority = "2";
+        case '**':
+            priority = "Baja";
             break;
-        case '*':
-            priority = "3";
+        case '***':
+            priority = "Media";
             break;
-        case '*':
-            priority = "4";
+        case '****':
+            priority = "Alta";
             break;
-        case '*':
-            priority = "5 Máxima";
+        case '*****':
+            priority = "*MUY ALTA*";
             break;
     }
 
