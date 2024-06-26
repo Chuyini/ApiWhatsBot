@@ -1,7 +1,7 @@
 function MessageText(textResponse, number) {
 
 
-    console.log("hasta aquí bien v2");
+    console.log("hasta aquí bien v2 numero es "+number);
     let data = JSON.stringify({
         "messaging_product": "whatsapp",
         "recipient_type": "individual",
