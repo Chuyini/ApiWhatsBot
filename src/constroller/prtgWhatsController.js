@@ -33,7 +33,7 @@ const Recived = async (req = request, res = response) => {
 
         // Llama a la función Process de manera asincrónica
         await processMessageR.ProcessToPrtg(sensorInfo, number);
-        await processMessageR.ProcessToPrtg(sensorInfo, number);
+        await processMessageR.ProcessToPrtg(sensorInfo, number2);
 
         return res.status(200).send("EVENT_RECEIVED");
     } catch (error) {
