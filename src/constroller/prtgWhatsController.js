@@ -59,6 +59,8 @@ function buildInformation(sensorData) {
 
     let linkUisp;
 
+    priority = priority.trim();
+
 
     console.log("prioridad: " + priority);
     switch (priority) {
