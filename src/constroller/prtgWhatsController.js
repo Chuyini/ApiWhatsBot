@@ -18,7 +18,9 @@ const Recived = async (req = request, res = response) => {
        
 
         // Reemplaza con el número de teléfono de destino
-        const number = "524442478574";
+        const number = "524434629327";
+
+        //"524442478574"
 
         console.log(`Sending message: "${sensorInfo}" to number: ${number}`);
 
