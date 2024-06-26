@@ -60,7 +60,7 @@ function buildInformation(sensorData) {
     let linkUisp;
 
 
-    console.log("prioridad: "+priority);
+    console.log("prioridad: " + priority);
     switch (priority) {
 
         case "*":
@@ -78,6 +78,9 @@ function buildInformation(sensorData) {
         case "*****":
             priority = "*MUY ALTA*";
             break;
+        default:
+            priority = "No se leyo la variable";
+                break;
     }
 
 
