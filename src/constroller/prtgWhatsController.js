@@ -22,19 +22,20 @@ const Recived = async (req = request, res = response) => {
 
         const sensorInfo = buildInformation(sensorData);
         // Reemplaza con el número de teléfono de destino
-        const number = "524434629327"; //chuy personal
-        const number2 = "524401050937"; //chuy trabajo
-        const number3 = "524442478574"; //Ruben
-
+        const numbers = ["524434629327", "524401050937"];
 
         //"524442478574"
 
-        console.log(`Sending message: "${sensorInfo}" to number: ${number}`);
+        
 
-        // Llama a la función Process de manera asincrónica
-        await processMessageR.ProcessToPrtg(sensorInfo, number);
-        await processMessageR.ProcessToPrtg(sensorInfo, number2);
-        await processMessageR.ProcessToPrtg(sensorInfo, number3);
+        // Enviar el mensaje a cada número de manera asincrónica
+        const promises = numbers.map(number => {
+            console.log(`Sending message: "${sensorInfo}" to number: ${number}`);
+            return processMessageR.ProcessToPrtg(sensorInfo, number);
+        });
+
+        // Esperar a que todas las promesas se resuelvan
+        await Promise.all(promises);
 
         return res.status(200).send("EVENT_RECEIVED");
     } catch (error) {
