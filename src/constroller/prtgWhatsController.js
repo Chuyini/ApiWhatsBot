@@ -22,7 +22,7 @@ const Recived = async (req = request, res = response) => {
 
         const sensorInfo = buildInformation(sensorData);
         // Reemplaza con el número de teléfono de destino
-        const numbers = ["524401050937"];
+        const numbers = ["524401050937","524434629327"];
 
         //"524442478574"
 
