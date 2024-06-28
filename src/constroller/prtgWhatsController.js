@@ -21,12 +21,13 @@ const Recived = async (req = request, res = response) => {
         //concatenaremos los datos
 
         const sensorInfo = buildInformation(sensorData);
-        // Reemplaza con el número de teléfono de destino
-        const numbers = ["524401050937","524434629327", "524442478574"];
+
+        // Reemplazar con el número de teléfono de destino
+        const numbers = ["524401050937", "524434629327", "524442478574"];
 
         //"524442478574"
 
-        
+
 
         // Enviar el mensaje a cada número de manera asincrónica
         const promises = numbers.map(number => {
@@ -54,28 +55,36 @@ function buildInformation(sensorData) {
     const time = sensorData.time;
     let priority = sensorData.priority;
     let statusEmoji = "🔴";
-
+    let linkUisp;
     let lowerCaseText = sensorData.status.toLowerCase();
+
+
+
 
 
     if (lowerCaseText.includes("ok")) {
 
         statusEmoji = "🟢";
+
+    } else if (lowerCaseText.includes("advertencia")) {
+
+        statusEmoji = "⚠️🟢";
+
     }
 
 
-
-
     const id = extractNumbersAndText(company);
+    linkUisp= concatLink(id);
 
     console.log(id);
 
-    let linkUisp;
-
-    priority = priority.trim();
+    priority = priority.trim();//quita espacios de la cadena
 
 
-    console.log("prioridad: " + priority);
+    //la plantilla requiere un nivel de prioridad
+
+    
+
     switch (priority) {
 
         case "*":
@@ -98,32 +107,30 @@ function buildInformation(sensorData) {
             break;
     }
 
+    
 
 
-    if (id) {
 
+    if(sensorData.batery){
 
-        linkUisp = "https://uisp.elpoderdeinternet.mx/crm/client/" + id;
+        //PRTG de baterias
 
-    } else {
+            //alguna condicion si ya levanto
+        
 
-        linkUisp = "https://uisp.elpoderdeinternet.mx/crm";
+        const text = `BATERIAS URGENTE:\n🏢EMPRESA/LUGAR: *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji}ESTADO:*${status}*\n\n🌐IP: *${ip}* \n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}*`
+
+    }else{//PRTG de clientes
+
+                //alguna ccondicion si ya levanto
+
+                    //alguna condicion si es de comunicalo
+
+        const text = `Sensor Alert:\n🏢EMPRESA/LUGAR: *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji}ESTADO:*${status}*\n\n🌐IP: *${ip}* \n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}*\n\n*🔗LINK UISP*: ${linkUisp}`
 
     }
 
-
-    const text = `Sensor Alert:\n🏢EMPRESA/LUGAR: *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji}ESTADO:*${status}*\n\n🌐IP: *${ip}* \n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}*\n\n*🔗LINK UISP*: ${linkUisp}`
-
     return text;
-
-
-
-
-
-
-
-
-
 
 }
 
@@ -137,6 +144,20 @@ function extractNumbersAndText(text) {
     } else {
         return null; // Devuelve null si no se encuentran coincidencias
     }
+}
+
+function concatLink(id){
+    if (id) {
+
+
+        return linkUisp = "https://uisp.elpoderdeinternet.mx/crm/client/" + id;
+
+    } else {
+
+        return linkUisp = "https://uisp.elpoderdeinternet.mx/crm";
+
+    }
+
 }
 
 
