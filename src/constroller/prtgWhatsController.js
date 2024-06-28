@@ -119,7 +119,7 @@ function buildInformation(sensorData) {
         
 
         const text = `BATERIAS URGENTE:\n🏢EMPRESA/LUGAR: *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji}ESTADO:*${status}*\n\n🌐IP: *${ip}* \n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}*`
-
+        return text;
     }else{//PRTG de clientes
 
                 //alguna ccondicion si ya levanto
@@ -127,10 +127,10 @@ function buildInformation(sensorData) {
                     //alguna condicion si es de comunicalo
 
         const text = `Sensor Alert:\n🏢EMPRESA/LUGAR: *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji}ESTADO:*${status}*\n\n🌐IP: *${ip}* \n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}*\n\n*🔗LINK UISP*: ${linkUisp}`
-
+        return text;
     }
 
-    return text;
+    
 
 }
 

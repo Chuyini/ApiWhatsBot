@@ -8,7 +8,7 @@ function SendMessageWhatsApp(data) {
         headers: {
             "Content-Type": "application/json",
             "Authorization": "Bearer "+process.env.WHATSAPP_API_KEY
-        },
+        },      
         timeout: 5000 // Timeout de 5 segundoss
     };
 
