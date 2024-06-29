@@ -30,9 +30,15 @@ const Recived = async (req = request, res = response) => {
 
 
         // Enviar el mensaje a cada número de manera asincrónica
-        const promises = numbers.map(number => {
+        // Enviar el mensaje a cada número de manera asincrónica
+        const promises = numbers.map(async (number) => {
             console.log(`Sending message: "${sensorInfo}" to number: ${number}`);
-            return processMessageR.ProcessToPrtg(sensorInfo, number);
+            try {
+                await processMessageR.ProcessToPrtg(sensorInfo, number);
+                console.log(`Message sent to ${number}`);
+            } catch (error) {
+                console.error(`Failed to send message to ${number}:`, error);
+            }
         });
 
         // Esperar a que todas las promesas se resuelvan
@@ -74,16 +80,16 @@ function buildInformation(sensorData) {
 
 
     const id = extractNumbersAndText(company);
-    linkUisp= concatLink(id);
+    linkUisp = concatLink(id);
 
     console.log(id);
 
-    priority = priority.trim();//quita espacios de la cadena
+    priority = priority.trim(); //quita espacios de la cadena
 
 
     //la plantilla requiere un nivel de prioridad
 
-    
+
 
     switch (priority) {
 
@@ -107,30 +113,30 @@ function buildInformation(sensorData) {
             break;
     }
 
-    
 
 
 
-    if(sensorData.batery){
+
+    if (sensorData.batery) {
 
         //PRTG de baterias
 
-            //alguna condicion si ya levanto
-        
+        //alguna condicion si ya levanto
+
 
         const text = `BATERIAS URGENTE:\n🏢EMPRESA/LUGAR: *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji}ESTADO:*${status}*\n\n🌐IP: *${ip}* \n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}*`
         return text;
-    }else{//PRTG de clientes
+    } else { //PRTG de clientes
 
-                //alguna ccondicion si ya levanto
+        //alguna ccondicion si ya levanto
 
-                    //alguna condicion si es de comunicalo
+        //alguna condicion si es de comunicalo
 
         const text = `Sensor Alert:\n🏢EMPRESA/LUGAR: *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji}ESTADO:*${status}*\n\n🌐IP: *${ip}* \n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}*\n\n*🔗LINK UISP*: ${linkUisp}`
         return text;
     }
 
-    
+
 
 }
 
@@ -146,7 +152,7 @@ function extractNumbersAndText(text) {
     }
 }
 
-function concatLink(id){
+function concatLink(id) {
     if (id) {
 
 
