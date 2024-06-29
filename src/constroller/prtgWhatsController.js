@@ -32,12 +32,18 @@ const Recived = async (req = request, res = response) => {
         // Enviar el mensaje a cada número de manera asincrónica
         // Enviar el mensaje a cada número de manera asincrónica
         const promises = numbers.map(async (number) => {
+           
             console.log(`Sending message: "${sensorInfo}" to number: ${number}`);
+            console.log("*********************************\n\n");
             try {
                 await processMessageR.ProcessToPrtg(sensorInfo, number);
+                
                 console.log(`Message sent to ${number}`);
+                console.log("*********************************\n\n");
             } catch (error) {
+                
                 console.error(`Failed to send message to ${number}:`, error);
+                console.log("*********************************\n\n");
             }
         });
 
