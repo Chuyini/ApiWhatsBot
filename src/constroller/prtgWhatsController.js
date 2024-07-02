@@ -143,7 +143,7 @@ function buildInformation(sensorData) {
 
         if (lowerCaseComuni.includes("comunicalo") && !/^192\.168\./.test(lowerCaseIp)) {
 
-             text = `Sensor :\n🏢*${company}*\n\n~SERVICIO~: *${device}*\n\n${statusEmoji}ESTADO:*${status}*\n\n🌐IP: *${ip}* \n\nTIEMPO: *${time}*`;
+             text = `Sensor :\n🏢*${company}*\n\n_SERVICIO_: *${device}*\n\n${statusEmoji}ESTADO:*${status}*\n\n🌐IP: *${ip}* \n\nTIEMPO: *${time}*`;
 
 
 
