@@ -70,6 +70,7 @@ function buildInformation(sensorData) {
     let linkUisp;
     let lowerCaseText = sensorData.status.toLowerCase();
     let lowerCaseComuni = company.toLowerCase();
+    let lowerCaseIp = ip.toLowerCase();
 
 
 
@@ -139,7 +140,7 @@ function buildInformation(sensorData) {
 
         //alguna condicion si es de comunicalo
 
-        if (lowerCaseComuni.includes("comunicalo")) {
+        if (lowerCaseComuni.includes("comunicalo") && !/^192\.168\./.test(lowerCaseIp)) {
 
             const text = `Sensor :\n🏢*${company}*\n\n~SERVICIO~: *${device}*\n\n${statusEmoji}ESTADO:*${status}*\n\n🌐IP: *${ip}* \n\nTIEMPO: *${time}*`;
 
