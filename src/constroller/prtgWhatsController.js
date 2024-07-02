@@ -65,6 +65,7 @@ function buildInformation(sensorData) {
     const ip = sensorData.ip;
     const status = sensorData.status;
     const time = sensorData.time;
+    const message = sensorData.message;
     let priority = sensorData.priority;
     let statusEmoji = "🔴";
     let linkUisp;
@@ -133,7 +134,7 @@ function buildInformation(sensorData) {
         //alguna condicion si ya levanto
 
 
-         text = `BATERIAS URGENTE:\n🏢EMPRESA/LUGAR: *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji}ESTADO:*${status}*\n\n🌐IP: *${ip}* \n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}*`
+        text = `BATERIAS URGENTE:\n🏢EMPRESA/LUGAR: *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji}ESTADO:*${status}*\n\n🌐IP: *${ip}* \n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}* \n\n ${message}`
         return text;
     } else { //PRTG de clientes
 
@@ -143,13 +144,13 @@ function buildInformation(sensorData) {
 
         if (lowerCaseComuni.includes("comunicalo") && !/^192\.168\./.test(lowerCaseIp)) {
 
-             text = `Sensor :\n🏢*${company}*\n\n_SERVICIO_: *${device}*\n\n${statusEmoji}ESTADO:*${status}*\n\n🌐IP: *${ip}* \n\nTIEMPO: *${time}*`;
+            text = `Sensor :\n🏢*${company}*\n\n_SERVICIO_: *${device}*\n\n${statusEmoji}ESTADO:*${status}*\n\n🌐IP: *${ip}* \n\nTIEMPO: *${time}* \n\n ${message}`;
 
 
 
         } else {
 
-             text = `Sensor Alert:\n🏢EMPRESA/LUGAR: *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji}ESTADO:*${status}*\n\n🌐IP: *${ip}* \n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}*\n\n*🔗LINK UISP*: ${linkUisp}`
+            text = `Sensor Alert:\n🏢EMPRESA/LUGAR: *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji}ESTADO:*${status}*\n\n🌐IP: *${ip}* \n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}*\n\n* \n\n ${message} 🔗LINK UISP*: ${linkUisp}`
         }
 
 
