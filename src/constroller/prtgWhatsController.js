@@ -32,16 +32,16 @@ const Recived = async (req = request, res = response) => {
         // Enviar el mensaje a cada número de manera asincrónica
         // Enviar el mensaje a cada número de manera asincrónica
         const promises = numbers.map(async (number) => {
-           
+
             console.log(`Sending message: "${sensorInfo}" to number: ${number}`);
             console.log("*********************************\n\n");
             try {
                 await processMessageR.ProcessToPrtg(sensorInfo, number);
-                
+
                 console.log(`Message sent to ${number}`);
                 console.log("*********************************\n\n");
             } catch (error) {
-                
+
                 console.error(`Failed to send message to ${number}:`, error);
                 console.log("*********************************\n\n");
             }
@@ -69,6 +69,7 @@ function buildInformation(sensorData) {
     let statusEmoji = "🔴";
     let linkUisp;
     let lowerCaseText = sensorData.status.toLowerCase();
+    let lowerCaseComuni = company.toLowerCase();
 
 
 
@@ -138,7 +139,18 @@ function buildInformation(sensorData) {
 
         //alguna condicion si es de comunicalo
 
-        const text = `Sensor Alert:\n🏢EMPRESA/LUGAR: *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji}ESTADO:*${status}*\n\n🌐IP: *${ip}* \n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}*\n\n*🔗LINK UISP*: ${linkUisp}`
+        if (lowerCaseComuni.includes("comunicalo")) {
+
+            const text = `Sensor :\n🏢*${company}*\n\n~SERVICIO~: *${device}*\n\n${statusEmoji}ESTADO:*${status}*\n\n🌐IP: *${ip}* \n\nTIEMPO: *${time}*`;
+
+
+
+        } else {
+
+            const text = `Sensor Alert:\n🏢EMPRESA/LUGAR: *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji}ESTADO:*${status}*\n\n🌐IP: *${ip}* \n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}*\n\n*🔗LINK UISP*: ${linkUisp}`
+        }
+
+
         return text;
     }
 
