@@ -21,7 +21,7 @@ const Recived = async (req = request, res = response) => {
         //le daremos formato segun la informacion
         //concatenaremos los datos
 
-        const sensorInfo = buildInformation(sensorData);
+        const sensorInfo = await buildInformation(sensorData);
 
         // Reemplazar con el número de teléfono de destino
         const numbers = ["524401050937", "524434629327", "524442478574"];
@@ -58,7 +58,7 @@ const Recived = async (req = request, res = response) => {
     }
 };
 
-function buildInformation(sensorData) {
+async function buildInformation(sensorData) {
 
 
     const company = sensorData.company;
@@ -146,7 +146,7 @@ function buildInformation(sensorData) {
         return text;
     } else { //PRTG de clientes
 
-        AIresponse = chatGPTService.GetMessageChatGPT("Puedes resumir lo siguiente es para mandarlo como reporte solo pon algo sencillo :"+message)
+        AIresponse = await chatGPTService.GetMessageChatGPT("Puedes resumir lo siguiente es para mandarlo como reporte solo pon algo sencillo :"+message)
         //alguna ccondicion si ya levanto
 
         //alguna condicion si es de comunicalo
