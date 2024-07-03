@@ -9,7 +9,7 @@ function SendMessageWhatsApp(data) {
             "Content-Type": "application/json",
             "Authorization": "Bearer "+process.env.WHATSAPP_API_KEY
         },      
-        timeout: 10000 // Timeout de 5 segundoss
+        timeout: 100000 // Timeout de 5 segundoss
     };
 
     return new Promise((resolve, reject) => {
