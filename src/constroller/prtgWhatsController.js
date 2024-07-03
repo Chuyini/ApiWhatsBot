@@ -10,7 +10,7 @@ const messageQueue = new Queue('messageQueue');
 // Configurar Bottleneck para la limitación de velocidad
 const limiter = new Bottleneck({
     maxConcurrent: 1,  // Número máximo de tareas concurrentes
-    minTime: 600 // Intervalo mínimo de tiempo entre tareas (100 mensajes por minuto)
+    minTime: 600  // Intervalo mínimo de tiempo entre tareas (100 tareas por minuto)
 });
 
 // Función principal que maneja la recepción de datos del sensor
@@ -30,13 +30,8 @@ const Recived = async (req = request, res = response) => {
         // Construir la información del mensaje basada en los datos del sensor
         const sensorInfo = await buildInformation(sensorData);
 
-        // Lista de números de teléfono de destino
-        const numbers = ["524401050937", "524434629327", "524442478574"];
-
-        // Añadir mensajes a la cola
-        numbers.forEach(number => {
-            messageQueue.add({ sensorInfo, number });
-        });
+        // Añadir el mensaje a la cola
+        await messageQueue.add({ sensorInfo });
 
         return res.status(200).send("EVENT_RECEIVED");
     } catch (error) {
@@ -136,14 +131,18 @@ function concatLink(id) {
 
 // Procesar trabajos en la cola
 messageQueue.process(async (job) => {
-    const { sensorInfo, number } = job.data;
+    const { sensorInfo } = job.data;
+
+    const numbers = ["524401050937", "524434629327", "524442478574"];
 
     await limiter.schedule(async () => {
-        try {
-            await processMessageR.ProcessToPrtg(sensorInfo, number);
-            console.log(`Message sent to ${number}`);
-        } catch (error) {
-            console.error(`Failed to send message to ${number}:`, error);
+        for (const number of numbers) {
+            try {
+                await processMessageR.ProcessToPrtg(sensorInfo, number);
+                console.log(`Message sent to ${number}`);
+            } catch (error) {
+                console.error(`Failed to send message to ${number}:`, error);
+            }
         }
     });
 });
