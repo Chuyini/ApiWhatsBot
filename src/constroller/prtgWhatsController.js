@@ -33,6 +33,7 @@ const Recived = async (req = request, res = response) => {
         // Añadir el mensaje a la cola
         await messageQueue.add({ sensorInfo });
 
+        // Responder inmediatamente al cliente
         return res.status(200).send("EVENT_RECEIVED");
     } catch (error) {
         console.error("Error in Recived function:", error);
