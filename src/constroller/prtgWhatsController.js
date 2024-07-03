@@ -3,6 +3,7 @@ const {
     response
 } = require("express");
 const processMessageR = require("../shared/processToPrtg");
+const chatGPTService = require("../service/chatGPT-service");
 
 const Recived = async (req = request, res = response) => {
     try {
@@ -73,6 +74,7 @@ function buildInformation(sensorData) {
     let lowerCaseComuni = company.toLowerCase();
     let lowerCaseIp = ip.toLowerCase();
     let text;
+    let AIresponse;
 
 
 
@@ -144,19 +146,20 @@ function buildInformation(sensorData) {
         return text;
     } else { //PRTG de clientes
 
+        AIresponse = chatGPTService.GetMessageChatGPT("Puedes resumir lo siguiente es para mandarlo como reporte solo pon algo sencillo :"+message)
         //alguna ccondicion si ya levanto
 
         //alguna condicion si es de comunicalo
 
         if (lowerCaseComuni.includes("comunicalo") && !/^192\.168\./.test(lowerCaseIp)) {
 
-            text = `\n🏢 *${company}*\n\nSERVICIO: *${device}*\n\n${statusEmoji} ESTADO: *${status}*\n\n🌐 IP: *${ip}*\n\nTIEMPO: *${time}*\n\n${message}`;
+            text = `\n🏢 *${company}*\n\nSERVICIO: *${device}*\n\n${statusEmoji} ESTADO: *${status}*\n\n🌐 IP: *${ip}*\n\nTIEMPO: *${time}*\n\n${AIresponse}`;
 
 
 
         } else {
 
-            text = `Sensor Alert:\n🏢 EMPRESA/LUGAR: *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji} ESTADO: *${status}*\n\n🌐 IP: *${ip}*\n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}*\n\n${message}\n\n🔗 LINK UISP: *${linkUisp}*`;
+            text = `Sensor Alert:\n🏢 EMPRESA/LUGAR: *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji} ESTADO: *${status}*\n\n🌐 IP: *${ip}*\n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}*\n\n${AIresponse}\n\n🔗 LINK UISP: *${linkUisp}*`;
 
         }
 
