@@ -10,7 +10,7 @@ const messageQueue = new Queue('messageQueue');
 // Configurar Bottleneck para la limitación de velocidad
 const limiter = new Bottleneck({
     maxConcurrent: 1,  // Número máximo de tareas concurrentes
-    minTime: 60000 / 100  // Intervalo mínimo de tiempo entre tareas (100 mensajes por minuto)
+    minTime: 600 // Intervalo mínimo de tiempo entre tareas (100 mensajes por minuto)
 });
 
 // Función principal que maneja la recepción de datos del sensor
