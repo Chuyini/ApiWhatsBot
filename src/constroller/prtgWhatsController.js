@@ -134,6 +134,7 @@ function concatLink(id) {
 messageQueue.process(async (job) => {
     const { sensorInfo } = job.data;
 
+    console.log("Mandando informacion antes de: ");
     const numbers = ["524401050937", "524434629327", "524442478574"];
 
     await limiter.schedule(async () => {
