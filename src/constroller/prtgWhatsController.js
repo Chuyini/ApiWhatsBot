@@ -65,7 +65,7 @@ function buildInformation(sensorData) {
     const ip = sensorData.ip;
     const status = sensorData.status;
     const time = sensorData.time;
-    const message = sensorData.message;
+    let message = sensorData.message;
     let priority = sensorData.priority;
     let statusEmoji = "🔴";
     let linkUisp;
