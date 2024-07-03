@@ -139,6 +139,8 @@ messageQueue.process(async (job) => {
     await limiter.schedule(async () => {
         for (const number of numbers) {
             try {
+                console.log("Mandando informacion");
+
                 await processMessageR.ProcessToPrtg(sensorInfo, number);
                 console.log(`Message sent to ${number}`);
             } catch (error) {
