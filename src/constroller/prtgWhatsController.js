@@ -100,6 +100,12 @@ function buildInformation(sensorData) {
     //la plantilla requiere un nivel de prioridad
 
 
+    if (message == undefined || message == null) {
+
+        message ="Posible error de conexión";
+    }
+
+
 
     switch (priority) {
 
@@ -134,7 +140,7 @@ function buildInformation(sensorData) {
         //alguna condicion si ya levanto
 
 
-        text = `BATERIAS URGENTE:\n🏢EMPRESA/LUGAR: *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji}ESTADO:*${status}*\n\n🌐IP: *${ip}* \n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}* \n\n ${message}`
+        text = `BATERIAS URGENTE:\n🏢EMPRESA/LUGAR: *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji}ESTADO:*${status}*\n\n🌐IP: *${ip}* \n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}* `
         return text;
     } else { //PRTG de clientes
 
