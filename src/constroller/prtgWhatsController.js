@@ -97,6 +97,8 @@ async function buildInformation(sensorData) {
     let AIresponse;
     let idUispService = extractNumberFromCompany(company);
 
+    console.log(idUispService);
+
 
 
 
