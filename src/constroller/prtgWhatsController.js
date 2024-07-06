@@ -97,7 +97,7 @@ async function buildInformation(sensorData) {
     let AIresponse;
     let idUispService = extractNumberFromCompany(company);
 
-    console.log("El codigo de concatenacion"+idUispService);
+    console.log("El codigo de concatenacion "+idUispService);
 
 
 
