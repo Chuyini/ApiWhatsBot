@@ -23,21 +23,19 @@ const Recived = async (req = request, res = response) => {
 
         const sensorData = req.body;
 
-        console.log("esto es = " + sensorData.company);
-
         if (!sensorData) {
             console.error("No sensor data found in request.");
             return res.status(400).send("No sensor data found in request.");
         }
-        // Extraer y asignar variables de la carga útil
-        //le daremos formato segun la informacion
-        //concatenaremos los datos
+        //Extraer y asignar variables de la carga útil
+        //Le daremos formato segun la informacion
+        //Concatenaremos los datos
 
         const sensorInfo = await buildInformation(sensorData);
-        //metemos a la cola  el texto y aplicamos alguna funcion supongo
+        //Metemos a la cola  el texto y aplicamos alguna funcion supongo
 
 
-        // Reemplazar con el número de teléfono de destino
+        //Reemplazar con el número de teléfono de destino
         const numbers = ["524401050937", "524434629327", "524442478574"];
 
 
@@ -52,16 +50,12 @@ const Recived = async (req = request, res = response) => {
         //"524442478574"
 
 
-
-        // Enviar el mensaje a cada número de manera asincrónica
-        // Enviar el mensaje a cada número de manera asincrónica
+        //Enviar el mensaje a cada número de manera asincrónica
         const promises = numbers.map(async (number) => {
 
             console.log(`Sending message: "${sensorInfo}" to number: ${number}`);
             console.log("*********************************\n\n");
             try {
-
-
 
                 await processMessageR.ProcessToPrtg(sensorInfo, number);
 
@@ -74,7 +68,7 @@ const Recived = async (req = request, res = response) => {
             }
         });
 
-        // Esperar a que todas las promesas se resuelvan
+        //Esperar a que todas las promesas se resuelvan
         await Promise.all(promises);
 
         return res.status(200).send("EVENT_RECEIVED");
@@ -101,16 +95,17 @@ async function buildInformation(sensorData) {
     let lowerCaseIp = ip.toLowerCase();
     let text;
     let AIresponse;
+    let idUispService = extractNumberFromCompany(company);
 
 
 
 
 
-    if (lowerCaseText.includes("fallo finalizado")) {
+        if (lowerCaseText.includes("fallo finalizado")) {
 
-        statusEmoji = "🟢";
+            statusEmoji = "🟢";
 
-    } else if (lowerCaseText.includes("anterior :advertencia")) {
+        } else if (lowerCaseText.includes("anterior :advertencia")) {
 
         statusEmoji = "⚠️🟢";
 
@@ -118,10 +113,9 @@ async function buildInformation(sensorData) {
 
 
     const id = extractNumbersAndText(company);
-    linkUisp = concatLink(id);
+    linkUisp = concatLink(idUispService);
 
-    console.log(id);
-
+    
     priority = priority.trim(); //quita espacios de la cadena
 
 
@@ -226,6 +220,11 @@ function concatLink(id) {
 
 }
 
+function extractNumberFromCompany(company) {
+    const regex = /#(\d+)/;
+    const match = company.match(regex);
+    return match ? match[1] : null;
+}
 
 
 
