@@ -97,17 +97,17 @@ async function buildInformation(sensorData) {
     let AIresponse;
     let idUispService = extractNumberFromCompany(company);
 
-    console.log("El codigo de concatenacion "+idUispService);
+    console.log("\nEl codigo de concatenacion " + idUispService + "\n");
 
 
 
 
 
-        if (lowerCaseText.includes("fallo finalizado")) {
+    if (lowerCaseText.includes("fallo finalizado")) {
 
-            statusEmoji = "🟢";
+        statusEmoji = "🟢";
 
-        } else if (lowerCaseText.includes("anterior :advertencia")) {
+    } else if (lowerCaseText.includes("anterior :advertencia")) {
 
         statusEmoji = "⚠️🟢";
 
@@ -117,7 +117,7 @@ async function buildInformation(sensorData) {
     const id = extractNumbersAndText(company);
     linkUisp = concatLink(idUispService);
 
-    
+
     priority = priority.trim(); //quita espacios de la cadena
 
 
