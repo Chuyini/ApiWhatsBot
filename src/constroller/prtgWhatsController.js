@@ -47,7 +47,7 @@ const Recived = async (req = request, res = response) => {
         });
 
 
-        //"524442478574"
+        
 
 
         //Enviar el mensaje a cada número de manera asincrónica
@@ -97,7 +97,7 @@ async function buildInformation(sensorData) {
     let AIresponse;
     let idUispService = extractNumberFromCompany(company);
 
-    console.log("\n 🔴El codigo de concatenacion " + idUispService + "\n");
+    console.log("\n 🔴El codigo de concatenacion \n");
 
 
 
