@@ -19,7 +19,7 @@ const limiter = new Bottleneck({
 
 const Recived = async (req = request, res = response) => {
     try {
-        console.log("Request body:", JSON.stringify(req.body, null, 2));
+        //console.log("Request body:", JSON.stringify(req.body, null, 2));
 
         const sensorData = req.body;
 
