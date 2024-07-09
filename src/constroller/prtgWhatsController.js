@@ -36,7 +36,7 @@ const Recived = async (req = request, res = response) => {
 
 
         //Reemplazar con el número de teléfono de destino
-        const numbers = ["524401050937", "524434629327", "524446831317"];
+        const numbers = ["524401050937", "524434629327", "524442478574"];
 
 
         numbers.forEach(number => {
