@@ -74,7 +74,9 @@ const Recived = async (req = request, res = response) => {
 function GetTextUser(message) {
     const typeMessage = message.type;
 
-    console.log("EL TIPO DE MENSAJE ES: "+typeMessage);
+    console.log("EL TIPO DE MENSAJE ES: " + typeMessage);
+    console.log("EL MENSAJE COMPLETO ES: ", JSON.stringify(message, null, 2));
+
     if (typeMessage === "text") {
         return message.text.body;
     } else if (typeMessage === "interactive") {
@@ -86,14 +88,14 @@ function GetTextUser(message) {
         } else if (typeInteractive === "list_reply") {
             return interactiveObject.list_reply.title;
         }
-    }else if(typeMessage == "button"){
-
-        console.log("EL MENSAJE BUTTON ES :"+message.buttton.title);
-
-
+    } else if (typeMessage === "button") {
+        console.log("EL MENSAJE BUTTON ES: " + message.button.text);
+        return message.button.text;
     }
-    return message;
+
+    return "Tipo de mensaje no reconocido";
 }
+
 
 module.exports = {
     VerifyToken,
