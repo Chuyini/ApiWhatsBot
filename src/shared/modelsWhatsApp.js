@@ -1,7 +1,7 @@
 function MessageText(textResponse, number) {
 
 
-    console.log("hasta aquí bien v2 numero es "+number);
+    console.log("hasta aquí bien v2 numero es " + number);
     let data = JSON.stringify({
         "messaging_product": "whatsapp",
         "recipient_type": "individual",
@@ -178,9 +178,42 @@ function MessageLocation(number) { //lo vamos a dejar solo para location
 }
 
 
-function TemplateContinueConversation(number){
+function TemplateContinueConversation(number) {
+
+    let data = JSON.stringify({
+        "messaging_product": "whatsapp",
+        "recipient_type": "individual",
+        "to": number,
+        "type": "template",
+        "template": {
+            "name": "continue",
+            "language": {
+                "code": "en_US"
+            }
+        }
+    });
+
+    return data;
+}
 
 
+
+function TemplateWelcome(number) {
+
+    let data = JSON.stringify({
+        "messaging_product": "whatsapp",
+        "recipient_type": "individual",
+        "to": number,
+        "type": "template",
+        "template": {
+            "name": "continue",
+            "language": {
+                "code": "en_US"
+            }
+        }
+    });
+
+    return data;
 
 
 
@@ -194,5 +227,6 @@ module.exports = {
     MessageList,
     MessageComprar,
     MessageVender,
-    MessageLocation
+    MessageLocation,
+    TemplateContinueConversation
 }

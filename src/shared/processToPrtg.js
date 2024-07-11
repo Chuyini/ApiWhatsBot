@@ -4,26 +4,36 @@ const chatGPTService = require("../service/chatGPT-service");
 
 
 async function ProcessToPrtg(textUser, number) {
-     // Convierte el texto en minúsculas
+    // Convierte el texto en minúsculas
     let models = []; // Arreglo de modelos
 
 
-   // const resultChatGPT = await chatGPTService.GetMessageChatGPT(textUser);
+    const now = new Date();
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
 
-//ok
-    if (/*resultChatGPT*/textUser != null) {
+
+    // const resultChatGPT = await chatGPTService.GetMessageChatGPT(textUser);
+
+    //ok
+    if ( /*resultChatGPT*/ textUser != null && hours != 6) {
 
         //let model = whatsAppModel.MessageText(resultChatGPT,number);
         //models.push(model);
 
-        let model = whatsAppModel.MessageText(textUser,number);
+        let model = whatsAppModel.MessageText(textUser, number);
         models.push(model);
-    }else{
+    } else if (textUser != null) {
 
-        let model = whatsAppModel.MessageText("Hubo un error con la respuesta",number);
+        let model = whatsAppModel.TemplateContinueConversation(number);
+        models.push(model);
+
+
+    } else {
+        let model = whatsAppModel.MessageText("Hubo un error con la respuesta", number);
         models.push(model);
     }
-    
+
     /*
     if (textUser.includes("hola")) {
         // comprar
