@@ -178,6 +178,16 @@ function MessageLocation(number) { //lo vamos a dejar solo para location
 }
 
 
+function TemplateContinueConversation(number){
+
+
+
+
+
+}
+
+
+
 
 module.exports = {
     MessageText,

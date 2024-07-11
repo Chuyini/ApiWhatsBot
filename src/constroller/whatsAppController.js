@@ -73,6 +73,8 @@ const Recived = async (req = request, res = response) => {
 
 function GetTextUser(message) {
     const typeMessage = message.type;
+
+    console.log("EL TIPO DE MENSAJE ES: "+typeMessage);
     if (typeMessage === "text") {
         return message.text.body;
     } else if (typeMessage === "interactive") {
