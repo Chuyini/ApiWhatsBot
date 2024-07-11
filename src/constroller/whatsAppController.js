@@ -86,6 +86,11 @@ function GetTextUser(message) {
         } else if (typeInteractive === "list_reply") {
             return interactiveObject.list_reply.title;
         }
+    }else if(typeMessage === "button"){
+
+        console.log("EL MENSAJE BUTTON ES :"+message.buttton.title);
+
+
     }
     return message;
 }
