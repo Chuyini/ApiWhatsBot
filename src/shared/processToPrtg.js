@@ -16,18 +16,14 @@ async function ProcessToPrtg(textUser, number) {
     // const resultChatGPT = await chatGPTService.GetMessageChatGPT(textUser);
 
     //ok
-    if ( /*resultChatGPT*/ textUser != null && hours != 6) {
+    if ( /*resultChatGPT*/ textUser != null ) {
 
         //let model = whatsAppModel.MessageText(resultChatGPT,number);
         //models.push(model);
 
         let model = whatsAppModel.MessageText(textUser, number);
         models.push(model);
-    } else if (textUser != null) {
-
-        let model = whatsAppModel.TemplateContinueConversation(number);
-        models.push(model);
-
+    
 
     } else {
         let model = whatsAppModel.MessageText("Hubo un error con la respuesta", number);
