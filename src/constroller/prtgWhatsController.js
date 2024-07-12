@@ -118,6 +118,7 @@ async function buildInformation(sensorData) {
     if (sensorData.batery) {
         text = `BATERIAS URGENTE:\n🏢EMPRESA/LUGAR: *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji}ESTADO:*${status}*\n\n🌐IP: *${ip}* \n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}* `;
         numbers.push("524434629327");
+        numbers.push("524442478772");
         return {
             text,
             numbers
