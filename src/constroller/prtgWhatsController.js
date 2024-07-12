@@ -18,7 +18,7 @@ const limiter = new Bottleneck({
 });
 
 const Recived = async (req = request, res = response) => {
-    setInterval(checkTimeAndGreet, 60000);
+   
     try {
         const sensorData = req.body;
 
