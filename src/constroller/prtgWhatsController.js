@@ -78,7 +78,7 @@ async function buildInformation(sensorData) {
     let AIresponse;
     let idUispService = extractNumberFromCompany(company);
     const numbers = ["524401050937", "524442478574"];
-    console.log("\n 🔴El codigo de concatenacion \n");
+    console.log("\n 🔴El codigo de concatenacion, la variable es:  \n"+priority);
 
     if (lowerCaseText.includes("fallo finalizado")) {
         statusEmoji = "🟢";
@@ -117,7 +117,7 @@ async function buildInformation(sensorData) {
 
     if (sensorData.batery) {
         text = `BATERIAS URGENTE:\n🏢EMPRESA/LUGAR: *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji}ESTADO:*${status}*\n\n🌐IP: *${ip}* \n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}* `;
-        numbers.push("524434629327");
+        numbers.push("524434629327");//yo
         numbers.push("524442478772");
         numbers.push("524441184908");
         return {
