@@ -81,7 +81,7 @@ async function buildInformation(sensorData) {
     const numbers = ["524401050937", "524442478574"];
 
     if (comments != undefined) {
-        console.log(comments);
+        console.log("Probando el console log");
     } else {
         console.log("al parecer es NULL");
 
