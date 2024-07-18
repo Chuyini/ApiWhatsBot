@@ -82,6 +82,7 @@ async function buildInformation(sensorData) {
 
     if (comments != undefined) {
         console.log("Probando el console log");
+        console.log("La variable es: " + comments);
     } else {
         console.log("al parecer es NULL");
 
