@@ -18,7 +18,7 @@ const limiter = new Bottleneck({
 });
 
 const Recived = async (req = request, res = response) => {
-   
+
     try {
         const sensorData = req.body;
 
@@ -67,6 +67,7 @@ async function buildInformation(sensorData) {
     const ip = sensorData.ip;
     const status = sensorData.status;
     const time = sensorData.time;
+    const comments = sensorData.comments
     let message = sensorData.message;
     let priority = sensorData.priority;
     let statusEmoji = "🔴";
@@ -78,13 +79,13 @@ async function buildInformation(sensorData) {
     let AIresponse;
     let idUispService = extractNumberFromCompany(company);
     const numbers = ["524401050937", "524442478574"];
-    if(priority == null){
-        console.log("\n 🔴El codigo de concatenacion, la variable es:  \n"+priority);
-    }else{
+    if (comments == null) {
+        console.log("\n 🔴El codigo de concatenacion, la variable es:  \n" + comments);
+    } else {
         console.log("al parecer es NULL");
 
     }
-   
+
 
     if (lowerCaseText.includes("fallo finalizado")) {
         statusEmoji = "🟢";
@@ -123,7 +124,7 @@ async function buildInformation(sensorData) {
 
     if (sensorData.batery) {
         text = `BATERIAS URGENTE:\n🏢EMPRESA/LUGAR: *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji}ESTADO:*${status}*\n\n🌐IP: *${ip}* \n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}* `;
-        numbers.push("524434629327");//yo
+        numbers.push("524434629327"); //yo
         numbers.push("524442478772");
         numbers.push("524441184908");
         return {
@@ -134,7 +135,7 @@ async function buildInformation(sensorData) {
         if (lowerCaseComuni.includes("comunicalo") && !/^192\.168\./.test(lowerCaseIp)) {
             AIresponse = await chatGPTService.GetMessageChatGPT("Puedes resumir lo siguiente es para mandarlo como reporte solo pon algo sencillo no agregues codigos de error, además pregunta si sucede algo con la electricidad o alguna afectacion ya que es comunicalo y ellos son un isp. No agreges emogies :" + message);
             text = `\n🏢 *${company}*\n\nSERVICIO: *${device}*\n\n${statusEmoji} ESTADO: *${status}*\n\n🌐 IP: *${ip}*\n\nTIEMPO: *${time}*\n\n${AIresponse}`;
-            
+
         } else {
             AIresponse = await chatGPTService.GetMessageChatGPT("Puedes resumir lo siguiente es para mandarlo como reporte solo pon algo sencillo no agrueges codigos de error y pon emogies mas corto de lo que es el propio mensaje:" + message);
             text = `Sensor Alert:\n🏢 EMPRESA/LUGAR: *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji} ESTADO: *${status}*\n\n🌐 IP: *${ip}*\n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}*\n\n${AIresponse}\n\n🔗 LINK UISP: *${linkUisp}*`;
