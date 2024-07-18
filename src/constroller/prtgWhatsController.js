@@ -78,7 +78,13 @@ async function buildInformation(sensorData) {
     let AIresponse;
     let idUispService = extractNumberFromCompany(company);
     const numbers = ["524401050937", "524442478574"];
-    console.log("\n 🔴El codigo de concatenacion, la variable es:  \n"+priority);
+    if(priority == null){
+        console.log("\n 🔴El codigo de concatenacion, la variable es:  \n"+priority);
+    }else{
+        console.log("al parecer es NULL");
+
+    }
+   
 
     if (lowerCaseText.includes("fallo finalizado")) {
         statusEmoji = "🟢";
