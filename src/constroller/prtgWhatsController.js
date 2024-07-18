@@ -79,7 +79,7 @@ async function buildInformation(sensorData) {
     let AIresponse;
     let idUispService = extractNumberFromCompany(company);
     const numbers = ["524401050937", "524442478574"];
-    if (comments != null) {
+    if (comments != "") {
         console.log("\n 🔴El codigo de concatenacion, la variable es:  \n" + comments);
     } else {
         console.log("al parecer es NULL");
