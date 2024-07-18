@@ -80,11 +80,12 @@ async function buildInformation(sensorData) {
     let idUispService = extractNumberFromCompany(company);
     const numbers = ["524401050937", "524442478574"];
 
-    if (comments != undefined) {
+    if (comments != "") {
         console.log("Probando el console log");
         console.log("La variable es: " + comments);
     } else {
         console.log("al parecer es NULL");
+        comments = "vacio";
 
     }
 
@@ -136,11 +137,11 @@ async function buildInformation(sensorData) {
     } else {
         if (lowerCaseComuni.includes("comunicalo") && !/^192\.168\./.test(lowerCaseIp)) {
             AIresponse = await chatGPTService.GetMessageChatGPT("Puedes resumir lo siguiente es para mandarlo como reporte solo pon algo sencillo no agregues codigos de error, además pregunta si sucede algo con la electricidad o alguna afectacion ya que es comunicalo y ellos son un isp. No agreges emogies :" + message);
-            text = `\n🏢 *${company}*\n\nSERVICIO: *${device}*\n\n${statusEmoji} ESTADO: *${status}*\n\n🌐 IP: *${ip}*\n\nTIEMPO: *${time}*\n\n${AIresponse}`;
+            text = `\n🏢 *${company}*\n\nSERVICIO: *${device}*\n\n${statusEmoji} ESTADO: *${status}*\n\n🌐 IP: *${ip}*\n\nTIEMPO: *${time}*\n\n${AIresponse}\n\nIp de servicio: ${comments}`;
 
         } else {
             AIresponse = await chatGPTService.GetMessageChatGPT("Puedes resumir lo siguiente es para mandarlo como reporte solo pon algo sencillo no agrueges codigos de error y pon emogies mas corto de lo que es el propio mensaje:" + message);
-            text = `Sensor Alert:\n🏢 EMPRESA/LUGAR: *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji} ESTADO: *${status}*\n\n🌐 IP: *${ip}*\n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}*\n\n${AIresponse}\n\n🔗 LINK UISP: *${linkUisp}*`;
+            text = `Sensor Alert:\n🏢 EMPRESA/LUGAR: *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji} ESTADO: *${status}*\n\n🌐 IP: *${ip}*\n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}*\n\n${AIresponse}\n\n🔗 LINK UISP: *${linkUisp}*\n\nIp de servicio: ${comments}`;
         }
 
         return {
