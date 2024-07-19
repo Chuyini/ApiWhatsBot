@@ -1,5 +1,6 @@
 const express = require("express");
 const bodyParser = require('body-parser');
+const {checkTimeAndGreet} = require("../src/shared/checkTime");
 
 //l
 const apiRouter = require("./routes/routes");
@@ -32,6 +33,10 @@ app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('Something broke!');
 });
+
+// Iniciar la verificación de tiempo para enviar mensajes
+setInterval(checkTimeAndGreet, 60000);
+console.log("La verificación de tiempo para enviar mensajes a las 6 PM ha comenzado.");
 
 // Iniciar el servidor
 app.listen(PORT, () => {
