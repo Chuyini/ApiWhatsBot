@@ -14,7 +14,7 @@ async function checkTimeAndGreet() {
         models.push(model);
     }
 
-    if (hours === 19 && minutes === 0) {
+    if (hours === 19) {
         console.log("Enviando mensajes a las 6 PM...");
         try {
             for (const element of models) {
