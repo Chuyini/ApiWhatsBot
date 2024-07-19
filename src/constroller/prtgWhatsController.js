@@ -67,7 +67,7 @@ async function buildInformation(sensorData) {
     const ip = sensorData.ip;
     const status = sensorData.status;
     const time = sensorData.time;
-    const comments = sensorData.comments.trim();
+    const comments = sensorData.comments;
     let message = sensorData.message;
     let priority = sensorData.priority;
     let statusEmoji = "🔴";
@@ -80,14 +80,15 @@ async function buildInformation(sensorData) {
     let idUispService = extractNumberFromCompany(company);
     const numbers = ["524401050937", "524442478574"];
 
-    if (comments != "") {
+    if (comments === "" || comments === null || comments === undefined) {
+        console.log("al parecer es NULL o vacía");
+        comments = "vacio";
+    } else {
+        comments = comments.trim();
         console.log("Probando el console log");
         console.log("La variable es: " + comments);
-    } else {
-        console.log("al parecer es NULL");
-        comments = "vacio";
-
     }
+    
 
 
     if (lowerCaseText.includes("fallo finalizado")) {
