@@ -67,7 +67,7 @@ async function buildInformation(sensorData) {
     const ip = sensorData.ip;
     const status = sensorData.status;
     const time = sensorData.time;
-    const comments = sensorData.comments;
+    let comments = sensorData.comments;
     let message = sensorData.message;
     let priority = sensorData.priority;
     let statusEmoji = "🔴";
