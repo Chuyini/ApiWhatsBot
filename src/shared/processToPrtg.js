@@ -9,7 +9,7 @@ async function ProcessToPrtg(textUser, number) {
     let models = []; // Arreglo de modelos
 
 
-    await checkTime.checkTimeAndGreet();
+    //await checkTime.checkTimeAndGreet();
 
 
     
