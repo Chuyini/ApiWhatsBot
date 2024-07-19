@@ -34,10 +34,11 @@ app.use((err, req, res, next) => {
 });
 
 // Iniciar la verificación de tiempo para enviar mensajes
+/*
 setInterval(() => {
     checkTimeAndGreet();
 }, 60000); // Aquí pasamos la referencia de la función sin llamarla
-
+*/
 
 // Iniciar el servidor
 app.listen(PORT, () => {
