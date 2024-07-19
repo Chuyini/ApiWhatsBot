@@ -1,24 +1,21 @@
+const whatsAppModel = require("../shared/modelsWhatsApp");
+const whatsAppService = require("../service/whatsappService");
+
 async function checkTimeAndGreet() {
     const now = new Date();
     const hours = now.getHours();
     const minutes = now.getMinutes();
 
-    // Verificar si ya se ha ejecutado en esta hora
-    if (lastExecutionTime && lastExecutionTime.getHours() === hours && lastExecutionTime.getMinutes() === minutes) {
-        return;
+    let models = [];
+    const numbers = ["524401050937", "524442478574"];
+
+    for (const number of numbers) {
+        let model = whatsAppModel.TemplateContinueConversation(number);
+        models.push(model);
     }
 
     if (hours === 18 && minutes === 0) {
-        let models = [];
-        const numbers = ["524401050937", "524442478574"];
-
-        for (const number of numbers) {
-            let model = whatsAppModel.TemplateContinueConversation(number);
-            models.push(model);
-        }
-
-        console.log("Enviando mensajes a las 6 de la tarde");
-
+        console.log("Enviando mensajes a las 6 PM...");
         try {
             for (const element of models) {
                 const response = await whatsAppService.SendMessageWhatsApp(element);
@@ -29,9 +26,6 @@ async function checkTimeAndGreet() {
         } catch (error) {
             console.error("Error sending message:", error);
         }
-
-        // Actualizar el último tiempo de ejecución
-        lastExecutionTime = now;
     }
 }
 
