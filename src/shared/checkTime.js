@@ -1,5 +1,3 @@
-
-
 async function checkTimeAndGreet() {
     const now = new Date();
     const hours = now.getHours();
@@ -36,3 +34,7 @@ async function checkTimeAndGreet() {
         lastExecutionTime = now;
     }
 }
+
+module.exports = {
+    checkTimeAndGreet
+};
