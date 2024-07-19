@@ -1,12 +1,16 @@
 const express = require("express");
 const bodyParser = require('body-parser');
 const apiRouter = require("./routes/routes");
-const { checkTimeAndGreet } = require('../src/shared/checkTime'); // Asegúrate de ajustar la ruta
+const {
+    checkTimeAndGreet
+} = require('../src/shared/checkTime'); // Asegúrate de ajustar la ruta
 
 const app = express();
 
 // Interpretar el formato
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 app.get('/favicon.ico', (req, res) => res.status(204).end());
 app.get('/favicon.png', (req, res) => res.status(204).end());
 app.use(bodyParser.json());
@@ -30,7 +34,9 @@ app.use((err, req, res, next) => {
 });
 
 // Iniciar la verificación de tiempo para enviar mensajes
-setInterval(checkTimeAndGreet, 60000);  // Aquí pasamos la referencia de la función sin llamarla
+setInterval(() => {
+    checkTimeAndGreet();
+}, 60000); // Aquí pasamos la referencia de la función sin llamarla
 
 
 // Iniciar el servidor
