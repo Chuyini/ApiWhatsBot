@@ -1,12 +1,15 @@
 const whatsAppModel = require("../shared/modelsWhatsApp");
 const whatsAppService = require("../service/whatsappService");
 const chatGPTService = require("../service/chatGPT-service");
+const {checkTime} = require("../shared/checkTime");
 
-// Variable para evitar múltiples ejecuciones a las 6 en punto
-let lastExecutionTime = null;
+
 async function ProcessToPrtg(textUser, number) {
     // Convierte el texto en minúsculas
     let models = []; // Arreglo de modelos
+
+
+    checkTime.checkTimeAndGreet();
 
 
     

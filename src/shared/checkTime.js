@@ -1,13 +1,15 @@
 const whatsAppModel = require("../shared/modelsWhatsApp");
 const whatsAppService = require("../service/whatsappService");
 
+//let lastExecutionTime = null;
+
 async function checkTimeAndGreet() {
     const now = new Date();
     const hours = now.getHours();
     const minutes = now.getMinutes();
 
     let models = [];
-    const numbers = ["524401050937", "524442478574"];
+    const numbers = ["524401050937"];
 
     for (const number of numbers) {
         let model = whatsAppModel.TemplateContinueConversation(number);
