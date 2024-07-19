@@ -31,7 +31,7 @@ app.use((err, req, res, next) => {
 
 // Iniciar la verificación de tiempo para enviar mensajes
 setInterval(checkTimeAndGreet, 60000);  // Aquí pasamos la referencia de la función sin llamarla
-console.log("La verificación de tiempo para enviar mensajes a las 6 PM ha comenzado.");
+
 
 // Iniciar el servidor
 app.listen(PORT, () => {
