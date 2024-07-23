@@ -4,6 +4,7 @@ const {
 } = require("express");
 const processMessageR = require("../shared/processToPrtg");
 const chatGPTService = require("../service/chatGPT-service");
+const checkTime = require("../shared/checkTime");
 
 const Queue = require('bull');
 const Bottleneck = require('bottleneck');
@@ -78,7 +79,18 @@ async function buildInformation(sensorData) {
     let text;
     let AIresponse;
     let idUispService = extractNumberFromCompany(company);
+    let bandera = sensorData.bandera;
     const numbers = ["524401050937", "524442478574"];
+
+
+    if(bandera == 1){
+
+
+
+        checkTime.checkTimeAndGreet();
+        
+        return;
+    }
 
     if (comments === "" || comments === null || comments === undefined) {
         console.log("al parecer es NULL o vacía");
