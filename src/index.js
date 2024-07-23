@@ -33,6 +33,8 @@ app.use((err, req, res, next) => {
     res.status(500).send('Something broke!');
 });
 
+
+
 // Iniciar la verificación de tiempo para enviar mensajes
 /*
 setInterval(() => {
@@ -43,4 +45,5 @@ setInterval(() => {
 // Iniciar el servidor
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
+    setInterval(checkTimeAndGreet, 60000); // Ejecuta la función cada minuto
 });
