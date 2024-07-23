@@ -45,5 +45,8 @@ setInterval(() => {
 // Iniciar el servidor
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
-    setInterval(checkTimeAndGreet, 60000); // Ejecuta la función cada minuto
+    setInterval(() => {
+        console.log('Checking time...');
+        checkTimeAndGreet();
+    }, 60000); // Ejecuta la función cada minuto
 });
