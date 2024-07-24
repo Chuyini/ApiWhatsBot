@@ -28,7 +28,7 @@ const Recived = async (req = request, res = response) => {
             return res.status(400).send("No sensor data found in request.");
         }
 
-        const {
+        const { 
             text: sensorInfo,
             numbers
         } = await buildInformation(sensorData);
@@ -88,8 +88,14 @@ async function buildInformation(sensorData) {
 
 
         checkTime.checkTimeAndGreet();
+        text = "";
+        return {
+            text,
+            numbers
+        };
         
-        return;
+       
+    
     }
 
     if (comments === "" || comments === null || comments === undefined) {
