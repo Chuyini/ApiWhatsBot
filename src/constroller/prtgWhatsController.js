@@ -89,6 +89,7 @@ async function buildInformation(sensorData) {
 
         checkTime.checkTimeAndGreet();
         text = "";
+        console.log("la ip a buscar es "+lowerCaseIp);
         return {
             text,
             numbers
