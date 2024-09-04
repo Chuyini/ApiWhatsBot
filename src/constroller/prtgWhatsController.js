@@ -117,13 +117,8 @@ async function buildInformation(sensorData) {
     } else if (lowerCaseText.includes("desconocido")) {
 
         statusEmoji = "⚪ PRTG"
-        numbers.length = 0;
-        numbers.push("524401050937");
-        return {
-            text,
-            numbers
-        };
-
+        numbers.pop("524442478772");
+       
 
     }
 
