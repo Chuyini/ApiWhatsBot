@@ -117,7 +117,7 @@ async function buildInformation(sensorData) {
     } else if (lowerCaseText.includes("desconocido")) {
 
         statusEmoji = "⚪ PRTG"
-        numbers.pop("524442478772");
+        numbers.pop("524442478772");//Sacamos a Debie cuando haya errores del PRTG 
        
 
     }
@@ -167,7 +167,7 @@ async function buildInformation(sensorData) {
 
         } else {
             AIresponse = await chatGPTService.GetMessageChatGPT("Puedes resumir lo siguiente es para mandarlo como reporte solo pon algo sencillo no agrueges codigos de error y pon emogies mas corto de lo que es el propio mensaje:" + message);
-            text = `Sensor Alert:\n🏢 EMPRESA/LUGAR: *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji} ESTADO: *${status}*\n\n🌐 IP: *${ip}*\n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}*\n\n${AIresponse}\n\n🔗 LINK UISP: *${linkUisp}*\n\nIp de servicio: ${comments}`;
+            text = `Sensor Alert ${statusEmoji}:\n🏢 EMPRESA/LUGAR: *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji} ESTADO: *${status}*\n\n🌐 IP: *${ip}*\n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}*\n\n${AIresponse}\n\n🔗 LINK UISP: *${linkUisp}*\n\nIp de servicio: ${comments}`;
         }
 
         return {
