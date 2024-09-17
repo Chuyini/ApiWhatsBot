@@ -110,7 +110,7 @@ async function buildInformation(sensorData) {
 
 
 
-    if (lowerCaseText.includes("fallo finalizado")) {
+    if (lowerCaseText.includes("fallo finalizado") && !lowerCaseText.includes("desconocido")) {
         statusEmoji = "🟢";
     } else if (lowerCaseText.includes("anterior :advertencia")) {
         statusEmoji = "⚠️🟢";
