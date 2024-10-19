@@ -80,7 +80,7 @@ async function buildInformation(sensorData) {
     let AIresponse;
     let idUispService = extractNumberFromCompany(company);
     let bandera = sensorData.bandera;
-    const numbers = ["524401050937", "524442478574", "524442478772"]; //Yo de trabajo, Ruben, Debbie
+    const numbers = ["524401050937", "524442478772"]; //Yo de trabajo, Debbie,El lic Frans, diana, daysimar
 
 
     if (bandera == 1) {
@@ -118,6 +118,7 @@ async function buildInformation(sensorData) {
 
         statusEmoji = "⚪ PRTG"
         numbers.pop("524442478772");//Sacamos a Debie cuando haya errores del PRTG 
+        
        
 
     }
@@ -154,6 +155,13 @@ async function buildInformation(sensorData) {
     if (sensorData.batery) {
         text = `BATERIAS URGENTE:\n🏢EMPRESA/LUGAR: *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji}ESTADO:*${status}*\n\n🌐IP: *${ip}* \n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}* `;
         numbers.push("524434629327"); //yo
+        if(company === "Grupo baterias"){
+            numbers.push("524441967796"); //el lic
+            
+            numbers.push("524441574990");//Daysimar
+        }
+
+        numbers.push("524442475444");//Diana
 
         numbers.push("524441184908"); //Ceron
         return {
