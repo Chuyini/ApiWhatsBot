@@ -155,13 +155,12 @@ async function buildInformation(sensorData) {
     if (sensorData.batery) {
         text = `BATERIAS URGENTE:\n🏢EMPRESA/LUGAR: *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji}ESTADO:*${status}*\n\n🌐IP: *${ip}* \n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}* `;
         numbers.push("524434629327"); //yo
-        if(company === "Grupo baterias"){
+        if(company == "Grupo baterias"){
+                
             numbers.push("524441967796"); //el lic
-            
+            numbers.push("524442475444");//Diana
             numbers.push("524441574990");//Daysimar
         }
-
-        numbers.push("524442475444");//Diana
 
         numbers.push("524441184908"); //Ceron
         return {
@@ -174,7 +173,7 @@ async function buildInformation(sensorData) {
             text = `\n🏢 *${company}*\n\nSERVICIO: *${device}*\n\n${statusEmoji} ESTADO: *${status}*\n\n🌐 IP: *${ip}*\n\nTIEMPO: *${time}*\n\n${AIresponse}\n\nIp de servicio: ${comments}`;
 
         } else {
-            AIresponse = await chatGPTService.GetMessageChatGPT("Puedes resumir lo siguiente es para mandarlo como reporte solo pon algo sencillo no agrueges codigos de error y pon emogies mas corto de lo que es el propio mensaje:" + message);
+            AIresponse = await chatGPTService.GetMessageChatGPT(message);
             text = `Sensor Alert ${statusEmoji}:\n🏢 EMPRESA/LUGAR: *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji} ESTADO: *${status}*\n\n🌐 IP: *${ip}*\n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}*\n\n${AIresponse}\n\n🔗 LINK UISP: *${linkUisp}*\n\nIp de servicio: ${comments}`;
         }
 
