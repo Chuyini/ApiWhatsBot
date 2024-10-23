@@ -10,7 +10,7 @@ async function checkTimeAndGreet() {
     //524442478574 -->Ruben
 
     let models = [];
-    const numbers = ["524434629327", "524441574990", "524441967796","524442475444","524441184908"];//,daysimar,Lic,diana,ceron
+    const numbers = ["524442475444"];//,daysimar,Lic,diana,ceron
 
     for (const number of numbers) {
         let model = whatsAppModel.TemplateContinueConversation(number);
