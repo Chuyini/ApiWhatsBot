@@ -86,10 +86,12 @@ async function buildInformation(sensorData) {
     if (bandera == 1) {
 
 
-
+        //esta funcions e encarga de mandar las plantillas pero necesita de los numeros 
+        //los pusheamos
         checkTime.checkTimeAndGreet();
         text = "";
         console.log("la ip a buscar es " + lowerCaseIp);
+        
         return {
             text,
             numbers
@@ -117,9 +119,9 @@ async function buildInformation(sensorData) {
     } else if (lowerCaseText.includes("desconocido")) {
 
         statusEmoji = "⚪ PRTG"
-        numbers.pop("524442478772");//Sacamos a Debie cuando haya errores del PRTG 
-        
-       
+        numbers.pop("524442478772"); //Sacamos a Debie cuando haya errores del PRTG 
+
+
 
     }
 
@@ -155,11 +157,11 @@ async function buildInformation(sensorData) {
     if (sensorData.batery) {
         text = `BATERIAS URGENTE:\n🏢EMPRESA/LUGAR: *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji}ESTADO:*${status}*\n\n🌐IP: *${ip}* \n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}* `;
         numbers.push("524434629327"); //yo
-        if(company == "Grupo baterias"){
-                
+        if (company == "Grupo baterias") {
+
             numbers.push("524441967796"); //el lic
-            numbers.push("524442475444");//Diana
-            numbers.push("524441574990");//Daysimar
+            numbers.push("524442475444"); //Diana
+            numbers.push("524441574990"); //Daysimar
         }
 
         numbers.push("524441184908"); //Ceron
@@ -173,7 +175,7 @@ async function buildInformation(sensorData) {
             text = `\n🏢 *${company}*\n\nSERVICIO: *${device}*\n\n${statusEmoji} ESTADO: *${status}*\n\n🌐 IP: *${ip}*\n\nTIEMPO: *${time}*\n\n${AIresponse}\n\nIp de servicio: ${comments}`;
 
         } else {
-           // AIresponse = await chatGPTService.GetMessageChatGPT(message); <-- no necesitamos algun reporte cuando este en OK
+            // AIresponse = await chatGPTService.GetMessageChatGPT(message); <-- no necesitamos algun reporte cuando este en OK
             text = `Sensor Alert ${statusEmoji}:\n🏢 EMPRESA/LUGAR: *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji} ESTADO: *${status}*\n\n🌐 IP: *${ip}*\n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}*\n\n${message}\n\n🔗 LINK UISP: *${linkUisp}*\n\nIp de servicio: ${comments}`;
         }
 
