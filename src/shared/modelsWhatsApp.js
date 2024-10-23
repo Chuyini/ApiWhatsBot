@@ -186,10 +186,19 @@ function TemplateContinueConversation(number) {
         "to": number,
         "type": "template",
         "template": {
-            "name": "continue",
+            "name": "mensaje_de_continuacin",
             "language": {
                 "code": "en_US"
-            }
+            },
+            "components": [{
+                "type": "header",
+                "parameters": [{
+                    "type": "image",
+                    "image": {
+                        "link": "https://drive.google.com/uc?export=view&id=1CwsHuNlpymRZ4KbtZSyma55tLD0r_kxA"
+                    }
+                }]
+            }]
         }
     });
 
