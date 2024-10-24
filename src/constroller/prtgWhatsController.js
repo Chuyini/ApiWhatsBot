@@ -91,7 +91,7 @@ async function buildInformation(sensorData) {
         checkTime.checkTimeAndGreet();
         text = "";
         console.log("la ip a buscar es " + lowerCaseIp);
-        
+
         return {
             text,
             numbers
@@ -157,12 +157,12 @@ async function buildInformation(sensorData) {
     if (sensorData.batery) {
         text = `BATERIAS URGENTE:\n🏢EMPRESA/LUGAR: *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji}ESTADO:*${status}*\n\n🌐IP: *${ip}* \n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}* `;
         numbers.push("524434629327"); //yo
-        if (company == "Grupo baterias") {
 
-            numbers.push("524441967796"); //el lic
-            numbers.push("524442475444"); //Diana
-            numbers.push("524441574990"); //Daysimar
-        }
+
+        numbers.push("524441967796"); //el lic
+        numbers.push("524442475444"); //Diana
+        numbers.push("524441574990"); //Daysimar
+
 
         numbers.push("524441184908"); //Ceron
         return {
