@@ -113,7 +113,17 @@ async function buildInformation(sensorData) {
 
 
     if (lowerCaseText.includes("fallo finalizado") && !lowerCaseText.includes("desconocido")) {
-        statusEmoji = "🟢";
+       
+
+        if(lowerCaseText.includes("Pausado")){
+
+            statusEmoji = "⏸️";
+        }else{
+
+            statusEmoji = "🟢";
+        }
+
+
     } else if (lowerCaseText.includes("anterior :advertencia")) {
         statusEmoji = "⚠️🟢";
     } else if (lowerCaseText.includes("desconocido")) {
@@ -154,6 +164,7 @@ async function buildInformation(sensorData) {
             break;
     }
 
+    ///Sin son de baterias  se alarma 
     if (sensorData.batery) {
         text = `BATERIAS URGENTE:\n🏢EMPRESA/LUGAR: *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji}ESTADO:*${status}*\n\n🌐IP: *${ip}* \n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}* `;
         numbers.push("524434629327"); //yo
