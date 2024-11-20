@@ -80,7 +80,7 @@ async function buildInformation(sensorData) {
     let AIresponse;
     let idUispService = extractNumberFromCompany(company);
     let bandera = sensorData.bandera;
-    const numbers = ["524401050937", "524442478772"]; //Yo de trabajo, Debbie,El lic Frans, diana, daysimar
+    const numbers = ["524401050937", "524442478772","524434629327"]; //Yo de trabajo, Debbie,El lic Frans, diana, daysimar
 
 
     if (bandera == 1) {
