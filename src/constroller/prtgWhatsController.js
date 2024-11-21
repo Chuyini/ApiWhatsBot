@@ -113,28 +113,20 @@ async function buildInformation(sensorData) {
 
 
     if (lowerCaseText.includes("fallo finalizado") && !lowerCaseText.includes("desconocido")) {
-       
-
-        if(lowerCaseText.includes("pausado")){
-
+        if (lowerCaseText.includes("pausado")) {
             statusEmoji = "⏸️";
-        }else{
-
+        } else if (lowerCaseText.includes("advertencia")) {
+            statusEmoji = "⚠️🟢";
+        } else {
             statusEmoji = "🟢";
         }
-
-
-    } else if (lowerCaseText.includes("anterior :advertencia")) {
-        statusEmoji = "⚠️🟢";
     } else if (lowerCaseText.includes("desconocido")) {
-
-        statusEmoji = "⚪ PRTG"
-        numbers.pop("524442478772"); //Sacamos a Debie cuando haya errores del PRTG 
-
-
-
+        statusEmoji = "⚪ PRTG";
+        numbers.pop("524442478772"); // Sacamos a Debie para que no siga alarmando
     }
+    
 
+  
     const id = extractNumbersAndText(company);
     linkUisp = concatLink(idUispService);
     priority = priority.trim();
