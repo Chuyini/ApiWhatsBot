@@ -125,7 +125,7 @@ async function buildInformation(sensorData) {
         numbers.pop("524442478772"); // Sacamos a Debie para que no siga alarmando
     }
     
-
+    numbers.pop("524442478772"); 
   
     const id = extractNumbersAndText(company);
     linkUisp = concatLink(idUispService);
