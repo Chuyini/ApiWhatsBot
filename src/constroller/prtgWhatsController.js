@@ -80,7 +80,7 @@ async function buildInformation(sensorData) {
     let AIresponse;
     let idUispService = extractNumberFromCompany(company);
     let bandera = sensorData.bandera;
-    const numbers = ["524401050937", "524434629327"]; //Yo de trabajo, Debbie,El lic Frans, diana, daysimar
+    const numbers = ["524401050937", "524442478772","524434629327"]; //Yo de trabajo, Debbie,El lic Frans, diana, daysimar
 
 
     if (bandera == 1) {
@@ -122,10 +122,10 @@ async function buildInformation(sensorData) {
         }
     } else if (lowerCaseText.includes("desconocido")) {
         statusEmoji = "⚪ PRTG";
-        numbers.pop("524442478772"); // Sacamos a Debie para que no siga alarmando
+        numbers = numbers.filter(number => number !== "524442478772");; // Sacamos a Debie para que no siga alarmando
     }
     
-    numbers.pop("524442478772"); 
+    
   
     const id = extractNumbersAndText(company);
     linkUisp = concatLink(idUispService);
