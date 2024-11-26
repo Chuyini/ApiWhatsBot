@@ -43,33 +43,33 @@ function MessageList(number) { //lo vamos a dejar solo para una imagen
             "action": {
                 "button": "GENERACION TICKET",
                 "sections": [{
-                        "title": "Tipos de TICKET",
-                        "rows": [{
-                                "id": "ticket_1",
-                                "title": "SIN SERVICIO",
-                                "description": "Descripción del Tipo 1"
-                            },
-                            {
-                                "id": "ticket_2",
-                                "title": "iNTERMITENCIA",
-                                "description": "Descripción del Tipo 2"
-                            }
-                        ]
+                    "title": "Tipos de TICKET",
+                    "rows": [{
+                        "id": "ticket_1",
+                        "title": "SIN SERVICIO",
+                        "description": "Descripción del Tipo 1"
                     },
                     {
-                        "title": "No ticket",
-                        "rows": [{
-                                "id": "no_ticket_1",
-                                "title": "Opción 1",
-                                "description": "Descripción de Opción 1"
-                            },
-                            {
-                                "id": "no_ticket_2",
-                                "title": "Opción 2",
-                                "description": "Descripción de Opción 2"
-                            }
-                        ]
+                        "id": "ticket_2",
+                        "title": "iNTERMITENCIA",
+                        "description": "Descripción del Tipo 2"
                     }
+                    ]
+                },
+                {
+                    "title": "No ticket",
+                    "rows": [{
+                        "id": "no_ticket_1",
+                        "title": "Opción 1",
+                        "description": "Descripción de Opción 1"
+                    },
+                    {
+                        "id": "no_ticket_2",
+                        "title": "Opción 2",
+                        "description": "Descripción de Opción 2"
+                    }
+                    ]
+                }
                 ]
             }
         }
@@ -94,19 +94,19 @@ function MessageComprar(number) { //lo vamos a dejar solo para una imagen
             },
             "action": {
                 "buttons": [{
-                        "type": "reply",
-                        "reply": {
-                            "id": "option-laptop",
-                            "title": "🛍️ Laptop"
-                        }
-                    },
-                    {
-                        "type": "reply",
-                        "reply": {
-                            "id": "option-computadora",
-                            "title": "🛍️Computadora"
-                        }
+                    "type": "reply",
+                    "reply": {
+                        "id": "option-laptop",
+                        "title": "🛍️ Laptop"
                     }
+                },
+                {
+                    "type": "reply",
+                    "reply": {
+                        "id": "option-computadora",
+                        "title": "🛍️Computadora"
+                    }
+                }
                 ]
             }
         }
@@ -133,19 +133,19 @@ function MessageVender(number) { //lo vamos a dejar solo para una imagen
             },
             "action": {
                 "buttons": [{
-                        "type": "reply",
-                        "reply": {
-                            "id": "option-laptop",
-                            "title": "🛍️ Laptop"
-                        }
-                    },
-                    {
-                        "type": "reply",
-                        "reply": {
-                            "id": "option-computadora",
-                            "title": "🛍️Computadora"
-                        }
+                    "type": "reply",
+                    "reply": {
+                        "id": "option-laptop",
+                        "title": "🛍️ Laptop"
                     }
+                },
+                {
+                    "type": "reply",
+                    "reply": {
+                        "id": "option-computadora",
+                        "title": "🛍️Computadora"
+                    }
+                }
                 ]
             }
         }
@@ -208,9 +208,10 @@ function TemplateContinueConversation(number, textV) {
 
 
 
-function TemplateBatery(number,msgText) {
+function TemplateBatery(number, msgText) {
 
     let data = JSON.stringify({
+
         "messaging_product": "whatsapp",
         "recipient_type": "individual",
         "to": number,
@@ -220,14 +221,18 @@ function TemplateBatery(number,msgText) {
             "language": {
                 "code": "en_US"
             },
-            "components": [{
-                "type": "header",
-                "parameters": [{
-                    "type": "text",
-                    "text": msgText,
-                    
-                }]
-            }]
+            "components": [
+                {
+                    "type": "header",
+                    "parameters": [
+                        {
+                            "type": "text",
+                            "text": msgText
+
+                        }
+                    ]
+                }
+            ]
         }
     });
 
