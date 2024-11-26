@@ -168,7 +168,7 @@ async function buildInformation(sensorData) {
         //numbers.push("524441574990"); //Daysimar
 
 
-    const textToTemplate = `${company} \n ${device}`;
+    const textToTemplate = `${device}`;
 
 
         //numbers.push("524441184908"); //Ceron
