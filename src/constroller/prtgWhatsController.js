@@ -80,7 +80,7 @@ async function buildInformation(sensorData) {
     let AIresponse;
     let idUispService = extractNumberFromCompany(company);
     let bandera = sensorData.bandera;
-    const numbers = ["524401050937", "524442478772","524434629327"]; //Yo de trabajo, Debbie,El lic Frans, diana, daysimar
+    const numbers = ["524401050937", "524442478772", "524434629327"]; //Yo de trabajo, Debbie,El lic Frans, diana, daysimar
 
 
     /*if (bandera == 1) {//esta bandera solo la usa el sensor de 24hrs
@@ -124,9 +124,9 @@ async function buildInformation(sensorData) {
         statusEmoji = "⚪ PRTG";
         numbers = numbers.filter(number => number !== "524442478772");; // Sacamos a Debie para que no siga alarmando
     }
-    
-    
-  
+
+
+
     const id = extractNumbersAndText(company);
     linkUisp = concatLink(idUispService);
     priority = priority.trim();
@@ -161,25 +161,26 @@ async function buildInformation(sensorData) {
         text = `BATERIAS URGENTE:\n🏢EMPRESA/LUGAR: *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji}ESTADO:*${status}*\n\n🌐IP: *${ip}* \n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}* `;
         numbers.push("524434629327"); //yo
 
-       // checkTime.checkTimeAndGreet();
+        // checkTime.checkTimeAndGreet();
         //text = "";
         numbers.push("524441967796"); //el lic
         numbers.push("524442475444"); //Diana
         //numbers.push("524441574990"); //Daysimar
 
 
-    const textToTemplate = `${device}${statusEmoji}${time}`;
+        var textToTemplate = `${device}------${statusEmoji}------${time}`;
+        textToTemplate = textToTemplate.trim();
 
 
         //numbers.push("524441184908"); //Ceron
-        checkTime.checkTimeAndGreet(numbers,textToTemplate);
+        checkTime.checkTimeAndGreet(numbers, textToTemplate);
 
         return {
             text,
             numbers
         };
     } else {
-        if (lowerCaseComuni.includes("comunicalo") /*&& !/^192\.168\./.test(lowerCaseIp)*/ ) {
+        if (lowerCaseComuni.includes("comunicalo") /*&& !/^192\.168\./.test(lowerCaseIp)*/) {
             AIresponse = await chatGPTService.GetMessageChatGPT("Puedes resumir lo siguiente es para mandarlo como reporte solo pon algo sencillo no agregues codigos de error, además pregunta si sucede algo con la electricidad o alguna afectacion ya que es comunicalo y ellos son un isp. No agreges emogies :" + message);
             text = `\n🏢 *${company}*\n\nSERVICIO: *${device}*\n\n${statusEmoji} ESTADO: *${status}*\n\n🌐 IP: *${ip}*\n\nTIEMPO: *${time}*\n\n${AIresponse}\n\nIp de servicio: ${comments}`;
 
