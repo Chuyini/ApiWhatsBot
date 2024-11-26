@@ -216,7 +216,7 @@ function TemplateBatery(number,msgText) {
         "to": number,
         "type": "template",
         "template": {
-            "name": "mensaje_de_continuacin",
+            "name": "alert_batery",
             "language": {
                 "code": "en_US"
             },
