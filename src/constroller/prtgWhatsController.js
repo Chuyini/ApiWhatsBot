@@ -83,7 +83,7 @@ async function buildInformation(sensorData) {
     const numbers = ["524401050937", "524442478772","524434629327"]; //Yo de trabajo, Debbie,El lic Frans, diana, daysimar
 
 
-    if (bandera == 1) {
+    /*if (bandera == 1) {//esta bandera solo la usa el sensor de 24hrs
 
 
         //esta funcions e encarga de mandar las plantillas pero necesita de los numeros 
@@ -99,7 +99,7 @@ async function buildInformation(sensorData) {
 
 
 
-    }
+    }*/
 
     if (comments === "" || comments === null || comments === undefined) {
         console.log("al parecer es NULL o vacía");
@@ -161,13 +161,16 @@ async function buildInformation(sensorData) {
         text = `BATERIAS URGENTE:\n🏢EMPRESA/LUGAR: *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji}ESTADO:*${status}*\n\n🌐IP: *${ip}* \n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}* `;
         numbers.push("524434629327"); //yo
 
-
+       // checkTime.checkTimeAndGreet();
+        //text = "";
         numbers.push("524441967796"); //el lic
         numbers.push("524442475444"); //Diana
-        numbers.push("524441574990"); //Daysimar
+        //numbers.push("524441574990"); //Daysimar
 
 
-        numbers.push("524441184908"); //Ceron
+        //numbers.push("524441184908"); //Ceron
+        checkTime.checkTimeAndGreet(numbers,text);
+
         return {
             text,
             numbers

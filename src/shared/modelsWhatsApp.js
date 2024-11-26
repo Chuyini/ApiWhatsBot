@@ -18,6 +18,7 @@ function MessageText(textResponse, number) {
 }
 
 
+
 function MessageList(number) { //lo vamos a dejar solo para una imagen
 
 
@@ -178,7 +179,7 @@ function MessageLocation(number) { //lo vamos a dejar solo para location
 }
 
 
-function TemplateContinueConversation(number) {
+function TemplateContinueConversation(number, textV) {
 
     let data = JSON.stringify({
         "messaging_product": "whatsapp",
@@ -205,6 +206,33 @@ function TemplateContinueConversation(number) {
     return data;
 }
 
+
+
+function TemplateBatery(number,msgText) {
+
+    let data = JSON.stringify({
+        "messaging_product": "whatsapp",
+        "recipient_type": "individual",
+        "to": number,
+        "type": "template",
+        "template": {
+            "name": "mensaje_de_continuacin",
+            "language": {
+                "code": "en_US"
+            },
+            "components": [{
+                "type": "header",
+                "parameters": [{
+                    "type": "text",
+                    "text": msgText,
+                    
+                }]
+            }]
+        }
+    });
+
+    return data;
+}
 
 
 function TemplateWelcome(number) {
@@ -237,5 +265,6 @@ module.exports = {
     MessageComprar,
     MessageVender,
     MessageLocation,
-    TemplateContinueConversation
+    TemplateContinueConversation,
+    TemplateBatery
 }

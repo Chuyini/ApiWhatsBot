@@ -3,17 +3,16 @@ const whatsAppService = require("../service/whatsappService");
 
 //let lastExecutionTime = null;
 
-async function checkTimeAndGreet() {
+async function checkTimeAndGreet(numbers,textBuilt) {
     
 
     //"524442478772" --> Devie
     //524442478574 -->Ruben
 
     let models = [];
-    const numbers = ["524434629327", "524441574990", "524441967796","524442475444","524441184908"];//,daysimar,Lic,diana,ceron
-
+//Esta funcion arma los templates para cada usuario
     for (const number of numbers) {
-        let model = whatsAppModel.TemplateContinueConversation(number);
+        let model = whatsAppModel.TemplateBatery(number,textBuilt);
         models.push(model);
     }
 
