@@ -172,7 +172,7 @@ async function buildInformation(sensorData) {
 
 
         //numbers.push("524441184908"); //Ceron
-        checkTime.checkTimeAndGreet(numbers,text);
+        checkTime.checkTimeAndGreet(numbers,textToTemplate);
 
         return {
             text,
