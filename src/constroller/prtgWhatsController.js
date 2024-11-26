@@ -168,7 +168,7 @@ async function buildInformation(sensorData) {
         //numbers.push("524441574990"); //Daysimar
 
 
-        var textToTemplate = `${statusEmoji} ${device}--ip: ${ip}`;
+        var textToTemplate = `${statusEmoji} ${device}--Ip: ${ip}`;
         
 
 
