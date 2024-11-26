@@ -26,7 +26,7 @@ async function checkTimeAndGreet(numbers,textBuilt) {
             console.log("Message sent successfully.");
         }
     } catch (error) {
-        console.error("Error sending message:", error);
+        console.error("TUVIMOS UN ERROR EN LAS PLANTILLAS: ", error);
     }
 
 }
