@@ -9,7 +9,7 @@ async function checkTimeAndGreet(numbers,textBuilt) {
     //"524442478772" --> Devie
     //524442478574 -->Ruben
 
-    numbers.push("524434629327");
+    
     let models = [];
 //Esta funcion arma los templates para cada usuario
     for (const number of numbers) {
