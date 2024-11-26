@@ -168,6 +168,9 @@ async function buildInformation(sensorData) {
         //numbers.push("524441574990"); //Daysimar
 
 
+    const textToTemplate = `${company} \n ${device}`;
+
+
         //numbers.push("524441184908"); //Ceron
         checkTime.checkTimeAndGreet(numbers,text);
 
