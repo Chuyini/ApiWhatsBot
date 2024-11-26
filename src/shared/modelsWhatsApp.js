@@ -227,7 +227,7 @@ function TemplateBatery(number, msgText) {
                     "parameters": [
                         {
                             "type": "text",
-                            "text": msgText
+                            "text": "msgText",
 
                         }
                     ]
