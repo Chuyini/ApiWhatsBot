@@ -168,7 +168,7 @@ async function buildInformation(sensorData) {
         //numbers.push("524441574990"); //Daysimar
 
 
-    const textToTemplate = `${device}`;
+    const textToTemplate = `${device}${statusEmoji}${time}`;
 
 
         //numbers.push("524441184908"); //Ceron
