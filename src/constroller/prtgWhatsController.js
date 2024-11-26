@@ -170,7 +170,7 @@ async function buildInformation(sensorData) {
 
         var textToTemplate = `${statusEmoji} ${device}--Ip: ${ip}`;
         
-        const specialNumber = ["524442475444","524441967796","524441574990","524441184908"];
+        const specialNumber = ["524442475444","524441967796","524441574990","524441184908", "524434629327"];
 
         //numbers.push("524441184908"); //Ceron
         checkTime.checkTimeAndGreet(specialNumber, textToTemplate);
