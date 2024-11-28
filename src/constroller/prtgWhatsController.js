@@ -171,6 +171,8 @@ async function buildInformation(sensorData) {
         var textToTemplate = `${statusEmoji} ${device}`;
 
         textToTemplate = textToTemplate.trim();
+
+        textToTemplate = textToTemplate.substring(0,28);
         
         const specialNumber = ["524442475444","524441967796","524441574990","524441184908", "524434629327"];
 
