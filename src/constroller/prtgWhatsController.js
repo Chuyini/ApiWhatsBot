@@ -168,7 +168,9 @@ async function buildInformation(sensorData) {
         //numbers.push("524441574990"); //Daysimar
 
 
-        var textToTemplate = `${statusEmoji} ${device}--Ip: ${ip}`;
+        var textToTemplate = `${statusEmoji} ${device}`;
+
+        textToTemplate = textToTemplate.trim();
         
         const specialNumber = ["524442475444","524441967796","524441574990","524441184908", "524434629327"];
 
