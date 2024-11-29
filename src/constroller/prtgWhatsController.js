@@ -172,10 +172,10 @@ async function buildInformation(sensorData) {
 
         textToTemplate = textToTemplate.trim();
 
-        textToTemplate = textToTemplate.substring(0,28);
+        textToTemplate = textToTemplate.substring(0,35);
         
-        const specialNumber = ["524442475444","524441967796","524441574990","524441184908", "524434629327"];
-
+        //const specialNumber = ["524442475444","524441967796","524441574990","524441184908", "524434629327"];
+        const specialNumber = ["524434629327"];
         //numbers.push("524441184908"); //Ceron
         checkTime.checkTimeAndGreet(specialNumber, textToTemplate);
 

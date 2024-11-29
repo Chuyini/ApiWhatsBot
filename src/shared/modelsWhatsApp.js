@@ -217,7 +217,7 @@ function TemplateBatery(number, msgText) {
         "to": number,
         "type": "template",
         "template": {
-            "name": "alert_batery",
+            "name": "batery_mod",
             "language": {
                 "code": "en_US"
             },
