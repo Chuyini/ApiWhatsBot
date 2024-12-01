@@ -63,11 +63,11 @@ const Recived = async (req = request, res = response) => {
 };
 
 async function buildInformation(sensorData) {
-    const company = sensorData.company;
-    const device = sensorData.device;
-    const ip = sensorData.ip;
-    const status = sensorData.status;
-    const time = sensorData.time;
+    let company = sensorData.company;
+    let device = sensorData.device;
+    let ip = sensorData.ip;
+    let status = sensorData.status;   
+    let time = sensorData.time;
     let comments = sensorData.comments;
     let message = sensorData.message;
     let priority = sensorData.priority;
@@ -80,7 +80,7 @@ async function buildInformation(sensorData) {
     let AIresponse;
     let idUispService = extractNumberFromCompany(company);
     let bandera = sensorData.bandera;
-    const numbers = ["524401050937", "524442478772", "524434629327"]; //Yo de trabajo, Debbie,El lic Frans, diana, daysimar
+    let numbers = ["524401050937", "524442478772", "524434629327"]; //Yo de trabajo, Debbie,El lic Frans, diana, daysimar
 
 
     /*if (bandera == 1) {//esta bandera solo la usa el sensor de 24hrs
@@ -127,7 +127,7 @@ async function buildInformation(sensorData) {
 
 
 
-    const id = extractNumbersAndText(company);
+    let id = extractNumbersAndText(company);
     linkUisp = concatLink(idUispService);
     priority = priority.trim();
 
@@ -168,7 +168,7 @@ async function buildInformation(sensorData) {
         //numbers.push("524441574990"); //Daysimar
 
 
-        var textToTemplate = `${statusEmoji} ${device}`;
+        let textToTemplate = `${statusEmoji} ${device}`;
 
         textToTemplate = textToTemplate.trim();
 
@@ -201,7 +201,7 @@ async function buildInformation(sensorData) {
 }
 
 function extractNumbersAndText(text) {
-    const match = text.match(/^(\d+)\s*-\s*(.*)/);
+    let match = text.match(/^(\d+)\s*-\s*(.*)/);
     if (match) {
         return match[1];
     } else {
@@ -218,8 +218,8 @@ function concatLink(id) {
 }
 
 function extractNumberFromCompany(company) {
-    const regex = /#(\d+)/;
-    const match = company.match(regex);
+    let regex = /#(\d+)/;
+    let match = company.match(regex);
     return match ? match[1] : null;
 }
 
