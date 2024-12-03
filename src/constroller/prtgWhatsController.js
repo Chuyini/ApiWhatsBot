@@ -218,7 +218,7 @@ function concatLink(id) {
         return "https://uisp.elpoderdeinternet.mx/crm/client/" + id;
     } else {
         return "https://uisp.elpoderdeinternet.mx/crm";
-    }
+    } 
 }
 
 function extractNumberFromCompany(company) {
