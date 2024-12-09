@@ -11,7 +11,7 @@ const Bottleneck = require('bottleneck');
 
 // Crear una cola de mensajes
 const messageQueue = new Queue('messageQueue');
-
+        
 // Configurar Bottleneck para la limitación de velocidad
 const limiter = new Bottleneck({
     maxConcurrent: 1, // Número máximo de tareas concurrentes
@@ -65,6 +65,7 @@ const Recived = async (req = request, res = response) => {
 async function buildInformation(sensorData) {
     let company = sensorData.company;
     let device = sensorData.device;
+    let tags = sensorData.tags;
     let ip = sensorData.ip;
     let status = sensorData.status;   
     let time = sensorData.time;
@@ -161,6 +162,7 @@ async function buildInformation(sensorData) {
     }
 
     ///Sin son de baterias  se alarma 
+    ///aqui podriamos definir los dispositivos de alta prioridad
     if (sensorData.batery) {
         text = `BATERIAS URGENTE:\n🏢EMPRESA/LUGAR: *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji}ESTADO:*${status}*\n\n🌐IP: *${ip}* \n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}* `;
         numbers.push("524434629327"); //yo

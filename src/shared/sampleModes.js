@@ -1,3 +1,5 @@
+
+
 function SampleText(textResponse, number) {
 
 
@@ -16,7 +18,6 @@ function SampleText(textResponse, number) {
     return data;
 
 }
-
 
 function SampleImage(number) { //lo vamos a dejar solo para una imagen
 
