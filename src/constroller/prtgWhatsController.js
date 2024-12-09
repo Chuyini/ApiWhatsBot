@@ -111,8 +111,8 @@ async function buildInformation(sensorData) {
         console.log("La variable es: " + comments);
     }
 
-
-
+    tags = tags.toLowerCase();
+    
     if (lowerCaseText.includes("fallo finalizado") && !lowerCaseText.includes("desconocido")) {
         if (lowerCaseText.includes("pausado")) {
             statusEmoji = "⏸️";
@@ -190,7 +190,7 @@ async function buildInformation(sensorData) {
             numbers
         };
     } else {
-        if (lowerCaseComuni.includes("comunicalo") /*&& !/^192\.168\./.test(lowerCaseIp)*/) {
+        if (lowerCaseComuni.includes("comunicalo") || tags.includes("comunicalo") /*&& !/^192\.168\./.test(lowerCaseIp)*/) {
             AIresponse = await chatGPTService.GetMessageChatGPT("Puedes resumir lo siguiente es para mandarlo como reporte solo pon algo sencillo no agregues codigos de error, además pregunta si sucede algo con la electricidad o alguna afectacion ya que es comunicalo y ellos son un isp. No agreges emogies :" + message);
             text = `\n🏢 *${company}*\n\nSERVICIO: *${device}*\n\n${statusEmoji} ESTADO: *${status}*\n\n🌐 IP: *${ip}*\n\nTIEMPO: *${time}*\n\n${AIresponse}\n\nIp de servicio: ${comments}`;
 
