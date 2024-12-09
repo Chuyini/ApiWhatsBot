@@ -65,7 +65,7 @@ const Recived = async (req = request, res = response) => {
 async function buildInformation(sensorData) {
     let company = sensorData.company;
     let device = sensorData.device;
-    let tags = sensorData.tags;
+    
     let ip = sensorData.ip;
     let status = sensorData.status;   
     let time = sensorData.time;
@@ -111,7 +111,14 @@ async function buildInformation(sensorData) {
         console.log("La variable es: " + comments);
     }
 
-    tags = tags.toLowerCase();
+    try{
+        let tags = sensorData.tags;
+        tags = tags.toLowerCase();
+    }catch(e){
+        let tags = "";
+
+    }
+    
     
     if (lowerCaseText.includes("fallo finalizado") && !lowerCaseText.includes("desconocido")) {
         if (lowerCaseText.includes("pausado")) {
