@@ -82,7 +82,7 @@ async function buildInformation(sensorData) {
     let idUispService = extractNumberFromCompany(company);
     let bandera = sensorData.bandera;
     let numbers = ["524401050937", "524442478772", "524434629327"]; //Yo de trabajo, Debbie,El lic Frans, diana, daysimar
-
+    let tags;
 
     /*if (bandera == 1) {//esta bandera solo la usa el sensor de 24hrs
 
@@ -112,10 +112,10 @@ async function buildInformation(sensorData) {
     }
 
     try{
-        let tags = sensorData.tags;
+        tags = sensorData.tags;
         tags = tags.toLowerCase();
     }catch(e){
-        let tags = "";
+         tags = "";
 
     }
     
