@@ -15,7 +15,9 @@ const VerifyToken = (req = request, res = response) => {
     } catch (error) {
         console.error("Error verifying token:", error);
         return res.status(500).send("Server error.");
-    }
+    } 
+
+    
 };
 
 const Recived = async (req = request, res = response) => {
@@ -56,6 +58,10 @@ const Recived = async (req = request, res = response) => {
 
             // Llama a la función Process de manera asincrónica
             await processMessage.Process(text, number);//se tiene que esperar a que termine
+            
+
+
+
 
             return res.status(200).send("EVENT_RECEIVED");  
         } else if (statusObject && statusObject.length > 0) {
@@ -70,6 +76,8 @@ const Recived = async (req = request, res = response) => {
         return res.status(500).send("Error processing event.");
     }
 };
+
+
 
 function GetTextUser(message) {
     const typeMessage = message.type;
