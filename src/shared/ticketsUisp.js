@@ -1,6 +1,7 @@
 const whatsAppModel = require("../shared/modelsWhatsApp");
 const axios = require("axios");
 const moment = require("moment");
+const https = require('https');
 
 async function createTicketUisp(sensorData, text) {
     try {
