@@ -270,14 +270,14 @@ function CreateServiceReport(clientId,subject,createdAt,commentBody) {
         "phoneFrom": null,
         "assignedGroupId": null,
         "assignedUserId": null,
-        "createdAt": createdAt,
+        "createdAt": "2024-12-21T10:07:45-0600",
         "status": 1,
         "public": false,
         "assignedJobIds": [],
         "activity": [
             {
                 "userId": null,  // Cambiar a null o al ID correcto del usuario autenticado
-                "createdAt": createdAt,
+                "createdAt": "2024-12-21T10:07:45-0600",
                 "public": false,
                 "comment": {
                     "body": commentBody,
@@ -295,6 +295,8 @@ function CreateServiceReport(clientId,subject,createdAt,commentBody) {
             }
         ]
     });
+
+    console.log(data);
 
     return data;
 }
