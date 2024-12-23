@@ -4,6 +4,9 @@ const moment = require("moment");
 
 async function createTicketUisp(sensorData, text) {
     try {
+        const agent = new https.Agent({
+            rejectUnauthorized: false, // Deshabilitar validación SSL
+        });
         // Validar datos de entrada
         if (!sensorData || !sensorData.time || !text) {
             throw new Error("Datos insuficientes para crear el ticket.");
@@ -27,6 +30,7 @@ async function createTicketUisp(sensorData, text) {
                 "Content-Type": "application/json",
                 "X-Auth-App-Key": process.env.UISP_TEMPORAL_KEY,
             },
+            httpsAgent: agent, //agente que no valida los certificados https
         });
 
         console.log("Éxito en subir el ticket a UISP", response.data);
