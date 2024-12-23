@@ -22,7 +22,7 @@ async function createTicketUisp(sensorData, text) {
         const dateSpecialFormat = moment(date, "DD/MM/YYYY hh:mm:ss a").format("YYYY-MM-DDTHH:mm:ssZ");
 
         // Crear los datos del reporte
-        const data = whatsAppModel.CreateServiceReport(clientId, subject, dateSpecialFormat, "Texto variable");
+        const data = whatsAppModel.CreateServiceReport(clientId, subject, dateSpecialFormat, text);
 
         // Enviar la solicitud a la API de UISP
         const apiUrl = process.env.UISP_API_URL || "https://45.189.154.77/crm/api/v1.0/ticketing/tickets";
