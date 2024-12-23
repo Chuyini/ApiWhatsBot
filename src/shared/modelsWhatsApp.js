@@ -261,10 +261,50 @@ function TemplateWelcome(number) {
 
 }
 
+function CreateServiceReport(clientId,subject,createdAt,commentBody) {
+    let data = JSON.stringify({
+        "subject": subject,
+        "clientId": clientId,
+        "emailFromAddress": null,
+        "emailFromName": null,
+        "phoneFrom": null,
+        "assignedGroupId": null,
+        "assignedUserId": null,
+        "createdAt": createdAt,
+        "status": 1,
+        "public": false,
+        "assignedJobIds": [],
+        "activity": [
+            {
+                "userId": null,  // Cambiar a null o al ID correcto del usuario autenticado
+                "createdAt": createdAt,
+                "public": false,
+                "comment": {
+                    "body": commentBody,
+                    "emailFromAddress": null,
+                    "emailFromName": null,
+                    "phoneFrom": null,
+                    "attachments": []
+                }
+            },
+            {
+                "userId": null,  // Cambiar a null o al ID correcto del usuario autenticado
+                "createdAt": createdAt,
+                "public": false,
+                "comment": null
+            }
+        ]
+    });
+
+    return data;
+}
+
+
 
 
 
 module.exports = {
+    CreateServiceReport,
     MessageText,
     MessageList,
     MessageComprar,
