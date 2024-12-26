@@ -1,49 +1,64 @@
-const https = require('https');
+const https = require("https");
 const axios = require("axios");
 
-
-//aqui vamos a buscar el ID que corresponde al ID de UISP con el del USER Ident
-
-async function found_Id_Uisp_Prtg(sensorData){
-
-try {
+async function found_Id_Uisp_Prtg(sensorData) {
+    try {
+        // Configurar agente HTTPS para evitar validación de certificados (solo en entornos de prueba)
         const agent = new https.Agent({
-            rejectUnauthorized: false, // Deshabilitar validación SSL
+            rejectUnauthorized: false,
         });
+
         // Validar datos de entrada
-        if (!sensorData || !sensorData.time || !text) {
-            throw new Error("Datos insuficientes para buscar el ID de usuario en CRM uisp.");
+        if (!sensorData || !sensorData.tags) {
+            throw new Error("Datos insuficientes para buscar el ID de usuario en CRM UISP.");
         }
 
-        //Primero vamos a sacar de la variable etiqutas de PRTG que nos dio el sensor 
+        // Extraer el ID de las etiquetas
+        const etiquetas = sensorData.tags;
+        if (typeof etiquetas !== "string") {
+            throw new Error("Las etiquetas no están disponibles o no son una cadena.");
+        }
 
-        
+        const idMatch = etiquetas.match(/\d+/);
+        if (!idMatch) {
+            console.log("No se encontró ningún ID en las etiquetas.");
+            return 556; // Devolver null si no se encuentra un ID
+        }
 
-        // Variables iniciales
-        const clientId = 1122;
-        const subject = "NOC003 - SIN SERVICIO";
-        const date = sensorData.time;
+        const id = idMatch[0];
+        console.log("ID encontrado:", id);
 
-        // Formatear la fecha
-        const dateSpecialFormat = moment(date, "DD/MM/YYYY hh:mm:ss a").format("YYYY-MM-DDTHH:mm:ssZ");
+        // Construir URL para la solicitud
+        const apiUrlToFindIdClient = `https://45.189.154.77/crm/api/v1.0/clients?userIdent=${id}`;
 
-        // Crear los datos del reporte
-        const data = whatsAppModel.CreateServiceReport(clientId, subject, dateSpecialFormat, text);
-
-        // Enviar la solicitud a la API de UISP
-        const apiUrl = process.env.UISP_API_URL || "https://45.189.154.77/crm/api/v1.0/ticketing/tickets";
-        const response = await axios.post(apiUrl, data, {
+        // Hacer la petición para buscar el ID en UISP
+        const response = await axios.get(apiUrlToFindIdClient, {
             headers: {
                 "Content-Type": "application/json",
                 "X-Auth-App-Key": process.env.UISP_TEMPORAL_KEY,
             },
-            httpsAgent: agent, //agente que no valida los certificados https
+            httpsAgent: agent,
         });
 
-        console.log("Éxito en subir el ticket a UISP", response.data);
+        // Extraer el ID de la respuesta
+        const idToUisp = response.data?.id;
+        if (!idToUisp) {
+            console.log("No se encontró un ID válido en la respuesta de UISP.");
+            return 556 ;
+        }
+
+        console.log("ID de UISP encontrado:", idToUisp);
+        return idToUisp;
     } catch (error) {
-        console.error("Error al crear el ticket:", error.response ? error.response.data : error.message);
+        if (error.response) {
+            console.error("Error en la respuesta de la API:", error.response.data);
+        } else if (error.request) {
+            console.error("No hubo respuesta de la API:", error.request);
+        } else {
+            console.error("Error al buscar el ID del usuario:", error.message);
+        }
+        return null; // En caso de error, devolver null
     }
-
-
 }
+
+module.exports = { found_Id_Uisp_Prtg };

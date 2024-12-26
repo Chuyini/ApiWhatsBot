@@ -2,6 +2,7 @@ const whatsAppModel = require("../shared/modelsWhatsApp");
 const axios = require("axios");
 const moment = require("moment");
 const https = require('https');
+const found_Id_Uisp_Prtg = require("../shared/foundIDsUisp");
 
 async function createTicketUisp(sensorData, text) {
     try {
@@ -14,7 +15,7 @@ async function createTicketUisp(sensorData, text) {
         }
 
         // Variables iniciales
-        const clientId = 1122;
+        const clientId = found_Id_Uisp_Prtg.found_Id_Uisp_Prtg(sensorData);
         const subject = "NOC003 - SIN SERVICIO";
         const date = sensorData.time;
 
@@ -47,6 +48,8 @@ async function closeTicket(sensorData, text) {
     try{
 
         //primero verificamos el user id de 
+
+
 
         //perimero haremos un get de los tickets para ver si existe y cerrarlo
 
