@@ -213,8 +213,8 @@ async function buildInformation(sensorData) {
             // AIresponse = await chatGPTService.GetMessageChatGPT(message); <-- no necesitamos algun reporte cuando este en OK
             text = `Sensor Alert ${statusEmoji}:\n🏢 EMPRESA/LUGAR: *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji} ESTADO: *${status}*\n\n🌐 IP: *${ip}*\n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}*\n\n${message}\n\n🔗 LINK UISP: *${linkUisp}*\n\n ${comments}\n\n etiquetas: ${tags}`;
             if(lowerCaseText.includes("repetir escalacion")){//si no es de comunicalo pero es un repetir escalacion
-
-                if(!await foundTicket.isThereTicketOnUisp){
+                let hasTicket = await foundTicket.isThereTicketOnUisp;
+                if(! hasTicket){
 
                     await ticketUisp.createTicketUisp(sensorData,text);
 
