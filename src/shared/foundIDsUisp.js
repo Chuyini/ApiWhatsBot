@@ -57,7 +57,7 @@ async function found_Id_Uisp_Prtg(sensorData) {
         } else {
             console.error("Error al buscar el ID del usuario:", error.message);
         }
-        return null; // En caso de error, devolver null
+        return 556; // En caso de error, devolver null
     }
 }
 
