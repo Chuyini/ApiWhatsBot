@@ -214,19 +214,20 @@ async function buildInformation(sensorData) {
             text = `Sensor Alert ${statusEmoji}:\n🏢 EMPRESA/LUGAR: *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji} ESTADO: *${status}*\n\n🌐 IP: *${ip}*\n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}*\n\n${message}\n\n🔗 LINK UISP: *${linkUisp}*\n\n ${comments}\n\n etiquetas: ${tags}`;
             if(lowerCaseText.includes("repetir escalacion")){//si no es de comunicalo pero es un repetir escalacion
 
-                let hasTicket = true;
+                await ticketUisp.createTicketUisp(sensorData,text);
+                /*let hasTicket = true;
                 
                 hasTicket = await foundTicket.isThereTicketOnUisp(sensorData);
                 console.log("esto dio la resupuesta : ",hasTicket);
 
                 if(!hasTicket){
 
-                    await ticketUisp.createTicketUisp(sensorData,text);
+                    
 
                 }else{
 
                     console.log("Ya habia un ticket");
-                }
+                }*/
                 
 
             }
