@@ -6,6 +6,7 @@ const processMessageR = require("../shared/processToPrtg");
 const chatGPTService = require("../service/chatGPT-service");
 const checkTime = require("../shared/checkTime");
 const ticketUisp = require("../shared/ticketsUisp");
+const foundTicket = require("../shared/foundTicket");
 
 const Queue = require('bull');
 const Bottleneck = require('bottleneck');
@@ -213,7 +214,15 @@ async function buildInformation(sensorData) {
             text = `Sensor Alert ${statusEmoji}:\n🏢 EMPRESA/LUGAR: *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji} ESTADO: *${status}*\n\n🌐 IP: *${ip}*\n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}*\n\n${message}\n\n🔗 LINK UISP: *${linkUisp}*\n\n ${comments}\n\n etiquetas: ${tags}`;
             if(lowerCaseText.includes("repetir escalacion")){//si no es de comunicalo pero es un repetir escalacion
 
-                await ticketUisp.createTicketUisp(sensorData,text);
+                if(!foundTicket.isThereTicketOnUisp){
+
+                    await ticketUisp.createTicketUisp(sensorData,text);
+
+                }else{
+
+                    console.log("Ya habia un ticket");
+                }
+                
 
             }
         }
