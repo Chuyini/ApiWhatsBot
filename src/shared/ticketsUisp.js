@@ -15,7 +15,7 @@ async function createTicketUisp(sensorData, text) {
         }
 
         // Variables iniciales
-        const clientId = 1122;//found_Id_Uisp_Prtg.found_Id_Uisp_Prtg(sensorData);
+        const clientId = found_Id_Uisp_Prtg.found_Id_Uisp_Prtg(sensorData);
         const subject = "NOC003 - SIN SERVICIO";
         const date = sensorData.time;
 
