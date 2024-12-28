@@ -111,7 +111,7 @@ async function isThereTicketOnUisp(sensorData) {
             throw new Error("La IA no pudo responder.");
         }
 
-        if (AIresponse.includes("sí")) {
+        if (AIresponse.includes("Sí")) {
             console.log("ChatGPT encontró coincidencias:", AIresponse);
             return AIresponse; // Respuesta de la IA
         } else {
