@@ -35,21 +35,21 @@ async function found_Id_Uisp_Prtg(sensorData) {
         const response = await axios.get(apiUrlToFindIdClient, {
             headers: {
                 "Content-Type": "application/json",
-                "X-Auth-App-Key": process.env.UISP_TEMPORAL_KEY,
+                "X-Auth-App-Key": process.env.UISP_PERMANENT_GET_KEY,
             },
             httpsAgent: agent,
         });
 
         // Extraer el ID de la respuesta
-        const idToUisp = response.data.id;
-        console.log("El response es ",idToUisp);
-        if (!idToUisp) {
-            console.log("No se encontró un ID válido en la respuesta de UISP.");
-            return 556 ;
+        if (response.data && response.data.length > 0) {
+            const idToUisp = response.data[0].id; // Si el ID está en el primer objeto del arreglo
+            console.log("ID extraído:", idToUisp);
+            return idToUisp; // Puedes devolverlo o usarlo donde lo necesites
+        } else {
+            console.log("No se encontró ningún cliente con el ID proporcionado.");
+            return null; // Retornar null si no hay resultados
         }
-
-        console.log("ID de UISP encontrado:", idToUisp);
-        return idToUisp;
+        
     } catch (error) {
         if (error.response) {
             console.error("Error en la respuesta de la API:", error.response.data);
