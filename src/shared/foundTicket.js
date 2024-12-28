@@ -1,6 +1,6 @@
 const https = require("https");
 const axios = require("axios");
-const { found_Id_Uisp_Prtg } = require("./foundIDsUisp");
+const found_Id_Uisp_Prtg = require("../shared/foundIDsUisp");
 const chatGPTService = require("../service/chatGPT-service");
 
 async function isThereTicketOnUisp(sensorData) {
