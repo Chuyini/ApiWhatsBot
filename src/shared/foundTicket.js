@@ -94,7 +94,9 @@ async function isThereTicketOnUisp(sensorData) {
             //Debemos asegurarnos que haya  tickets de ese Grupo o cliente empresarial que puede tener varios
             //servicios
 
-            if (!Array.isArray(ticketsGroup) || ticketsGroup.length === 0) {
+            console.log("Los grupos de tickes de este usurio son", ticketsGroup);
+
+            if (ticketsGroup.length === 0) {
                 console.log("No se encontraron tickets para este cliente.");
                 return null;
             }
