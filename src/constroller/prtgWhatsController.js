@@ -13,7 +13,7 @@ const Bottleneck = require('bottleneck');
 
 // Crear una cola de mensajes
 const messageQueue = new Queue('messageQueue');
-        
+
 // Configurar Bottleneck para la limitación de velocidad
 const limiter = new Bottleneck({
     maxConcurrent: 1, // Número máximo de tareas concurrentes
@@ -67,9 +67,9 @@ const Recived = async (req = request, res = response) => {
 async function buildInformation(sensorData) {
     let company = sensorData.company;
     let device = sensorData.device;
-    
+
     let ip = sensorData.ip;
-    let status = sensorData.status;   
+    let status = sensorData.status;
     let time = sensorData.time;
     let comments = sensorData.comments;
     let message = sensorData.message;
@@ -113,15 +113,15 @@ async function buildInformation(sensorData) {
         console.log("La variable es: " + comments);
     }
 
-    try{
+    try {
         tags = sensorData.tags;
         tags = tags.toLowerCase();
-    }catch(e){
-         tags = "";
+    } catch (e) {
+        tags = "";
 
     }
-    
-    
+
+
     if (lowerCaseText.includes("fallo finalizado") && !lowerCaseText.includes("desconocido")) {
         if (lowerCaseText.includes("pausado")) {
             statusEmoji = "⏸️";
@@ -133,17 +133,17 @@ async function buildInformation(sensorData) {
     } else if (lowerCaseText.includes("desconocido")) {
         statusEmoji = "⚪ PRTG";
         numbers = numbers.filter(number => number !== "524442478772");; // Sacamos a Debie para que no siga alarmando
-    }else if(lowerCaseText.includes("ok")){
+    } else if (lowerCaseText.includes("ok")) {
 
         statusEmoji = "🟢";
 
-    }else if(lowerCaseText.includes("repetir escalacion") || lowerCaseText.includes("fallo escalacion")){
+    } else if (lowerCaseText.includes("repetir escalacion") || lowerCaseText.includes("fallo escalacion")) {
         statusEmoji = "🔴🔧";
 
     }
 
 
-    
+
     let id = extractNumbersAndText(company);
     linkUisp = concatLink(idUispService);
     priority = priority.trim();
@@ -190,9 +190,9 @@ async function buildInformation(sensorData) {
 
         textToTemplate = textToTemplate.trim();
 
-        textToTemplate = textToTemplate.substring(0,50);
-        
-        const specialNumber = ["524442475444","524441967796","524441574990","524441184908", "524434629327", "524442478772"];
+        textToTemplate = textToTemplate.substring(0, 50);
+
+        const specialNumber = ["524442475444", "524441967796", "524441574990", "524441184908", "524434629327", "524442478772"];
         //const testNumbers = ["524434629327","524442478772","524441967796"];
         //numbers.push("524441184908"); //Ceron
         checkTime.checkTimeAndGreet(specialNumber, textToTemplate);
@@ -206,28 +206,28 @@ async function buildInformation(sensorData) {
             AIresponse = await chatGPTService.GetMessageChatGPT("Puedes resumir lo siguiente es para mandarlo como reporte solo pon algo sencillo no agregues codigos de error, además pregunta si sucede algo con la electricidad o alguna afectacion ya que es comunicalo y ellos son un isp. No agreges emogies :" + message);
             text = `\n🏢 *${company}*\n\nSERVICIO: *${device}*\n\n${statusEmoji} ESTADO: *${status}*\n\n🌐 IP: *${ip}*\n\nTIEMPO: *${time}*\n\n${AIresponse}\n\n${comments}`;
 
-            if(lowerCaseText.includes("fallo escalacion") && statusEmoji == "🔴🔧"){
-                await ticketUisp.createTicketUisp(sensorData,text);
+            if (lowerCaseText.includes("fallo escalacion") && statusEmoji == "🔴🔧") {
+                await ticketUisp.createTicketUisp(sensorData, text);
             }
         } else {
             // AIresponse = await chatGPTService.GetMessageChatGPT(message); <-- no necesitamos algun reporte cuando este en OK
             text = `Sensor Alert ${statusEmoji}:\n🏢 EMPRESA/LUGAR: *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji} ESTADO: *${status}*\n\n🌐 IP: *${ip}*\n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}*\n\n${message}\n\n🔗 LINK UISP: *${linkUisp}*\n\n ${comments}\n\n etiquetas: ${tags}`;
-            if(lowerCaseText.includes("repetir escalacion")){//si no es de comunicalo pero es un repetir escalacion
+            if (lowerCaseText.includes("repetir escalacion")) {//si no es de comunicalo pero es un repetir escalacion
 
                 let hasTicket = null;
-                
-                hasTicket =await foundTicket.isThereTicketOnUisp(sensorData);
-                console.log("esto dio la resupuesta : ",hasTicket);
 
-                if(hasTicket != null ){
+                hasTicket = await foundTicket.isThereTicketOnUisp(sensorData);
+                console.log("esto dio la resupuesta : ", hasTicket);
 
-                    await ticketUisp.createTicketUisp(sensorData,text);
+                if (hasTicket != null) {
 
-                }else{
+                    await ticketUisp.createTicketUisp(sensorData, text);
+
+                } else {
 
                     console.log("Ya habia un ticket");
                 }
-                
+
 
             }
         }
@@ -253,7 +253,7 @@ function concatLink(id) {
         return "https://uisp.elpoderdeinternet.mx/crm/client/" + id;
     } else {
         return "https://uisp.elpoderdeinternet.mx/crm";
-    } 
+    }
 }
 
 function extractNumberFromCompany(company) {
