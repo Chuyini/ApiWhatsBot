@@ -4,11 +4,17 @@ const found_Id_Uisp_Prtg = require("../shared/foundIDsUisp");
 const chatGPTService = require("../service/chatGPT-service");
 
 async function isThereTicketOnUisp(sensorData) {
+
+
     try {
+
+        
+
         // Configurar agente HTTPS para evitar validación de certificados
         const agent = new https.Agent({
             rejectUnauthorized: false,
         });
+        
 
         // Validar entrada
         if (!sensorData || !sensorData.ip) {
@@ -27,6 +33,7 @@ async function isThereTicketOnUisp(sensorData) {
                 "X-Auth-App-Key": process.env.UISP_TEMPORAL_KEY,
             },
             httpsAgent: agent,
+            timeout: 120000,
         });
 
         const tickets = response.data;
@@ -69,6 +76,7 @@ async function isThereTicketOnUisp(sensorData) {
                 "X-Auth-App-Key": process.env.UISP_TEMPORAL_KEY,
             },
             httpsAgent: agent,
+            timeout: 120000,
         });
 
         const ticketsGroup = responseAllGropusTickets.data;
@@ -92,7 +100,6 @@ async function isThereTicketOnUisp(sensorData) {
             Dispositivo: ${sensorData.device}, IP: ${sensorData.ip}, Tags: ${sensorData.tags}, Grupo empresarial: ${sensorData.company}.
             Estos son los tickets encontrados:
             "${summary}"
-
             Verifica si hay coincidencias estrictas basadas en ID, IP, tags o acrónimos (ej. Fahorro = Farmacias Ahorro). 
             Responde "sí" con el ID del ticket si hay coincidencias; responde "no" si no las hay.
         `;
