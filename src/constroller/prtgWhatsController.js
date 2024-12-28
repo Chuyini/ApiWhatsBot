@@ -219,7 +219,7 @@ async function buildInformation(sensorData) {
                 hasTicket =await foundTicket.isThereTicketOnUisp(sensorData);
                 console.log("esto dio la resupuesta : ",hasTicket);
 
-                if(!hasTicket){
+                if(hasTicket != null ){
 
                     await ticketUisp.createTicketUisp(sensorData,text);
 
