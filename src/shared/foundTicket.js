@@ -74,7 +74,7 @@ async function isThereTicketOnUisp(sensorData) {
 
             if (!responseAllGropusTickets) {
 
-                throw new Error(`Error en la consulta de tickets. Código de estado: ${responseAllGroupsTickets.status}`);
+                throw new Error(`Error en la consulta de tickets. Código de estado: ${responseAllGroupsTickets}`);
             }
 
 
