@@ -172,8 +172,7 @@ async function isThereTicketOnUisp(sensorData) {
 
 
 
-        console.log("No se encontraron tickets con la IP proporcionada.");
-        return null; // No se encontraron coincidencias
+       
     } catch (error) {
         console.error("Error al buscar el ticket en CRM UISP:");
         if (error.response) {
