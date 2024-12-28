@@ -48,5 +48,5 @@ app.listen(PORT, () => {
     setInterval(() => {
         console.log('Checking time...');
         checkTimeAndGreet();
-    }, 60000); // Ejecuta la función cada minuto
+    }, 70000); // Ejecuta la función cada minuto
 });

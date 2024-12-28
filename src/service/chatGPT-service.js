@@ -15,12 +15,11 @@ async function GetMessageChatGPT(text) {
             messages: [{
                 role: "user",
                 content: text
-            }]
+            }],
+            temperature: 0, // Controlar la aleatoriedad
             
         });
-        new Promise((_, reject) =>
-            setTimeout(() => reject(new Error("Timeout alcanzado")), 30000)
-        )
+        
 
         // Procesa la respuesta correctamente
         let responseText = response.choices[0].message.content;
