@@ -22,7 +22,7 @@ async function found_Id_Uisp_Prtg(sensorData) {
         const idMatch = etiquetas.match(/\d+/);
         if (!idMatch) {
             console.log("No se encontró ningún ID en las etiquetas.");
-            return 556; // Devolver null si no se encuentra un ID
+            return null; // Devolver null si no se encuentra un ID
         }
 
         const id = idMatch[0];
@@ -47,7 +47,7 @@ async function found_Id_Uisp_Prtg(sensorData) {
             return idToUisp; // Puedes devolverlo o usarlo donde lo necesites
         } else {
             console.log("No se encontró ningún cliente con el ID proporcionado.");
-            return 556; // Retornar null si no hay resultados
+            return null; // Retornar null si no hay resultados
         }
         
     } catch (error) {
@@ -58,7 +58,7 @@ async function found_Id_Uisp_Prtg(sensorData) {
         } else {
             console.error("Error al buscar el ID del usuario:", error.message);
         }
-        return 556; // En caso de error, devolver null
+        return null; // En caso de error, devolver null
     }
 }
 

@@ -1,5 +1,7 @@
 const https = require("https");
 const axios = require("axios");
+const { found_Id_Uisp_Prtg } = require("./foundIDsUisp");
+const chatGPTService = require("../service/chatGPT-service");
 
 async function isThereTicketOnUisp(sensorData) {
     try {
@@ -28,6 +30,7 @@ async function isThereTicketOnUisp(sensorData) {
             httpsAgent: agent,
         });
 
+
         // Extraer los tickets
         const tickets = response.data;
         if (!Array.isArray(tickets)) {
@@ -49,6 +52,116 @@ async function isThereTicketOnUisp(sensorData) {
                 }
             }
         }
+
+        //Si no se encuentra el ticket
+        //Tendremos que sacar los tickets que correspondan al grupo del servicio 
+
+        //Primero debemos encontrar el id en base al userIdent
+
+        const idClient = await found_Id_Uisp_Prtg.found_Id_Uisp_Prtg(sensorData);
+
+        if (idClient != null) {
+
+            const apiUrlToFindTicketsOfGroup = `https://45.189.154.77/crm/api/v1.0/ticketing/tickets?statuses%5B%5D=0&statuses%5B%5D=1&statuses%5B%5D=2&public=0&clientId=${idClient}`;
+
+            const responseAllGropusTickets = await axios.get(apiUrlToFindTicketsOfGroup, {
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-Auth-App-Key": process.env.UISP_TEMPORAL_KEY,
+                },
+                httpsAgent: agent,
+            });
+
+            if (responseAllGropusTickets.status() !== 200) {
+
+                throw new Error(`Error en la consulta de tickets. Código de estado: ${responseAllGroupsTickets.status}`);
+            }
+
+
+
+
+            const ticketsGroup = responseAllGropusTickets.data;
+
+            //Debemos asegurarnos que haya  tickets de ese Grupo o cliente empresarial que puede tener varios
+            //servicios
+
+            if (!Array.isArray(ticketsGroup) || ticketsGroup.length === 0) {
+                console.log("No se encontraron tickets para este cliente.");
+                return null;
+            }
+            ///este es el caso en que si hay tickets a nombre de ese grupo empresarialx
+            //ahora dembemos ordenar los tickets sacar lo necesario
+            let prompt = "";
+            let message = "";
+
+            for (const ticket of ticketsGroup) {
+                message += `Asunto: ${ticket.subject}\nID Cliente: ${ticket.clientId}\nTicket ID: ${ticket.id}\nComentarios:\n`;
+
+                // Verificar si el ticket tiene actividades y recorrerlas
+
+                if (ticket.activity && Array.isArray(ticket.activity)) {
+                    for (const activity of ticket.activity) {
+                        if (activity.comment && activity.comment.body) {
+                            message += `Usuario: ${activity.userId},\n${activity.comment.body.trim()}\n`;
+                        }
+                    }
+                } else {
+                    message += "";
+                }
+
+            }
+
+            //Ahora debemos armar el prompt para pasarselo a la inteligencia artificial 
+
+            prompt = `
+                    Actúa como un experto en soporte técnico que consulta tickets. 
+                    Tengo la siguiente información: 
+                    Dispositivo: ${sensorData.device}, IP: ${sensorData.ip}, Tags: ${sensorData.tags}, Grupo empresarial: ${sensorData.company}.
+                    Este servicio podría estar relacionado con el ID del cliente. 
+
+                    Quiero que analices estrictamente el siguiente mensaje para compararlo con los tickets asociados:
+                    "${message}"
+
+                    Verifica si hay coincidencias, ya sea por ID, IP, tags, acrónimos (por ejemplo, Fahorro significa Farmacias Ahorro), o cualquier relación clara. 
+                    Si hay una coincidencia, responde únicamente con "sí" y con el id del ticket. 
+                    Si no hay coincidencias, responde únicamente con "no".`;
+
+            const AIresponse = await chatGPTService.GetMessageChatGPT(prompt);
+
+            if(AIresponse == null){
+
+                throw new Error("La IA no pudo contestar");
+
+            }else{
+            
+
+                if(AIresponse.includes("sí")){
+
+                    //Tenemos que buscar ese ticket
+                    return AIresponse;
+                    
+
+                }else{
+
+
+                    return null;
+
+
+                }
+
+            }
+
+
+
+
+
+
+        }
+
+
+
+
+
 
         console.log("No se encontraron tickets con la IP proporcionada.");
         return null; // No se encontraron coincidencias
