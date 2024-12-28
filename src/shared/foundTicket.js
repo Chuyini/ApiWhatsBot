@@ -72,7 +72,7 @@ async function isThereTicketOnUisp(sensorData) {
                 httpsAgent: agent,
             });
 
-            if (responseAllGropusTickets.status() !== 200) {
+            if (!responseAllGropusTickets) {
 
                 throw new Error(`Error en la consulta de tickets. Código de estado: ${responseAllGroupsTickets.status}`);
             }
