@@ -47,7 +47,7 @@ async function found_Id_Uisp_Prtg(sensorData) {
             return idToUisp; // Puedes devolverlo o usarlo donde lo necesites
         } else {
             console.log("No se encontró ningún cliente con el ID proporcionado.");
-            return null; // Retornar null si no hay resultados
+            return 556; // Retornar null si no hay resultados
         }
         
     } catch (error) {
