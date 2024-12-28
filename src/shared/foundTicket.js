@@ -64,23 +64,23 @@ async function isThereTicketOnUisp(sensorData) {
 
             const apiUrlToFindTicketsOfGroup = `https://45.189.154.77/crm/api/v1.0/ticketing/tickets?statuses%5B%5D=0&statuses%5B%5D=1&statuses%5B%5D=2&public=0&clientId=${idClient}`;
 
-            console.log("Tickets de ese usuario: ", apiUrlToFindTickets);
+           
 
+            const responseAllGropusTickets = await axios.get(apiUrlToFindTicketsOfGroup, {
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-Auth-App-Key": process.env.UISP_TEMPORAL_KEY,
+                },
+                httpsAgent: agent,
+            });
 
-            try {
-                const responseAllGropusTickets = await axios.get(apiUrlToFindTicketsOfGroup, {
-                    headers: {
-                        "Content-Type": "application/json",
-                        "X-Auth-App-Key": process.env.UISP_TEMPORAL_KEY,
-                    },
-                    httpsAgent: agent,
-                });
-            } catch (e) {
+            if(response.status !== 200){
 
-                console.log("Error en la consulta ");
-                return null;
-
+                throw Error("Error al consultar el tickett ");
+                
             }
+
+            console.log("Tickets de ese usuario: ", response.data);
 
 
 
