@@ -103,6 +103,7 @@ async function closeTicket(sensorData, text) {
                 "X-Auth-App-Key": process.env.UISP_TEMPORAL_KEY,
             },
             httpsAgent: agent, //agente que no valida los certificados https
+            timeout: 120000,
         });
 
         console.log("Éxito en subir el ticket a UISP", response.data);
