@@ -50,3 +50,5 @@ app.listen(PORT, () => {
         checkTimeAndGreet();
     }, 70000); // Ejecuta la función cada minuto
 });
+
+server.setTimeout(100000); 
