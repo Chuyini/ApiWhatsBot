@@ -64,21 +64,30 @@ async function isThereTicketOnUisp(sensorData) {
 
             const apiUrlToFindTicketsOfGroup = `https://45.189.154.77/crm/api/v1.0/ticketing/tickets?statuses%5B%5D=0&statuses%5B%5D=1&statuses%5B%5D=2&public=0&clientId=${idClient}`;
 
-            const responseAllGropusTickets = await axios.get(apiUrlToFindTicketsOfGroup, {
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-Auth-App-Key": process.env.UISP_TEMPORAL_KEY,
-                },
-                httpsAgent: agent,
-            });
+            console.log("Tickets de ese usuario: ", apiUrlToFindTickets);
 
-            if (!responseAllGropusTickets) {
 
-                throw new Error(`Error en la consulta de tickets. Código de estado: ${responseAllGroupsTickets}`);
+            try {
+                const responseAllGropusTickets = await axios.get(apiUrlToFindTicketsOfGroup, {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-Auth-App-Key": process.env.UISP_TEMPORAL_KEY,
+                    },
+                    httpsAgent: agent,
+                });
+            } catch (e) {
+
+                console.log("Error en la consulta ");
+                return null;
+
             }
 
 
 
+
+
+
+            //si hubo tickest por lo que procedemos a hacer las inferencias
 
             const ticketsGroup = responseAllGropusTickets.data;
 
@@ -128,20 +137,20 @@ async function isThereTicketOnUisp(sensorData) {
 
             const AIresponse = await chatGPTService.GetMessageChatGPT(prompt);
 
-            if(AIresponse == null){
+            if (AIresponse == null) {
 
                 throw new Error("La IA no pudo contestar");
 
-            }else{
-            
+            } else {
 
-                if(AIresponse.includes("sí")){
+
+                if (AIresponse.includes("sí")) {
 
                     //Tenemos que buscar ese ticket
                     return AIresponse;
-                    
 
-                }else{
+
+                } else {
 
 
                     return null;
