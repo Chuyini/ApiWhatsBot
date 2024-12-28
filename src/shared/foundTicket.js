@@ -98,7 +98,7 @@ async function isThereTicketOnUisp(sensorData) {
         `;
 
         // Llamar a ChatGPT
-        const AIresponse = await chatGPTService.GetMessageChatGPT(prompt);
+        const AIresponse = await chatGPTService.GetMessageChatGPT("hola");
 
         if (!AIresponse) {
             throw new Error("La IA no pudo responder.");
