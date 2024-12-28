@@ -41,7 +41,7 @@ async function found_Id_Uisp_Prtg(sensorData) {
         });
 
         // Extraer el ID de la respuesta
-        const idToUisp = response.data;
+        const idToUisp = response.data.id;
         console.log("El response es ",idToUisp);
         if (!idToUisp) {
             console.log("No se encontró un ID válido en la respuesta de UISP.");
