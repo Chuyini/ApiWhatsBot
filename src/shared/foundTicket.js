@@ -44,23 +44,24 @@ async function isThereTicketOnUisp(sensorData) {
                         activity.comment.body.includes(ip)
                     ) {
                         console.log("Ticket encontrado:", ticket.id);
-                        return true; // Ticket encontrado
+                        return ticket; // Ticket encontrado
                     }
                 }
             }
         }
 
         console.log("No se encontraron tickets con la IP proporcionada.");
-        return false; // No se encontraron coincidencias
+        return null; // No se encontraron coincidencias
     } catch (error) {
+        console.error("Error al buscar el ticket en CRM UISP:");
         if (error.response) {
             console.error("Error en la respuesta de la API:", error.response.data);
         } else if (error.request) {
             console.error("No hubo respuesta de la API:", error.request);
         } else {
-            console.error("Error al procesar los tickets:", error.message);
+            console.error("Error desconocido:", error.message);
         }
-        return false; // En caso de error, devolver false
+        return null; // En caso de error, devolver null
     }
 }
 
