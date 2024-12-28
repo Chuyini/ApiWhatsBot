@@ -98,7 +98,7 @@ async function isThereTicketOnUisp(sensorData) {
         `;
 
         // Llamar a ChatGPT
-        const AIresponse = await chatGPTService.GetMessageChatGPT("hola");
+        const AIresponse = await chatGPTService.GetMessageChatGPT(prompt.trim());
 
         if (!AIresponse) {
             throw new Error("La IA no pudo responder.");
@@ -108,7 +108,7 @@ async function isThereTicketOnUisp(sensorData) {
             console.log("ChatGPT encontró coincidencias:", AIresponse);
             return AIresponse; // Respuesta de la IA
         } else {
-            console.log("No se encontraron coincidencias según ChatGPT.");
+            console.log("No se encontraron coincidencias según la IA.");
             console.log(AIresponse);
             return null;
         }
