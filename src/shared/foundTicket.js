@@ -96,7 +96,7 @@ async function isThereTicketOnUisp(sensorData) {
             if (ticket.activity && Array.isArray(ticket.activity)) {
                 for (const activity of ticket.activity) {
                     if (activity.comment && activity.comment.body) {
-                        message += `Usuario: ${activity.userId},\n${activity.comment.body.trim()}\n`;
+                        message += `Usuario: ${activity.userId} -->${activity.comment.body.trim()}\n`;
                     }
                 }
             } else {
@@ -106,7 +106,7 @@ async function isThereTicketOnUisp(sensorData) {
 
         // Procesar tickets para generar un resumen compacto
         let summary = ticketsGroup
-            .map(ticket => `Asunto: ${ticket.subject}, ID Cliente: ${ticket.clientId}, Ticket ID: ${ticket.id}, body: ${message}`)
+            .map(ticket => `Asunto: ${ticket.subject}, ID de grupo empresarial: ${ticket.clientId}, Ticket ID: ${ticket.id}, body: ${message}`)
             .join("\n");
 
         // Construir el prompt para el lenguaje natural
