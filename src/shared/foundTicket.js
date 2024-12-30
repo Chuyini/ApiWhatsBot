@@ -95,6 +95,7 @@ async function isThereTicketOnUisp(sensorData) {
 
         const numberOfServices = await found_Id_Uisp_Prtg.numberOfServicesOfCompany(idClient);
 
+        console.log("Number of services :",numberOfServices);
         if (ticketsGroup.length === 1 && numberOfServices === 1) {
             return ticketsGroup;
         }
