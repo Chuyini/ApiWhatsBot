@@ -104,6 +104,7 @@ async function isThereTicketOnUisp(sensorData) {
             Responde "sí" con el ID del ticket si hay coincidencias; responde "no" si no las hay.
         `;
 
+        console.log(prompt);
         // Llamada al lenguaje natural
         const AIresponse = await chatGPTService.GetMessageChatGPT(prompt.trim());
 
