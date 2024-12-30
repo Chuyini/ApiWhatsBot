@@ -111,14 +111,35 @@ async function isThereTicketOnUisp(sensorData) {
 
         // Construir el prompt para el lenguaje natural
         const prompt = `
-            Actúa como un experto en soporte técnico que consulta tickets.
-            Información del servicio: 
-            Dispositivo: ${sensorData.device}, IP: ${sensorData.ip}, Tags: ${sensorData.tags}, Grupo empresarial: ${sensorData.company}.
-            Estos son los tickets encontrados:
-            "${summary}"
-            Verifica si hay coincidencias estrictas basadas en ID sobre todo en ID y IP si no encuentras algo como esto mejor di que no pero tambien toma en cuenta tags o acrónimos (ej. Fahorro = Farmacias Ahorro). 
-            Responde "sí" con el ID del ticket si hay coincidencias; responde "no" si no las hay.
-        `;
+Actúa como un experto en soporte técnico que consulta tickets.
+
+Información del servicio que estás evaluando: 
+- Dispositivo: ${sensorData.device}.
+- IP: ${sensorData.ip}.
+- Tags: ${sensorData.tags}.
+- Grupo empresarial: ${sensorData.company}.
+
+Estos son los tickets encontrados relacionados con este cliente:
+"${summary}"
+
+Tu tarea es identificar coincidencias estrictas entre el servicio reportado y los tickets proporcionados. 
+Las coincidencias deben basarse principalmente en:
+1. **ID del cliente o ticket.**
+2. **Dirección IP exacta (${sensorData.ip}).**
+3. Tags relacionados (${sensorData.tags}).
+4. Acrónimos o relaciones explícitas (por ejemplo, Fahorro = Farmacias Ahorro).
+
+Considera lo siguiente:
+- **No des por hecho una coincidencia si solo hay similitudes vagas como comentarios generales o nombres de sucursales.** 
+- Si hay coincidencias estrictas (IDs, IP, o tags únicos que confirmen el servicio), responde **solo con "sí" seguido del ID del ticket correspondiente**.
+- Si no encuentras coincidencias estrictas en los datos proporcionados, responde **únicamente con "no"**.
+
+Ejemplo:  
+Si la información del ticket contiene un ID de cliente o ticket que no coincide exactamente con la ID o IP del servicio reportado, considera que **no hay coincidencia**, incluso si el nombre es similar o hay menciones relacionadas en comentarios.  
+Esto asegura que los tickets ambiguos no sean malinterpretados.
+
+`;
+
 
         console.log(prompt);
         // Llamada al lenguaje natural
