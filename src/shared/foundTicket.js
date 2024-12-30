@@ -8,13 +8,13 @@ async function isThereTicketOnUisp(sensorData) {
 
     try {
 
-        
+
 
         // Configurar agente HTTPS para evitar validación de certificados
         const agent = new https.Agent({
             rejectUnauthorized: false,
         });
-        
+
 
         // Validar entrada
         if (!sensorData || !sensorData.ip) {
@@ -87,10 +87,26 @@ async function isThereTicketOnUisp(sensorData) {
         }
 
         console.log("Tickets del grupo empresarial encontrados:", ticketsGroup.length);
+        let message = ""; // Inicializamos la variable como cadena vacía
+
+        for (const ticket of ticketsGroup) {
+            message += `Asunto: ${ticket.subject}\nID Cliente: ${ticket.clientId}\nTicket ID: ${ticket.id}\nComentarios:\n`;
+
+            // Verificar si el ticket tiene actividades y recorrerlas
+            if (ticket.activity && Array.isArray(ticket.activity)) {
+                for (const activity of ticket.activity) {
+                    if (activity.comment && activity.comment.body) {
+                        message += `Usuario: ${activity.userId},\n${activity.comment.body.trim()}\n`;
+                    }
+                }
+            } else {
+                message += "Sin actividades asociadas.\n";
+            }
+        }
 
         // Procesar tickets para generar un resumen compacto
         let summary = ticketsGroup
-            .map(ticket => `Asunto: ${ticket.subject}, ID Cliente: ${ticket.clientId}, Ticket ID: ${ticket.id}`)
+            .map(ticket => `Asunto: ${ticket.subject}, ID Cliente: ${ticket.clientId}, Ticket ID: ${ticket.id}, body: ${message}`)
             .join("\n");
 
         // Construir el prompt para el lenguaje natural
