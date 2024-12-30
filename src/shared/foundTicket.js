@@ -33,7 +33,7 @@ async function isThereTicketOnUisp(sensorData) {
                 "X-Auth-App-Key": process.env.UISP_TEMPORAL_KEY,
             },
             httpsAgent: agent,
-            timeout: 140000,
+            timeout: 200000,
         });
 
         const tickets = response.data;
@@ -76,7 +76,7 @@ async function isThereTicketOnUisp(sensorData) {
                 "X-Auth-App-Key": process.env.UISP_TEMPORAL_KEY,
             },
             httpsAgent: agent,
-            timeout: 140000,
+            timeout: 200000,
         });
 
         const ticketsGroup = responseAllGropusTickets.data;

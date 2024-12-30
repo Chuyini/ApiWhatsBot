@@ -38,7 +38,7 @@ async function found_Id_Uisp_Prtg(sensorData) {
                 "X-Auth-App-Key": process.env.UISP_PERMANENT_GET_KEY,
             },
             httpsAgent: agent,
-            timeout: 140000,
+            timeout: 200000,
         });
 
         // Extraer el ID de la respuesta
