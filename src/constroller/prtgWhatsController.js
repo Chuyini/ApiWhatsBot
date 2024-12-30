@@ -7,9 +7,10 @@ const chatGPTService = require("../service/chatGPT-service");
 const checkTime = require("../shared/checkTime");
 const ticketUisp = require("../shared/ticketsUisp");
 const foundTicket = require("../shared/foundTicket");
-
+const infromationCRM = require("../shared/foundIDsUisp");
 const Queue = require('bull');
 const Bottleneck = require('bottleneck');
+
 
 // Crear una cola de mensajes
 const messageQueue = new Queue('messageQueue');
@@ -207,7 +208,20 @@ async function buildInformation(sensorData) {
             text = `\n🏢 *${company}*\n\nSERVICIO: *${device}*\n\n${statusEmoji} ESTADO: *${status}*\n\n🌐 IP: *${ip}*\n\nTIEMPO: *${time}*\n\n${AIresponse}\n\n${comments}`;
 
             if ((lowerCaseText.includes("fallo escalacion") || lowerCaseText.includes("repetir escalacion") )) {
-                await ticketUisp.createTicketUisp(sensorData, text);
+                let hasTicket = "no generar ticket";
+
+                hasTicket = await foundTicket.isThereTicketOnUisp(sensorData);
+                console.log("esto dio la resupuesta : ", hasTicket);
+
+                if (hasTicket == null ) {
+
+                    await ticketUisp.createTicketUisp(sensorData, text);
+
+                } else {
+
+                    console.log("Ya habia un ticket");
+                }
+
             }
         } else {
             // AIresponse = await chatGPTService.GetMessageChatGPT(message); <-- no necesitamos algun reporte cuando este en OK

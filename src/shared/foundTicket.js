@@ -33,7 +33,7 @@ async function isThereTicketOnUisp(sensorData) {
                 "X-Auth-App-Key": process.env.UISP_TEMPORAL_KEY,
             },
             httpsAgent: agent,
-            timeout: 200000,
+            timeout: 30000,
         });
 
         const tickets = response.data;
@@ -76,7 +76,7 @@ async function isThereTicketOnUisp(sensorData) {
                 "X-Auth-App-Key": process.env.UISP_TEMPORAL_KEY,
             },
             httpsAgent: agent,
-            timeout: 200000,
+            timeout: 30000,
         });
 
         const ticketsGroup = responseAllGropusTickets.data;
@@ -86,7 +86,21 @@ async function isThereTicketOnUisp(sensorData) {
             return null;
         }
 
+
+
+
         console.log("Tickets del grupo empresarial encontrados:", ticketsGroup.length);
+
+
+
+        const numberOfServices = await found_Id_Uisp_Prtg.numberOfServicesOfCompany(idClient);
+
+        if (ticketsGroup.length === 1 && numberOfServices === 1) {
+            return ticketsGroup;
+        }
+
+
+
         let message = ""; // Inicializamos la variable como cadena vacía
 
         for (const ticket of ticketsGroup) {
@@ -112,34 +126,34 @@ async function isThereTicketOnUisp(sensorData) {
         // Construir el prompt para el lenguaje natural
         const prompt = `Actúa como un experto en soporte técnico que analiza tickets relacionados con un servicio.
 
-Información del servicio a evaluar: 
-- **Dispositivo:** ${sensorData.device}.
-- **IP:** ${sensorData.ip}.
-- **Tags:** ${sensorData.tags}.
-- **Grupo empresarial:** ${sensorData.company}.
+                    Información del servicio a evaluar: 
+                        - **Dispositivo:** ${sensorData.device}.
+                        - **IP:** ${sensorData.ip}.
+                        - **Tags:** ${sensorData.tags}.
+                        - **Grupo empresarial:** ${sensorData.company}.
 
-A continuación, se presentan los tickets encontrados para este cliente:
-"${summary}"
+                    A continuación, se presentan los tickets encontrados para este cliente:
+                    "${summary}"
 
-Tu tarea es verificar si alguno de estos tickets está estrictamente relacionado con el servicio proporcionado. Para hacerlo, céntrate **únicamente en los comentarios** y en la información exacta proporcionada en los datos del servicio. 
+                    Tu tarea es verificar si alguno de estos tickets está estrictamente relacionado con el servicio proporcionado. Para hacerlo, céntrate **únicamente en los comentarios** y en la información exacta proporcionada en los datos del servicio. 
 
-Criterios para determinar una coincidencia estricta:
-1. **Comentarios que mencionen específicamente el dispositivo (${sensorData.device}) o la IP (${sensorData.ip}).**
-2. **IDs de cliente o ticket que coincidan exactamente con los datos proporcionados.**
-3. **Tags relevantes (${sensorData.tags}) relacionados con el servicio.**
-4. **Acrónimos o relaciones específicas (ejemplo: Fahorro = Farmacias Ahorro).**
+                    Criterios para determinar una coincidencia estricta:
+                        1. **Comentarios que mencionen específicamente el dispositivo (${sensorData.device}) o la IP (${sensorData.ip}).**
+                        2. **IDs de cliente o ticket que coincidan exactamente con los datos proporcionados.**
+                        3. **Tags relevantes (${sensorData.tags}) relacionados con el servicio.**
+                        4. **Acrónimos o relaciones específicas (ejemplo: Fahorro = Farmacias Ahorro).**
 
-Reglas importantes:
-- **Ignora similitudes vagas** como menciones de nombres de sucursales o comentarios genéricos que no estén claramente vinculados al dispositivo, IP, o ID del servicio.
-- Si encuentras coincidencias basadas en los criterios anteriores, responde **solo con "sí" seguido del ID del ticket**.
-- Si no encuentras coincidencias estrictas en los datos proporcionados, responde **únicamente con "no"**.
+                    Reglas importantes:
+                    - **Ignora similitudes vagas** como menciones de nombres de sucursales o comentarios genéricos que no estén claramente vinculados al dispositivo, IP, o ID del servicio.
+                    - Si encuentras coincidencias basadas en los criterios anteriores, responde **solo con "sí" seguido del ID del ticket**.
+                    - Si no encuentras coincidencias estrictas en los datos proporcionados, responde **únicamente con "no"**.
 
-Ejemplo práctico:
-Si un ticket menciona explícitamente el dispositivo o la IP del servicio y tiene un ID que coincide, considera que hay una coincidencia. Si no hay mención directa o clara, responde que **no hay coincidencia**.
+                    Ejemplo práctico:
+                        Si un ticket menciona explícitamente el dispositivo o la IP del servicio y tiene un ID que coincide, considera que hay una coincidencia. Si no hay mención directa o clara, responde que **no hay coincidencia**.
 
-Evalúa los datos y proporciona tu respuesta final:
-- "Sí" seguido del ID del ticket correspondiente si hay coincidencia.
-- "No" si no hay coincidencias estrictas.`;
+                        Evalúa los datos y proporciona tu respuesta final:
+                            - "Sí" seguido del ID del ticket correspondiente si hay coincidencia.
+                            - "No" si no hay coincidencias estrictas.`;
 
 
         console.log(prompt);

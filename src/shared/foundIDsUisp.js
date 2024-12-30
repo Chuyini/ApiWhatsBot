@@ -38,7 +38,7 @@ async function found_Id_Uisp_Prtg(sensorData) {
                 "X-Auth-App-Key": process.env.UISP_PERMANENT_GET_KEY,
             },
             httpsAgent: agent,
-            timeout: 200000,
+            timeout: 30000,
         });
 
         // Extraer el ID de la respuesta
@@ -63,4 +63,41 @@ async function found_Id_Uisp_Prtg(sensorData) {
     }
 }
 
-module.exports = { found_Id_Uisp_Prtg };
+
+async function numberOfServicesOfCompany(clientID) {
+    try {
+        // Configurar agente HTTPS para evitar validación de certificados (solo en entornos de prueba)
+        const agent = new https.Agent({
+            rejectUnauthorized: false,
+        });
+
+       
+        // Construir URL para la solicitud, con esta api obtenemos los servicios
+        const apiUrlToKnowHowManyServices = `https://45.189.154.77/crm/api/v1.0/clients/services?clientId=${clientID}`;
+
+        // Hacer la petición para buscar el ID en UISP
+        const response = await axios.get(apiUrlToKnowHowManyServices, {
+            headers: {
+                "Content-Type": "application/json",
+                "X-Auth-App-Key": process.env.UISP_PERMANENT_GET_KEY,
+            },
+            httpsAgent: agent,
+            timeout: 30000,
+        });
+
+        // Extraer el ID de la respuesta
+        return response.data.length;
+        
+    } catch (error) {
+        if (error.response) {
+            console.error("Error en la respuesta de la API:", error.response.data);
+        } else if (error.request) {
+            console.error("No hubo respuesta de la API:", error.request);
+        } else {
+            console.error("Error al buscar el ID del usuario:", error.message);
+        }
+        return null; // En caso de error, devolver null
+    }
+}
+
+module.exports = { found_Id_Uisp_Prtg , numberOfServicesOfCompany};
