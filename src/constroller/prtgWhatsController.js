@@ -206,7 +206,7 @@ async function buildInformation(sensorData) {
             AIresponse = await chatGPTService.GetMessageChatGPT("Puedes resumir lo siguiente es para mandarlo como reporte solo pon algo sencillo no agregues codigos de error, además pregunta si sucede algo con la electricidad o alguna afectacion ya que es comunicalo y ellos son un isp. No agreges emogies :" + message);
             text = `\n🏢 *${company}*\n\nSERVICIO: *${device}*\n\n${statusEmoji} ESTADO: *${status}*\n\n🌐 IP: *${ip}*\n\nTIEMPO: *${time}*\n\n${AIresponse}\n\n${comments}`;
 
-            if (lowerCaseText.includes("fallo escalacion") && statusEmoji == "🔴🔧") {
+            if ((lowerCaseText.includes("fallo escalacion") || lowerCaseText.includes("repetir escalacion") )) {
                 await ticketUisp.createTicketUisp(sensorData, text);
             }
         } else {
