@@ -110,35 +110,36 @@ async function isThereTicketOnUisp(sensorData) {
             .join("\n");
 
         // Construir el prompt para el lenguaje natural
-        const prompt = `
-Actúa como un experto en soporte técnico que consulta tickets.
+        const prompt = `Actúa como un experto en soporte técnico que analiza tickets relacionados con un servicio.
 
-Información del servicio que estás evaluando: 
-- Dispositivo: ${sensorData.device}.
-- IP: ${sensorData.ip}.
-- Tags: ${sensorData.tags}.
-- Grupo empresarial: ${sensorData.company}.
+Información del servicio a evaluar: 
+- **Dispositivo:** ${sensorData.device}.
+- **IP:** ${sensorData.ip}.
+- **Tags:** ${sensorData.tags}.
+- **Grupo empresarial:** ${sensorData.company}.
 
-Estos son los tickets encontrados relacionados con este cliente:
+A continuación, se presentan los tickets encontrados para este cliente:
 "${summary}"
 
-Tu tarea es identificar coincidencias estrictas entre el servicio reportado y los tickets proporcionados. 
-Las coincidencias deben basarse principalmente en:
-1. **ID del cliente o ticket.**
-2. **Dirección IP exacta (${sensorData.ip}).**
-3. Tags relacionados (${sensorData.tags}).
-4. Acrónimos o relaciones explícitas (por ejemplo, Fahorro = Farmacias Ahorro).
+Tu tarea es verificar si alguno de estos tickets está estrictamente relacionado con el servicio proporcionado. Para hacerlo, céntrate **únicamente en los comentarios** y en la información exacta proporcionada en los datos del servicio. 
 
-Considera lo siguiente:
-- **No des por hecho una coincidencia si solo hay similitudes vagas como comentarios generales o nombres de sucursales.** 
-- Si hay coincidencias estrictas (IDs, IP, o tags únicos que confirmen el servicio), responde **solo con "sí" seguido del ID del ticket correspondiente**.
+Criterios para determinar una coincidencia estricta:
+1. **Comentarios que mencionen específicamente el dispositivo (${sensorData.device}) o la IP (${sensorData.ip}).**
+2. **IDs de cliente o ticket que coincidan exactamente con los datos proporcionados.**
+3. **Tags relevantes (${sensorData.tags}) relacionados con el servicio.**
+4. **Acrónimos o relaciones específicas (ejemplo: Fahorro = Farmacias Ahorro).**
+
+Reglas importantes:
+- **Ignora similitudes vagas** como menciones de nombres de sucursales o comentarios genéricos que no estén claramente vinculados al dispositivo, IP, o ID del servicio.
+- Si encuentras coincidencias basadas en los criterios anteriores, responde **solo con "sí" seguido del ID del ticket**.
 - Si no encuentras coincidencias estrictas en los datos proporcionados, responde **únicamente con "no"**.
 
-Ejemplo:  
-Si la información del ticket contiene un ID de cliente o ticket que no coincide exactamente con la ID o IP del servicio reportado, considera que **no hay coincidencia**, incluso si el nombre es similar o hay menciones relacionadas en comentarios.  
-Esto asegura que los tickets ambiguos no sean malinterpretados.
+Ejemplo práctico:
+Si un ticket menciona explícitamente el dispositivo o la IP del servicio y tiene un ID que coincide, considera que hay una coincidencia. Si no hay mención directa o clara, responde que **no hay coincidencia**.
 
-`;
+Evalúa los datos y proporciona tu respuesta final:
+- "Sí" seguido del ID del ticket correspondiente si hay coincidencia.
+- "No" si no hay coincidencias estrictas.`;
 
 
         console.log(prompt);
