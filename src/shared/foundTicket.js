@@ -93,7 +93,7 @@ async function isThereTicketOnUisp(sensorData) {
             .map(ticket => `Asunto: ${ticket.subject}, ID Cliente: ${ticket.clientId}, Ticket ID: ${ticket.id}`)
             .join("\n");
 
-        // Construir el prompt para ChatGPT
+        // Construir el prompt para el lenguaje natural
         const prompt = `
             Actúa como un experto en soporte técnico que consulta tickets.
             Información del servicio: 
@@ -104,7 +104,7 @@ async function isThereTicketOnUisp(sensorData) {
             Responde "sí" con el ID del ticket si hay coincidencias; responde "no" si no las hay.
         `;
 
-        // Llamar a ChatGPT
+        // Llamada al lenguaje natural
         const AIresponse = await chatGPTService.GetMessageChatGPT(prompt.trim());
 
         if (!AIresponse) {
@@ -112,7 +112,7 @@ async function isThereTicketOnUisp(sensorData) {
         }
 
         if (AIresponse.includes("Sí")) {
-            console.log("ChatGPT encontró coincidencias:", AIresponse);
+            console.log("IA encontró coincidencias:", AIresponse);
             return AIresponse; // Respuesta de la IA
         } else {
             console.log("No se encontraron coincidencias según la IA.");
