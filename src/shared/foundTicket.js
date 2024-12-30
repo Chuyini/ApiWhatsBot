@@ -100,7 +100,7 @@ async function isThereTicketOnUisp(sensorData) {
             Dispositivo: ${sensorData.device}, IP: ${sensorData.ip}, Tags: ${sensorData.tags}, Grupo empresarial: ${sensorData.company}.
             Estos son los tickets encontrados:
             "${summary}"
-            Verifica si hay coincidencias estrictas basadas en ID sobre todo en ID y IP si no encuentras algo como esto mejor di que no, tags o acrónimos (ej. Fahorro = Farmacias Ahorro). 
+            Verifica si hay coincidencias estrictas basadas en ID sobre todo en ID y IP si no encuentras algo como esto mejor di que no pero tambien toma en cuenta tags o acrónimos (ej. Fahorro = Farmacias Ahorro). 
             Responde "sí" con el ID del ticket si hay coincidencias; responde "no" si no las hay.
         `;
 
