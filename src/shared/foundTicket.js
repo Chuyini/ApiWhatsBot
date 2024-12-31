@@ -38,6 +38,8 @@ async function isThereTicketOnUisp(sensorData) {
             timeout: 30000,
         });
 
+        // Segunda consulta: Buscar tickets de grupo (requiere ID del cliente)
+        const idClient = await found_Id_Uisp_Prtg.found_Id_Uisp_Prtg(sensorData);
         const tickets = response.data;
         if (!Array.isArray(tickets)) {
             throw new Error("La respuesta de la API no contiene un arreglo de tickets.");
@@ -63,8 +65,7 @@ async function isThereTicketOnUisp(sensorData) {
         }
 
 
-        // Segunda consulta: Buscar tickets de grupo (requiere ID del cliente)
-        const idClient = await found_Id_Uisp_Prtg.found_Id_Uisp_Prtg(sensorData);
+        
 
         console.log("cliente id ",idClient);
         
