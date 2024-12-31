@@ -3,6 +3,7 @@ const axios = require("axios");
 const found_Id_Uisp_Prtg = require("../shared/foundIDsUisp");
 const chatGPTService = require("../service/chatGPT-service");
 const stringSimilarity = require('string-similarity');
+const { Console } = require("console");
 
 async function isThereTicketOnUisp(sensorData) {
 
@@ -61,8 +62,12 @@ async function isThereTicketOnUisp(sensorData) {
             }
         }
 
+
         // Segunda consulta: Buscar tickets de grupo (requiere ID del cliente)
         const idClient = await found_Id_Uisp_Prtg.found_Id_Uisp_Prtg(sensorData);
+
+        console.log("cliente id ",idClient);
+        
 
         if (!idClient) {
             throw new Error("No se encontró ID del cliente asociado al sensor.");
@@ -209,7 +214,7 @@ async function isThereTicketOnUisp(sensorData) {
             console.log(AIresponse);
             return {
                 idClient: idClient,
-                ticket: null,
+                ticket: AIresponse,
             };
         }
     } catch (error) {
