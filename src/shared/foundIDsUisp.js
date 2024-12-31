@@ -1,5 +1,6 @@
 const https = require("https");
 const axios = require("axios");
+const stringSimilarity = require('string-similarity');
 
 async function found_Id_Uisp_Prtg(sensorData) {
     try {
@@ -50,7 +51,7 @@ async function found_Id_Uisp_Prtg(sensorData) {
             console.log("No se encontró ningún cliente con el ID proporcionado.");
             return null; // Retornar null si no hay resultados
         }
-        
+
     } catch (error) {
         if (error.response) {
             console.error("Error en la respuesta de la API:", error.response.data);
@@ -64,19 +65,66 @@ async function found_Id_Uisp_Prtg(sensorData) {
 }
 
 
-async function numberOfServicesOfCompany(clientID) {
+async function ServicesOfCompany(clientID) {
+    try {
+        const agent = new https.Agent({
+            rejectUnauthorized: false, // Ignorar certificados (solo en pruebas)
+        });
+
+        const apiUrl = `https://45.189.154.77/crm/api/v1.0/clients/services?clientId=${clientID}&statuses%5B%5D=2&statuses%5B%5D=3`;
+
+        const response = await axios.get(apiUrl, {
+            headers: {
+                "Content-Type": "application/json",
+                "X-Auth-App-Key": process.env.UISP_PERMANENT_GET_KEY,
+            },
+            httpsAgent: agent,
+            timeout: 30000,
+        });
+
+        const services = response.data;
+
+        // Clasificar servicios
+        const servicesSuspended = services.filter(s => s.status === 3);
+        const servicesEnded = services.filter(s => s.status === 2);
+        const servicesOk = services.filter(s => s.status !== 2 && s.status !== 3);
+
+        return {
+            totalServices: services.length, // Total de servicios
+            servicesOk, // Servicios activos
+            servicesSuspended, // Servicios suspendidos
+            servicesEnded, // Servicios terminados
+        };
+    } catch (error) {
+        if (error.response) {
+            console.error("Error en la respuesta de la API:", error.response.data);
+        } else if (error.request) {
+            console.error("No hubo respuesta de la API:", error.request);
+        } else {
+            console.error("Error general al buscar servicios:", error.message);
+        }
+
+        throw new Error("Error al obtener los servicios del cliente."); // Mejor manejo de errores
+    }
+}
+
+
+
+
+
+async function statusOfService(clientID, sensorData) {
     try {
         // Configurar agente HTTPS para evitar validación de certificados (solo en entornos de prueba)
         const agent = new https.Agent({
             rejectUnauthorized: false,
         });
 
-       
+
         // Construir URL para la solicitud, con esta api obtenemos los servicios
-        const apiUrlToKnowHowManyServices = `https://45.189.154.77/crm/api/v1.0/clients/services?clientId=${clientID}`;
+        const apiUrlToKnowstatusOfService = `https://45.189.154.77/crm/api/v1.0/clients/services?clientId=${clientID}&statuses%5B%5D=2&statuses%5B%5D=3`;
 
         // Hacer la petición para buscar el ID en UISP
-        const response = await axios.get(apiUrlToKnowHowManyServices, {
+        const response = await axios.get(apiUrlToKnowstatusOfService, {
             headers: {
                 "Content-Type": "application/json",
                 "X-Auth-App-Key": process.env.UISP_PERMANENT_GET_KEY,
@@ -86,8 +134,33 @@ async function numberOfServicesOfCompany(clientID) {
         });
 
         // Extraer el ID de la respuesta
-        return response.data.length;
-        
+        if (response.data.length === 0) {
+
+            return 0;
+        } else {
+
+
+            const services = response.data;
+
+            const similarity = stringSimilarity(services.name, sensorData.device);
+
+            console.log("la similaridad es ", similarity);
+
+            if (similarity > 0.5) {
+
+                return similarity
+
+            }else{
+
+                return 0;
+            }
+
+
+
+
+
+        }
+
     } catch (error) {
         if (error.response) {
             console.error("Error en la respuesta de la API:", error.response.data);
@@ -100,4 +173,5 @@ async function numberOfServicesOfCompany(clientID) {
     }
 }
 
-module.exports = { found_Id_Uisp_Prtg , numberOfServicesOfCompany};
+
+module.exports = { found_Id_Uisp_Prtg, ServicesOfCompany,statusOfService };

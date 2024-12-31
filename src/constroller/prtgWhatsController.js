@@ -229,6 +229,7 @@ async function buildInformation(sensorData) {
             if (lowerCaseText.includes("repetir escalacion")) {//si no es de comunicalo pero es un repetir escalacion
 
                 let hasTicket = "no generar ticket";
+               
 
                 hasTicket = await foundTicket.isThereTicketOnUisp(sensorData);
                 console.log("esto dio la resupuesta : ", hasTicket);

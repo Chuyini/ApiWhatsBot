@@ -2,6 +2,7 @@ const https = require("https");
 const axios = require("axios");
 const found_Id_Uisp_Prtg = require("../shared/foundIDsUisp");
 const chatGPTService = require("../service/chatGPT-service");
+const stringSimilarity = require('string-similarity');
 
 async function isThereTicketOnUisp(sensorData) {
 
@@ -93,12 +94,36 @@ async function isThereTicketOnUisp(sensorData) {
 
 
 
-        const numberOfServices = await found_Id_Uisp_Prtg.numberOfServicesOfCompany(idClient);
+        const numberOfServices = await found_Id_Uisp_Prtg.ServicesOfCompany(idClient);
 
-        console.log("Number of services :",numberOfServices);
-        if (ticketsGroup.length === 1 && numberOfServices === 1) {
+
+        //Si solo hay un ticket y un servicio pues obvio el ticke debe ser de ese servicio
+        console.log("Number of services :", numberOfServices.totalServices);
+        if (ticketsGroup.length === 1 && numberOfServices.totalServices === 1) {
             return ticketsGroup;
         }
+
+        //resulta que si hay mas servicios ahora solo hay que checar que no este suspendido
+        //Se supone que como queremos encontrar tickets y son muy ambiguos
+        //pues usamos IA pero en esta  seccion de "isSupended" estamos aprovechando 
+        //que ya se hizo la consulta de los servicios para probar la funcion y ver si estan
+        //supendidos, esta con la finalida de no generar un time out gateway
+
+        const isSupended = isDownServices(numberOfServices, sensorData);
+
+        if (isSupended) {
+
+            return "Esta supendido el servicios o cancelado";//<-- como no regresa null no genera ticket
+        }
+
+
+        /**
+            * Evalúa los tickets con IA.
+            * @param {string} summary - Resumen de los tickets.
+            * @param {Object} sensorData - Datos del sensor.
+            * @returns {string} - Respuesta de la IA.
+        */
+
 
 
 
@@ -185,5 +210,31 @@ async function isThereTicketOnUisp(sensorData) {
         return null;
     }
 }
+
+/*
+totalServices: response.data.length, // Total de servicios
+            servicesOk, // Servicios activos
+            servicesSuspended, // Servicios suspendidos
+            servicesEnded, 
+
+*/
+
+
+function isDownServices(services, sensorData) {
+    const { servicesSuspended, servicesEnded } = services;
+
+    for (const service of [...servicesSuspended, ...servicesEnded]) {
+        const similarity = stringSimilarity(service.name || "", sensorData.device || "");
+
+        console.log("La similaridad es:", similarity);
+
+        if (similarity > 0.5) {
+            return true; // Servicio encontrado como caído
+        }
+    }
+
+    return false; // Ningún servicio coincide
+}
+
 
 module.exports = { isThereTicketOnUisp };

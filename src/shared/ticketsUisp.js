@@ -110,9 +110,8 @@ async function closeTicket(sensorData, text) {
     } catch (error) {
         console.error("Error al crear el ticket:", error.response ? error.response.data : error.message);
     }
-
-
     
 }
 
 module.exports = { createTicketUisp };
+    
