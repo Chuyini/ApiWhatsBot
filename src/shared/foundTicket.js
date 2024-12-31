@@ -52,7 +52,10 @@ async function isThereTicketOnUisp(sensorData) {
                         activity.comment.body.includes(ip)
                     ) {
                         console.log("Ticket encontrado:", ticket.id);
-                        return ticket; // Ticket encontrado
+                        return {
+                            idClient: idClient,
+                            ticket: ticket,
+                        };
                     }
                 }
             }
@@ -62,8 +65,7 @@ async function isThereTicketOnUisp(sensorData) {
         const idClient = await found_Id_Uisp_Prtg.found_Id_Uisp_Prtg(sensorData);
 
         if (!idClient) {
-            console.log("No se encontró ID del cliente asociado al sensor.");
-            return null;
+            throw new Error("No se encontró ID del cliente asociado al sensor.");
         }
 
         console.log("ID del cliente encontrado:", idClient);
@@ -84,7 +86,10 @@ async function isThereTicketOnUisp(sensorData) {
 
         if (!Array.isArray(ticketsGroup) || ticketsGroup.length === 0) {
             console.log("No se encontraron tickets para este cliente.");
-            return null;
+            return {
+                idClient: idClient,
+                ticket: null,
+            };
         }
 
 
@@ -100,7 +105,10 @@ async function isThereTicketOnUisp(sensorData) {
         //Si solo hay un ticket y un servicio pues obvio el ticke debe ser de ese servicio
         console.log("Number of services :", numberOfServices.totalServices);
         if (ticketsGroup.length === 1 && numberOfServices.totalServices === 1) {
-            return ticketsGroup;
+            return {
+                idClient: idClient,
+                ticket: ticketsGroup,
+            };
         }
 
         //resulta que si hay mas servicios ahora solo hay que checar que no este suspendido
@@ -192,11 +200,17 @@ async function isThereTicketOnUisp(sensorData) {
 
         if (AIresponse.includes("Sí")) {
             console.log("IA encontró coincidencias:", AIresponse);
-            return AIresponse; // Respuesta de la IA
+            return {
+                idClient: idClient,
+                ticket: AIresponse,
+            };// Respuesta de la IA
         } else {
             console.log("No se encontraron coincidencias según la IA.");
             console.log(AIresponse);
-            return null;
+            return {
+                idClient: idClient,
+                ticket: null,
+            };
         }
     } catch (error) {
         console.error("Error al buscar tickets en CRM UISP:");
@@ -207,7 +221,10 @@ async function isThereTicketOnUisp(sensorData) {
         } else {
             console.error("Error desconocido:", error.message);
         }
-        return null;
+         return {
+            idClient: null,
+            ticket: null,
+        };
     }
 }
 

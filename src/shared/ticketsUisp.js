@@ -4,7 +4,7 @@ const moment = require("moment");
 const https = require('https');
 const found_Id_Uisp_Prtg = require("../shared/foundIDsUisp");
 
-async function createTicketUisp(sensorData, text) {
+async function createTicketUisp(sensorData, text, clienId) {
     try {
         const agent = new https.Agent({
             rejectUnauthorized: false, // Deshabilitar validación SSL
@@ -15,7 +15,7 @@ async function createTicketUisp(sensorData, text) {
         }
 
         // Variables iniciales
-        const clientId = await found_Id_Uisp_Prtg.found_Id_Uisp_Prtg(sensorData);
+        const clientId = clienId
         const subject = "NOC003 - SIN SERVICIO";
         const date = sensorData.time;
 
@@ -114,4 +114,3 @@ async function closeTicket(sensorData, text) {
 }
 
 module.exports = { createTicketUisp };
-    

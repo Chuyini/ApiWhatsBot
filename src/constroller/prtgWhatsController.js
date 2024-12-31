@@ -208,14 +208,14 @@ async function buildInformation(sensorData) {
             text = `\n🏢 *${company}*\n\nSERVICIO: *${device}*\n\n${statusEmoji} ESTADO: *${status}*\n\n🌐 IP: *${ip}*\n\nTIEMPO: *${time}*\n\n${AIresponse}\n\n${comments}`;
 
             if ((lowerCaseText.includes("fallo escalacion") || lowerCaseText.includes("repetir escalacion") )) {
-                let hasTicket = "no generar ticket";
+                
 
-                hasTicket = await foundTicket.isThereTicketOnUisp(sensorData);
-                console.log("esto dio la resupuesta : ", hasTicket);
+                const { idClient, ticket }= await foundTicket.isThereTicketOnUisp(sensorData);
+                console.log("esto dio la resupuesta : ", ticket);
 
-                if (hasTicket == null ) {
+                if (ticket == null ) {
 
-                    await ticketUisp.createTicketUisp(sensorData, text);
+                    await ticketUisp.createTicketUisp(sensorData, text,idClient);
 
                 } else {
 
@@ -228,16 +228,16 @@ async function buildInformation(sensorData) {
             text = `Sensor Alert ${statusEmoji}:\n🏢 EMPRESA/LUGAR: *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji} ESTADO: *${status}*\n\n🌐 IP: *${ip}*\n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}*\n\n${message}\n\n🔗 LINK UISP: *${linkUisp}*\n\n ${comments}\n\n etiquetas: ${tags}`;
             if (lowerCaseText.includes("repetir escalacion") || (sensorData.priority == "Alta" && statusEmoji == "🔴")) {//si no es de comunicalo pero es un repetir escalacion
 
-                let hasTicket = "no generar ticket";
+               
                
 
-                hasTicket = await foundTicket.isThereTicketOnUisp(sensorData);
-                console.log("esto dio la resupuesta : ", hasTicket);
+                const { idClient, ticket }= await foundTicket.isThereTicketOnUisp(sensorData);
+                console.log("esto dio la resupuesta : ",ticket);
                 
 
-                if (hasTicket == null) {
+                if (ticket == null) {
 
-                    await ticketUisp.createTicketUisp(sensorData, text);
+                    await ticketUisp.createTicketUisp(sensorData, text,idClient);
 
                 } else {
 
