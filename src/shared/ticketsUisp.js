@@ -2,6 +2,7 @@ const whatsAppModel = require("../shared/modelsWhatsApp");
 const axios = require("axios");
 const moment = require("moment");
 const https = require('https');
+const botInCRM = require('../shared/botInCRM');
 
 
 async function createTicketUisp(sensorData, text, clienId) {
@@ -19,6 +20,10 @@ async function createTicketUisp(sensorData, text, clienId) {
         const subject = "NOC003 - SIN SERVICIO";
         const date = sensorData.time;
 
+        //Esta funcion hara que el bot inicie sesion de ser necesario
+
+        loginUISP();
+
         // Formatear la fecha
         const dateSpecialFormat = moment(date, "DD/MM/YYYY hh:mm:ss a").format("YYYY-MM-DDTHH:mm:ssZ");
 
@@ -30,7 +35,7 @@ async function createTicketUisp(sensorData, text, clienId) {
         const response = await axios.post(apiUrl, data, {
             headers: {
                 "Content-Type": "application/json",
-                "X-Auth-App-Key": process.env.UISP_TEMPORAL_KEY,
+                "X-Auth-App-Key": global.apiKey,
             },
             httpsAgent: agent, //agente que no valida los certificados https
         });
@@ -45,7 +50,7 @@ async function createTicketUisp(sensorData, text, clienId) {
 async function closeTicket(sensorData, text) {
 
 
-    try{
+    try {
 
         //primero verificamos el user id de 
 
@@ -55,16 +60,18 @@ async function closeTicket(sensorData, text) {
 
         const apiUrlGet = "https://45.189.154.77/crm/api/v1.0/ticketing/tickets";
 
-        const response = await axios.get(apiUrlGet,{headers:{
+        const response = await axios.get(apiUrlGet, {
+            headers: {
 
-            "Content-Type": "application/json",
-            "X-Auth-App-Key": process.env.UISP_TEMPORAL_KEY,
-        }});
+                "Content-Type": "application/json",
+                "X-Auth-App-Key": process.env.UISP_TEMPORAL_KEY,
+            }
+        });
 
 
 
 
-    }catch(error){
+    } catch (error) {
 
 
         console.log("Hubo un error en la busqueda u obtencion de la llave ", error);
@@ -81,7 +88,7 @@ async function closeTicket(sensorData, text) {
         }
 
 
-        
+
 
 
         // Variables iniciales
@@ -110,7 +117,31 @@ async function closeTicket(sensorData, text) {
     } catch (error) {
         console.error("Error al crear el ticket:", error.response ? error.response.data : error.message);
     }
-    
+
 }
+
+
+
+async function loginUISP() {
+
+    if (global.apiKey == null) {
+
+        try {
+            const key = botInCRM.getApiKeyFromLocalStorage();
+
+            console.log("La llave es ", key);
+        } catch (error) {
+
+            console.error("ERROR AL INICIAR SESSION ",error);
+
+        }
+
+
+    }
+
+}
+
+
+
 
 module.exports = { createTicketUisp };

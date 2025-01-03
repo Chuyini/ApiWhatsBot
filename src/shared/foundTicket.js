@@ -84,7 +84,7 @@ async function isThereTicketOnUisp(sensorData) {
         const responseAllGropusTickets = await axios.get(apiUrlToFindTicketsOfGroup, {
             headers: {
                 "Content-Type": "application/json",
-                "X-Auth-App-Key": process.env.UISP_TEMPORAL_KEY,
+                "X-Auth-App-Key": process.env.UISP_PERMANENT_GET_KEY,
             },
             httpsAgent: agent,
             timeout: 30000,
