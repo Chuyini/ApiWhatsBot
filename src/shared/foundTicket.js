@@ -251,8 +251,9 @@ function isDownServices(services, sensorData) {
     // Iterar sobre los servicios suspendidos y terminados
     for (const service of [...servicesSuspended, ...servicesEnded]) {
         // Asegurarse de que service.name y sensorData.device no sean null o undefined
-        const serviceName = service.name || ""; 
-        const sensorDeviceName = sensorData.device || "";
+
+        const serviceName = service.name; 
+        const sensorDeviceName = sensorData.device;
 
         // Calcular la similitud usando stringSimilarity.compareTwoStrings
         const similarity = stringSimilarity.compareTwoStrings(serviceName, sensorDeviceName);
