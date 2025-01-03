@@ -214,7 +214,7 @@ async function isThereTicketOnUisp(sensorData) {
             };// Respuesta de la IA
         } else {
             console.log("No se encontraron coincidencias según la IA.");
-            console.log(AIresponse);
+            console.log("Esto dijo la IA -> ",AIresponse);
             return {
                 idClient: idClient,
                 ticket: AIresponse,
