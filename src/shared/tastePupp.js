@@ -54,7 +54,7 @@ const puppeteer = require('puppeteer');
         // Extrae la clave del Local Storage
         console.log('Extrayendo clave del Local Storage...');
         const apiKey = await page.evaluate(() => {
-            return localStorage.getItem('apiKey'); // Cambia 'apiKey' por tu clave específica
+            return localStorage.getItem('x-auth-token'); // Cambia 'apiKey' por tu clave específica
         });
 
         if (apiKey) {
@@ -63,7 +63,7 @@ const puppeteer = require('puppeteer');
             console.error('No se encontró la clave especificada en el Local Storage.');
         }
 
-        // Cierra el navegador
+        // cerrar el navegador
         console.log('Cerrando el navegador...');
         await browser.close();
     } catch (error) {
