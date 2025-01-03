@@ -217,7 +217,7 @@ async function isThereTicketOnUisp(sensorData) {
             console.log("Esto dijo la IA -> ",AIresponse);
             return {
                 idClient: idClient,
-                ticket: AIresponse,
+                ticket: null,
             };
         }
     } catch (error) {
