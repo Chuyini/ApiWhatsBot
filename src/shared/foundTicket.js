@@ -27,20 +27,22 @@ async function isThereTicketOnUisp(sensorData) {
         console.log("Buscando tickets relacionados con la IP:", ip);
 
         // Primera consulta: Buscar tickets generales
-        const apiUrlToFindTickets = "https://45.189.154.77/crm/api/v1.0/ticketing/tickets?statuses%5B%5D=0&statuses%5B%5D=1&statuses%5B%5D=2&public=0";
+       // Configuración para la primera consulta
+       const apiUrlToFindTickets = "https://45.189.154.77/crm/api/v1.0/ticketing/tickets?statuses%5B%5D=0&statuses%5B%5D=1&statuses%5B%5D=2&public=0";
 
-        const response = await axios.get(apiUrlToFindTickets, {
-            headers: {
-                "Content-Type": "application/json",
-                "X-Auth-App-Key": process.env.UISP_TEMPORAL_KEY,
-            },
-            httpsAgent: agent,
-            timeout: 30000,
-        });
-
-        // Segunda consulta: Buscar tickets de grupo (requiere ID del cliente)
-        const idClient = await found_Id_Uisp_Prtg.found_Id_Uisp_Prtg(sensorData);
-        const tickets = response.data;
+       // Ejecutar ambas consultas en paralelo
+       const [ticketsResponse, idClient] = await Promise.all([
+           axios.get(apiUrlToFindTickets, {
+               headers: {
+                   "Content-Type": "application/json",
+                   "X-Auth-App-Key": process.env.UISP_TEMPORAL_KEY,
+               },
+               httpsAgent: agent,
+               timeout: 30000,
+           }),
+           found_Id_Uisp_Prtg.found_Id_Uisp_Prtg(sensorData)
+       ]);
+        const tickets = ticketsResponse.data;
         if (!Array.isArray(tickets)) {
             throw new Error("La respuesta de la API no contiene un arreglo de tickets.");
         }
@@ -246,11 +248,19 @@ totalServices: response.data.length, // Total de servicios
 function isDownServices(services, sensorData) {
     const { servicesSuspended, servicesEnded } = services;
 
+    // Iterar sobre los servicios suspendidos y terminados
     for (const service of [...servicesSuspended, ...servicesEnded]) {
-        const similarity = stringSimilarity(service.name || "", sensorData.device || "");
+        // Asegurarse de que service.name y sensorData.device no sean null o undefined
+        const serviceName = service.name || ""; 
+        const sensorDeviceName = sensorData.device || "";
 
+        // Calcular la similitud usando stringSimilarity.compareTwoStrings
+        const similarity = stringSimilarity.compareTwoStrings(serviceName, sensorDeviceName);
+
+        console.log(`Comparando: "${serviceName}" con "${sensorDeviceName}"`);
         console.log("La similaridad es:", similarity);
 
+        // Si la similitud es mayor al umbral, considerarlo como un servicio caído
         if (similarity > 0.5) {
             return true; // Servicio encontrado como caído
         }
