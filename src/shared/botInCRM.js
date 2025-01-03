@@ -46,7 +46,7 @@ const getApiKeyFromLocalStorage = async () => {
     } catch (error) {
 
         console.error('Error al obtener la API Key del Local Storage:', error);
-        global.apiKey = null;
+        global.apiKey = process.env.UISP_TEMPORAL_KEY;
 
     }
 };
