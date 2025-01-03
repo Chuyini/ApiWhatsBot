@@ -196,7 +196,7 @@ async function buildInformation(sensorData) {
         //const specialNumber = ["524442475444", "524441967796", "524441574990", "524441184908", "524434629327", "524442478772"];
         const testNumbers = ["524434629327","524442478772","524441967796","524442475444","524401050937"];//yo,Debie, Lic, diana,,yo trabajo
         //numbers.push("524441184908"); //Ceron
-        checkTime.checkTimeAndGreet(specialNumber, textToTemplate);
+        checkTime.checkTimeAndGreet(testNumbers, textToTemplate);
 
         return {
             text,
