@@ -37,7 +37,7 @@ function SendMessageWhatsApp(data) {
 
         req.on("timeout", () => {
             req.abort();
-            reject(new Error("Request timed out"));
+            reject(new Error("Request timed out ALGO"));
         });
 
         console.log("Data being sent:", data);

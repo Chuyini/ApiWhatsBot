@@ -1,7 +1,6 @@
 const whatsAppModel = require("../shared/modelsWhatsApp");
 const whatsAppService = require("../service/whatsappService");
-const chatGPTService = require("../service/chatGPT-service");
-const {checkTime} = require("../shared/checkTime");
+
 
 
 async function ProcessToPrtg(textUser, number) {

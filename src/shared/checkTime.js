@@ -18,7 +18,7 @@ async function checkTimeAndGreet(numbers,textBuilt) {
     }
 
 
-    console.log("Enviando mensajes a las 6 PM...");
+    console.log("Enviando mensajes de TEMPLATE");
     try {
         for (const element of models) {
             const response = await whatsAppService.SendMessageWhatsApp(element);
