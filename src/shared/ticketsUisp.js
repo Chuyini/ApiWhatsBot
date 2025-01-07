@@ -51,7 +51,7 @@ async function createTicketUisp(sensorData, text, clienId,retries) {
         if (error.response && error.response.status === 401 && retries > 0) {
             console.log("401: Intentando autenticación...");
             await loginUISP();
-            return createTicketUisp(sensorData, text, clienId, retries - 1); // Reducir el contador de reintentos
+            return await createTicketUisp(sensorData, text, clienId, retries - 1); // Reducir el contador de reintentos
         }
         
 
