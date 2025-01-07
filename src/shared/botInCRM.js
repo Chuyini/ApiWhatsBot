@@ -7,7 +7,7 @@ const getApiKeyFromLocalStorage = async () => {
     try {
 
         
-        const apiOwnServices = "logbotusip-production.up.railway.app/api";
+        const apiOwnServices = "https://logbotusip-production.up.railway.app/api";
 
         const response = await axios.get(apiOwnServices,{
            
