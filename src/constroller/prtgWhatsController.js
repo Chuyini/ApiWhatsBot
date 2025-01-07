@@ -66,6 +66,11 @@ const Recived = async (req = request, res = response) => {
 };
 
 async function buildInformation(sensorData) {
+
+    if (!sensorData || typeof sensorData !== "object") {
+        throw new Error("Datos del sensor inválidos o no proporcionados.");
+    }
+
     let company = sensorData.company;
     let device = sensorData.device;
 
@@ -87,26 +92,20 @@ async function buildInformation(sensorData) {
     let numbers = ["524401050937", "524442478772", "524434629327"]; //Yo de trabajo, Debbie,El lic Frans, diana, daysimar
     let tags;
 
-    
+
+
 
     //Personalizar el mensaje de $message
-    try{
-
-        
+    try {
         let resumMesagge = message.toLowerCase();
 
-        if(resumMesagge.includes("no response")){
-
+        if (resumMesagge.includes("no response")) {
             message = "Desconexión detectada. Favor de verificar: IP, SNMP (activo y contraseña), conexión de la antena (electricidad), frecuencia, configuración de la red, cableado, software/firmware, interferencias, configuraciones de seguridad, estado del servidor y credenciales de acceso.";
-
         }
-
-
-    }catch(e){
-
-        console.error("Hubo un error en el bloque del mensaje: ", e);
-
+    } catch (e) {
+        console.error(`Error en el bloque del mensaje. Mensaje procesado: '${message}'. Error:`, e);
     }
+
 
     /*if (bandera == 1) {//esta bandera solo la usa el sensor de 24hrs
 
@@ -166,7 +165,7 @@ async function buildInformation(sensorData) {
 
 
 
-    let id = extractNumbersAndText(company);
+    //let id = extractNumbersAndText(company);
     linkUisp = concatLink(idUispService);
     priority = priority.trim();
 
@@ -228,15 +227,15 @@ async function buildInformation(sensorData) {
             AIresponse = await chatGPTService.GetMessageChatGPT("Puedes resumir lo siguiente es para mandarlo como reporte solo pon algo sencillo no agregues codigos de error, además pregunta si sucede algo con la electricidad o alguna afectacion ya que es comunicalo y ellos son un isp. No agreges emogies :" + message);
             text = `\n🏢 *${company}*\n\nSERVICIO: *${device}*\n\n${statusEmoji} ESTADO: *${status}*\n\n🌐 IP: *${ip}*\n\nTIEMPO: *${time}*\n\n${AIresponse}\n\n${comments}`;
 
-            if ((lowerCaseText.includes("fallo escalacion") || lowerCaseText.includes("repetir escalacion") )) {
-                
+            if ((lowerCaseText.includes("fallo escalacion") || lowerCaseText.includes("repetir escalacion"))) {
 
-                const { idClient, ticket }= await foundTicket.isThereTicketOnUisp(sensorData);
+
+                const { idClient, ticket } = await foundTicket.isThereTicketOnUisp(sensorData);
                 console.log("esto dio la resupuesta : ", ticket);
 
-                if (ticket == null ) {
+                if (ticket == null) {
 
-                    await ticketUisp.createTicketUisp(sensorData, text,idClient);
+                    await ticketUisp.createTicketUisp(sensorData, text, idClient);
 
                 } else {
 
@@ -249,16 +248,16 @@ async function buildInformation(sensorData) {
             text = `Sensor Alert ${statusEmoji}:\n🏢 EMPRESA/LUGAR: *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji} ESTADO: *${status}*\n\n🌐 IP: *${ip}*\n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}*\n\n${message}\n\n🔗 LINK UISP: *${linkUisp}*\n\n ${comments}\n\n etiquetas: ${tags}`;
             if (lowerCaseText.includes("repetir escalacion") || ((priority.includes("Alta") || tags.includes("prioridad:alta")) && statusEmoji == "🔴")) {//si no es de comunicalo pero es un repetir escalacion
 
-               
-               
 
-                const { idClient, ticket }= await foundTicket.isThereTicketOnUisp(sensorData);
-                console.log("esto dio la resupuesta : ",ticket);
-                
+
+
+                const { idClient, ticket } = await foundTicket.isThereTicketOnUisp(sensorData);
+                console.log("esto dio la resupuesta : ", ticket);
+
 
                 if (ticket == null) {
 
-                    await ticketUisp.createTicketUisp(sensorData, text,idClient,1);
+                    await ticketUisp.createTicketUisp(sensorData, text, idClient, 1);
 
                 } else {
 
