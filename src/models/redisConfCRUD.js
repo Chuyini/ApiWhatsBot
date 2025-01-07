@@ -18,6 +18,9 @@ async function setValue(key, value, expirationInSeconds) {
 
 
 async function autoIncrement() {
+    console.log("REDIS_URL:", process.env.REDIS_URL);
+    console.log("REDIS_TOKEN:", process.env.REDIS_TOKEN);
+
     // Incrementar la clave 'counter' en 1
     const counter = await redis.incr('counter');
 
