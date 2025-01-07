@@ -87,6 +87,27 @@ async function buildInformation(sensorData) {
     let numbers = ["524401050937", "524442478772", "524434629327"]; //Yo de trabajo, Debbie,El lic Frans, diana, daysimar
     let tags;
 
+    
+
+    //Personalizar el mensaje de $message
+    try{
+
+        
+        let resumMesagge = message.toLowerCase();
+
+        if(resumMesagge.includes("no response")){
+
+            message = "Desconexión detectada. Favor de verificar: IP, SNMP (activo y contraseña), conexión de la antena (electricidad), frecuencia, configuración de la red, cableado, software/firmware, interferencias, configuraciones de seguridad, estado del servidor y credenciales de acceso.";
+
+        }
+
+
+    }catch(e){
+
+        console.error("Hubo un error en el bloque del mensaje: ", e);
+
+    }
+
     /*if (bandera == 1) {//esta bandera solo la usa el sensor de 24hrs
 
 

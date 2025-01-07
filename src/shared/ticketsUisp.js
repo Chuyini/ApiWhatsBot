@@ -22,7 +22,7 @@ async function createTicketUisp(sensorData, text, clienId) {
 
         //Esta funcion hara que el bot inicie sesion de ser necesario
 
-        loginUISP();
+
 
         // Formatear la fecha
         const dateSpecialFormat = moment(date, "DD/MM/YYYY hh:mm:ss a").format("YYYY-MM-DDTHH:mm:ssZ");
@@ -42,6 +42,13 @@ async function createTicketUisp(sensorData, text, clienId) {
 
         console.log("Éxito en subir el ticket a UISP", response.data);
     } catch (error) {
+
+        
+
+    
+
+
+
         console.error("Error al crear el ticket:", error.response ? error.response.data : error.message);
     }
 }
@@ -124,20 +131,20 @@ async function closeTicket(sensorData, text) {
 
 async function loginUISP() {
 
-    if (global.apiKey == null) {
 
-        try {
-            const key = botInCRM.getApiKeyFromLocalStorage();
 
-            console.log("La llave es ", key);
-        } catch (error) {
+    try {
+        const key = botInCRM.getApiKeyFromLocalStorage();
 
-            console.error("ERROR AL INICIAR SESSION ",error);
+        console.log("La llave es ", key);
+    } catch (error) {
 
-        }
-
+        console.error("ERROR AL INICIAR SESSION ", error);
 
     }
+
+
+
 
 }
 
