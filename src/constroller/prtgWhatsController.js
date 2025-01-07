@@ -258,7 +258,7 @@ async function buildInformation(sensorData) {
 
                 if (ticket == null) {
 
-                    await ticketUisp.createTicketUisp(sensorData, text,idClient);
+                    await ticketUisp.createTicketUisp(sensorData, text,idClient,1);
 
                 } else {
 

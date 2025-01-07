@@ -1,4 +1,4 @@
-const https = require("https");
+
 const axios = require("axios");
 
 
@@ -6,14 +6,11 @@ const getApiKeyFromLocalStorage = async () => {
 
     try {
 
-        const agent = new https.Agent({
-
-            rejectUnauthorized: false,
-        });
+        
         const apiOwnServices = "logbotusip-production.up.railway.app/api";
 
         const response = await axios.get(apiOwnServices,{
-           httpAgent:agent,
+           
            timeout:30000
         });
 
@@ -22,10 +19,6 @@ const getApiKeyFromLocalStorage = async () => {
         global.apiKey = apiKey;
 
         console.log("Exito al obtener la nueva llave temporal....");
-
-
-
-
 
     } catch (error) {
 

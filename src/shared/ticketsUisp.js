@@ -5,7 +5,7 @@ const https = require('https');
 const botInCRM = require('../shared/botInCRM');
 
 
-async function createTicketUisp(sensorData, text, clienId) {
+async function createTicketUisp(sensorData, text, clienId,retries) {
     try {
         const agent = new https.Agent({
             rejectUnauthorized: false, // Deshabilitar validación SSL
@@ -44,13 +44,16 @@ async function createTicketUisp(sensorData, text, clienId) {
     } catch (error) {
 
 
-
-        if(error.response.status == 401){
-
-            console.log("Error: ",error.response.status);
+        //El error 401 corresponde a no estar autenticado
+        //por lo que procedemos a autenticarnos llamando a la funcion
+        //que llama al servicio de puppter en otro servidor 
+        //para no entrar en un bucle infinito, hace intentos en la variable retries
+        if (error.response && error.response.status === 401 && retries > 0) {
+            console.log("401: Intentando autenticación...");
+            await loginUISP();
+            return createTicketUisp(sensorData, text, clienId, retries - 1); // Reducir el contador de reintentos
         }
-
-        console.log("Error: ",error.response.status);
+        
 
     
 
