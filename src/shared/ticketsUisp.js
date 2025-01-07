@@ -51,7 +51,7 @@ async function createTicketUisp(sensorData, text, clienId, retries) {
         if (error.response && error.response.status === 401 && retries > 0) {
             console.log("401: Intentando autenticación y metiendo a redis...");
 
-            let ok = redis.setValue(newKey, text, 60)
+            let ok = await redis.setValue(newKey, text, 60)
             const newKey = redis.autoIncrement();
             console.log("El status de redis :",ok);
 
