@@ -43,7 +43,10 @@ async function createTicketUisp(sensorData, text, clienId) {
         console.log("Éxito en subir el ticket a UISP", response.data);
     } catch (error) {
 
-        
+
+
+
+        console.log("Error: ",error.response);
 
     
 

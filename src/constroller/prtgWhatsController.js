@@ -265,7 +265,6 @@ async function buildInformation(sensorData) {
                     console.log("Ya habia un ticket");
                 }
 
-
             }
         }
 
