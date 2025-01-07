@@ -5,7 +5,7 @@ const https = require('https');
 const botInCRM = require('../shared/botInCRM');
 const redis = require("../models/redisConfCRUD");
 
-async function createTicketUisp(sensorData, text, clienId,retries) {
+async function createTicketUisp(sensorData, text, clienId, retries) {
     try {
         const agent = new https.Agent({
             rejectUnauthorized: false, // Deshabilitar validación SSL
@@ -50,16 +50,16 @@ async function createTicketUisp(sensorData, text, clienId,retries) {
         //para no entrar en un bucle infinito, hace intentos en la variable retries
         if (error.response && error.response.status === 401 && retries > 0) {
             console.log("401: Intentando autenticación y metiendo a redis...");
-            
+
             const newKey = redis.autoIncrement();
-            redis.setValue(newKey,text,60);
+            console.log(redis.setValue(newKey, text, 60));
 
             //await loginUISP();
             //return await createTicketUisp(sensorData, text, clienId, retries - 1); // Reducir el contador de reintentos
         }
-        
 
-    
+
+
 
 
 
