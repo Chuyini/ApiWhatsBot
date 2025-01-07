@@ -45,6 +45,10 @@ async function createTicketUisp(sensorData, text, clienId) {
 
 
 
+        if(error.response.status == 401){
+
+            console.log("Error: ",error.response.status);
+        }
 
         console.log("Error: ",error.response.status);
 
