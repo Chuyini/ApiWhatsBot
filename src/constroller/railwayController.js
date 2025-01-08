@@ -9,13 +9,15 @@ const doTickets = async (req = request, res = response) => {
 
         // Verifica si la API key está presente en el body
         const temporalAPI = req.body.apiKey || "API key no proporcionada";
-
+        console.log("llave: ", temporalAPI);
         // Devuelve los tickets pendientes y la API key en la respuesta
         res.status(200).json({
             msg: "Éxito",
             tickets: PendingTickets,
             api: temporalAPI, // Aquí enviamos la API key
         });
+
+        
     } catch (error) {
         console.error("Error ", error);
 
