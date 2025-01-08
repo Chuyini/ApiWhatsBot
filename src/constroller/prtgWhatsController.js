@@ -298,5 +298,6 @@ function extractNumberFromCompany(company) {
 }
 
 module.exports = {
-    Recived
+    Recived,
+    buildInformation
 };
