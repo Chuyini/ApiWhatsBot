@@ -9,7 +9,15 @@ const doTickets = async (req = request, res = response) => {
 
     //va a consultar en railway todos los tickest pendientes
 
-    const PendingTickets = await redis.getAllKeysAndValues();
+    try {
+        const PendingTickets = await redis.getAllKeysAndValues();
+        
+    } catch (error) {
+        console.log("Error ", error);
+        
+    }
+
+    
 
     console.log("Archivo controlador RailWay ", PendingTickets);
 
