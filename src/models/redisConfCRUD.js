@@ -35,20 +35,24 @@ async function deleteValue(key) {
 
 // Función para obtener todas las claves y valores de Redis
 async function getAllKeysAndValues() {
-    let cursor = 0;
+    let cursor = '0'; // El cursor debe inicializarse como una cadena "0"
     const allKeys = [];
 
     do {
+        // Realiza la operación SCAN
         const [nextCursor, keys] = await redis.scan(cursor);
-        cursor = nextCursor;
-        allKeys.push(...keys);
-    } while (cursor !== 0);
+        cursor = nextCursor; // Actualiza el cursor
+        allKeys.push(...keys); // Agrega las claves encontradas
+    } while (cursor !== '0'); // Continúa hasta que el cursor vuelva a "0"
 
     if (allKeys.length === 0) {
         return {};
     }
 
+    // Obtiene los valores asociados a las claves usando MGET
     const values = await redis.mget(allKeys);
+
+    // Combina las claves y valores en un objeto
     const keysAndValues = {};
     allKeys.forEach((key, index) => {
         keysAndValues[key] = values[index];
@@ -56,6 +60,7 @@ async function getAllKeysAndValues() {
 
     return keysAndValues;
 }
+
 
 module.exports = { getValue, setValue, deleteValue, autoIncrement, getAllKeysAndValues };
         
