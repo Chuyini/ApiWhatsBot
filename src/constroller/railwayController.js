@@ -1,8 +1,8 @@
 const { request, response } = require("express");
 const redis = require("../models/redisConfCRUD");
-const uploadTicket = require("../shared/ticketsUisp");
-const functionsPRTG = require("../constroller/prtgWhatsController");
-const idClient = require("../shared/foundIDsUisp");
+//const uploadTicket = require("../shared/ticketsUisp");
+//const functionsPRTG = require("../constroller/prtgWhatsController");
+//const idClient = require("../shared/foundIDsUisp");
 
 
 const doTickets = async (req = request, res = response) => {
