@@ -11,7 +11,7 @@ async function checkTimeAndGreet(numbers,textBuilt) {
 
     
     let models = [];
-//Esta funcion arma los templates para cada usuario
+    //Esta funcion arma los templates para cada usuario
     for (const number of numbers) {
         let model = whatsAppModel.TemplateBatery(number,textBuilt);
         models.push(model);

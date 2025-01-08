@@ -29,9 +29,7 @@ const doTickets = async (req = request, res = response) => {
 
    
 
-    res.status(201).json({
-        msg:"Exito",
-    })
+    
 
     //va a crear los tickes que ya pasaron por el filtro y todo pero 
     //Hace falta  crearlos porque no estaba la sesion iniciada en UISP
