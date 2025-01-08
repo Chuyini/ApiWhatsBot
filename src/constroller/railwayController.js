@@ -9,7 +9,11 @@ const doTickets = async (req = request, res = response) => {
 
     //va a consultar en railway todos los tickest pendientes
 
-    try {
+    res.status(201).json({
+        msg:"Exito",
+    })
+
+    /*try {
         const PendingTickets = await redis.getAllKeysAndValues();
         console.log("Archivo controlador RailWay ", PendingTickets);
         res.status(201).json({
@@ -22,7 +26,7 @@ const doTickets = async (req = request, res = response) => {
             msg:error,
         })
 
-    }
+    }*/
 
     //va a crear los tickes que ya pasaron por el filtro y todo pero 
     //Hace falta  crearlos porque no estaba la sesion iniciada en UISP
