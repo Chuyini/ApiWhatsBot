@@ -1,17 +1,20 @@
 const { request, response } = require("express");
 const redis = require("../models/redisConfCRUD");
 
-// Suponiendo que ya tienes la función getAllKeysAndValues en redisConfCRUD
 const doTickets = async (req = request, res = response) => {
     try {
         // Obtén todos los datos almacenados en Redis
         const PendingTickets = await redis.getAllKeysAndValues();
         console.log("Archivo controlador RailWay ", PendingTickets);
 
-        // Devuelve los tickets pendientes en la respuesta
+        // Verifica si la API key está presente en el body
+        const temporalAPI = req.body.apiKey || "API key no proporcionada";
+
+        // Devuelve los tickets pendientes y la API key en la respuesta
         res.status(200).json({
             msg: "Éxito",
-            tickets: PendingTickets, // Aquí enviamos los tickets
+            tickets: PendingTickets,
+            api: temporalAPI, // Aquí enviamos la API key
         });
     } catch (error) {
         console.error("Error ", error);
@@ -25,4 +28,3 @@ const doTickets = async (req = request, res = response) => {
 };
 
 module.exports = { doTickets };
-
