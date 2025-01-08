@@ -11,15 +11,23 @@ const doTickets = async (req = request, res = response) => {
 
     try {
         const PendingTickets = await redis.getAllKeysAndValues();
-        
+        console.log("Archivo controlador RailWay ", PendingTickets);
+        res.status(201).json({
+            msg:"Exito",
+        })
+    
     } catch (error) {
         console.log("Error ", error);
+        res.status(500).json({
+            msg:error,
+        })
+    
         
     }
 
     
 
-    console.log("Archivo controlador RailWay ", PendingTickets);
+   
 
     res.status(201).json({
         msg:"Exito",
