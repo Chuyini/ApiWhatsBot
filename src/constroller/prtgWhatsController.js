@@ -70,28 +70,26 @@ async function buildInformation(sensorData) {
     if (!sensorData || typeof sensorData !== "object") {
         throw new Error("Datos del sensor inválidos o no proporcionados.");
     }
-
-    let company = sensorData.company;
-    let device = sensorData.device;
-
-    let ip = sensorData.ip;
-    let status = sensorData.status;
-    let time = sensorData.time;
-    let comments = sensorData.comments;
-    let message = sensorData.message;
-    let priority = sensorData.priority;
+    let company = sensorData.company || "DefaultCompany";
+    let device = sensorData.device || "DefaultDevice";
+    let ip = sensorData.ip || "192.168.1.1";
+    let status = sensorData.status || "unknown";
+    let time = sensorData.time || "00:00";
+    let comments = sensorData.comments || "No comments";
+    let message = sensorData.message || "No message";
+    let priority = sensorData.priority || "low";
     let statusEmoji = "🔴";
-    let linkUisp;
-    let lowerCaseText = sensorData.status.toLowerCase();
+    let linkUisp = sensorData.linkUisp || "http://default-link.com";
+    let lowerCaseText = sensorData.status ? sensorData.status.toLowerCase() : "unknown";
     let lowerCaseComuni = company.toLowerCase();
     let lowerCaseIp = ip.toLowerCase();
-    let text;
-    let AIresponse;
+    let text = sensorData.text || "Default text";
+    let AIresponse = sensorData.AIresponse || "Default AI response";
     let idUispService = extractNumberFromCompany(company);
-    let bandera = sensorData.bandera;
+    let bandera = sensorData.bandera || "default";
     let numbers = ["524401050937", "524442478772", "524434629327"]; //Yo de trabajo, Debbie,El lic Frans, diana, daysimar
-    let tags;
-
+    let tags = sensorData.tags || ["defaultTag"];
+    
 
 
 
