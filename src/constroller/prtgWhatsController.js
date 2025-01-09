@@ -123,10 +123,11 @@ async function buildInformation(sensorData) {
 
     }*/
 
-    if (comments === "" || comments === null || comments === undefined) {
+    if (comments === "" || comments === null || comments === undefined || comments.includes("No comments")) {
         console.log("al parecer es NULL o vacía");
         comments = "vacio";
     } else {
+        
         comments = comments.trim();
         console.log("Probando el console log");
         console.log("La variable es: " + comments);
