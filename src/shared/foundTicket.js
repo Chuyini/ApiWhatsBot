@@ -46,6 +46,9 @@ async function isThereTicketOnUisp(sensorData) {
         if (!Array.isArray(tickets)) {
             throw new Error("La respuesta de la API no contiene un arreglo de tickets.");
         }
+        if (!idClient) {
+            throw new Error("No se pudo encontrar el ID de cliente para los datos proporcionados.");
+        }
 
         // Buscar tickets que contengan la IP
         for (const ticket of tickets) {
