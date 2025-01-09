@@ -1,43 +1,46 @@
 const { request, response } = require("express");
 const redis = require("../models/redisConfCRUD");
-const uispCreateTickets = require("../shared/ticketsUisp")
+const uispCreateTickets = require("../shared/ticketsUisp");
+
+const processTickets = async (PendingTickets) => {
+    const ticketPromises = Object.entries(PendingTickets).map(([key, ticket]) => {
+        if (!ticket || !ticket.clienId) {
+            console.warn(`Ticket inválido encontrado: ${key}`, ticket);
+            return Promise.resolve(); // Evita bloquear con un ticket inválido
+        }
+        return uispCreateTickets.createTicketUisp(ticket, ticket, ticket.clienId, 1);
+    });
+
+    await Promise.all(ticketPromises);
+};
 
 const doTickets = async (req = request, res = response) => {
     try {
         // Obtén todos los datos almacenados en Redis
         const PendingTickets = await redis.getAllKeysAndValues();
-        console.log("Archivo controlador RailWay ", PendingTickets);
+        console.log("Tickets pendientes obtenidos de Redis:", PendingTickets);
 
         // Verifica si la API key está presente en el body
         const temporalAPI = req.body.apiKey || "API key no proporcionada";
-        console.log("llave: ", temporalAPI);
-        global.apiKey = temporalAPI;
-        // Devuelve los tickets pendientes y la API key en la respuesta
-        //resolver los tickets pendientes ()
+        console.log("API Key recibida: ", temporalAPI);
 
-        for(ticket in PendingTickets){
+        // Procesa los tickets pendientes
+        await processTickets(PendingTickets);
 
-            await uispCreateTickets.createTicketUisp(ticket,ticket,ticket.clienId,1);
-
-        }
-
-
-        res.status(201).json({
+        res.status(200).json({
             msg: "Éxito",
             tickets: PendingTickets,
-            api: temporalAPI, // Aquí enviamos la API key
+            api: temporalAPI,
         });
-
-        
     } catch (error) {
-        console.error("Error ", error);
+        console.error("Error al procesar los tickets:", error);
 
-        // Manejo de errores
         res.status(500).json({
             msg: "Ocurrió un error al obtener los tickets.",
-            error: error.message, // Envía el mensaje de error para depuración
+            error: error.message,
         });
     }
 };
 
 module.exports = { doTickets };
+
