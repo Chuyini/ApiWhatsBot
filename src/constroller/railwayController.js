@@ -30,7 +30,7 @@ const doTickets = async (req = request, res = response) => {
         global.apiKey = temporalAPI;
 
         // Procesa los tickets pendientes
-        await processTickets(PendingTickets);
+       // await processTickets(PendingTickets);
 
         res.status(200).json({
             msg: "Éxito",
