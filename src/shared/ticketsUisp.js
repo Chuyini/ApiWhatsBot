@@ -73,7 +73,7 @@ async function closeTicket(sensorData, text) {
 
 
     try {
-
+ 
         //primero verificamos el user id de 
 
 
