@@ -1,5 +1,6 @@
 const { request, response } = require("express");
 const redis = require("../models/redisConfCRUD");
+const uispCreateTickets = require("../shared/ticketsUisp")
 
 const doTickets = async (req = request, res = response) => {
     try {
@@ -10,9 +11,18 @@ const doTickets = async (req = request, res = response) => {
         // Verifica si la API key está presente en el body
         const temporalAPI = req.body.apiKey || "API key no proporcionada";
         console.log("llave: ", temporalAPI);
-        //global.apiKey = temporalAPI;
+        global.apiKey = temporalAPI;
         // Devuelve los tickets pendientes y la API key en la respuesta
-        res.status(200).json({
+        //resolver los tickets pendientes ()
+
+        for(ticket in PendingTickets){
+
+            await uispCreateTickets.createTicketUisp(ticket,ticket,ticket.clienId,1);
+
+        }
+
+
+        res.status(201).json({
             msg: "Éxito",
             tickets: PendingTickets,
             api: temporalAPI, // Aquí enviamos la API key
