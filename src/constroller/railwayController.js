@@ -8,7 +8,11 @@ const processTickets = async (PendingTickets) => {
             console.warn(`Ticket inválido encontrado: ${key}`, ticket);
             return Promise.resolve(); // Evita bloquear con un ticket inválido
         }
-        return uispCreateTickets.createTicketUisp(ticket, ticket, ticket.clienId, 1);
+
+        // Convertir el ticket en un string antes de pasarlo
+        const ticketString = JSON.stringify(ticket);
+
+        return uispCreateTickets.createTicketUisp(ticket, ticketString, ticket.clienId, 1);
     });
 
     await Promise.all(ticketPromises);
