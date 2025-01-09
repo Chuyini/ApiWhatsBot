@@ -233,6 +233,8 @@ async function buildInformation(sensorData) {
                 const { idClient, ticket } = await foundTicket.isThereTicketOnUisp(sensorData);
                 console.log("esto dio la resupuesta : ", ticket);
 
+                sensorData.clienId = idClient;
+
                 if (ticket == null) {
 
                     await ticketUisp.createTicketUisp(sensorData, text, idClient);
@@ -253,6 +255,7 @@ async function buildInformation(sensorData) {
 
                 const { idClient, ticket } = await foundTicket.isThereTicketOnUisp(sensorData);
                 console.log("esto dio la resupuesta : ", ticket);
+                sensorData.clienId = idClient;
 
 
                 if (ticket == null) {

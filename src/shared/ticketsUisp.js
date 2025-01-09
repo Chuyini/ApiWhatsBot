@@ -55,6 +55,8 @@ async function createTicketUisp(sensorData, text, clienId, retries) {
            //let ok = await redis.setValue(sensorData.ip, sensorData, 600)
            //console.log("El status de redis :",ok);
 
+           console.log("EL sensor data es: ",sensorData);
+
             //await loginUISP();
             //return await createTicketUisp(sensorData, text, clienId, retries - 1); // Reducir el contador de reintentos
         }
