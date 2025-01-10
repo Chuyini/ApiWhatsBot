@@ -60,6 +60,8 @@ async function isThereTicketOnUisp(sensorData) {
                         activity.comment.body.includes(ip)
                     ) {
                         console.log("Ticket encontrado:", ticket.id);
+                        console.log("Ticket encontrado:", ticket.id, "Detalles del ticket:", ticket);
+                        console.log("ID de cliente relacionado:", idClient);
                         return {
                             idClient: idClient,
                             ticket: ticket,
