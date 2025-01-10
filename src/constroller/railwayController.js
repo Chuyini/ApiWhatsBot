@@ -13,8 +13,11 @@ const processTickets = async (PendingTickets) => {
 
             const ticketString = buildInformation(ticket);
 
+            console.log("Bloque de railwat sensor data : ",ticket);
             // Buscar el cliente y ticket asociado
             const { clienId, ticketFounded } = await found_Id_Uisp_Prtg(ticket);
+
+            console.log("lo que encontro la fincion: ",ticketFounded);
 
             if (!ticketFounded) {
                 console.log(`Creando ticket para el cliente ID: ${clienId}`);
