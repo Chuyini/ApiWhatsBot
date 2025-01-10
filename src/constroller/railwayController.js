@@ -1,7 +1,7 @@
 const { request, response } = require("express");
 const redis = require("../models/redisConfCRUD");
 const uispCreateTickets = require("../shared/ticketsUisp");
-const { found_Id_Uisp_Prtg } = require("../shared/foundIDsUisp");
+const { foundTicket } = require("../shared/foundTicket");
 
 const processTickets = async (PendingTickets) => {
     for (const [key, ticket] of Object.entries(PendingTickets)) {
