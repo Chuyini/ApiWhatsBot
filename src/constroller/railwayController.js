@@ -15,7 +15,7 @@ const processTickets = async (PendingTickets) => {
 
             console.log("Bloque de railwat sensor data : ",ticket);
             // Buscar el cliente y ticket asociado
-            const { clienId, ticketFounded } = await foundTicket.isThereTicketOnUisp(ticket);
+            const { idClient, ticketFounded } = await foundTicket.isThereTicketOnUisp(ticket);
 
             console.log("lo que encontro la fincion: ",ticketFounded);
 
