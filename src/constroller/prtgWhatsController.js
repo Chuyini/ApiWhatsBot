@@ -40,7 +40,7 @@ const Recived = async (req = request, res = response) => {
         numbers.forEach(number => {
             messageQueue.add({
                 sensorInfo,
-                number
+                number 
             });
         });
 
