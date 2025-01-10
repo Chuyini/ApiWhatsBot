@@ -1,7 +1,7 @@
 const { request, response } = require("express");
 const redis = require("../models/redisConfCRUD");
 const uispCreateTickets = require("../shared/ticketsUisp");
-const foundTicket  = require("../shared/foundTicket");
+const foundTicketService = require("../shared/foundTicket");
 
 const processTickets = async (PendingTickets) => {
     for (const [key, ticket] of Object.entries(PendingTickets)) {
@@ -13,13 +13,14 @@ const processTickets = async (PendingTickets) => {
 
             const ticketString = buildInformation(ticket);
 
-            console.log("Bloque de railwat sensor data : ",ticket);
+            console.log("Bloque de railway sensor data: ", ticket);
+
             // Buscar el cliente y ticket asociado
-            const { idClient, ticketFounded } = await foundTicket.isThereTicketOnUisp(ticket);
+            const { idClient, ticket: foundTicket } = await foundTicketService.isThereTicketOnUisp(ticket);
 
-            console.log("lo que encontro la fincion: ",ticketFounded);
+            console.log("Detalles del ticket encontrado: ", foundTicket);
 
-            if (!ticketFounded) {
+            if (!foundTicket) {
                 console.log(`Creando ticket para el cliente ID: ${ticket.clienId}`);
                 await uispCreateTickets.createTicketUisp(ticket, ticketString, ticket.clienId, 1);
             } else {
