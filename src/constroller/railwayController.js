@@ -18,7 +18,7 @@ const processTickets = async (PendingTickets) => {
 
             if (!ticketFounded) {
                 console.log(`Creando ticket para el cliente ID: ${clienId}`);
-                await uispCreateTickets.createTicketUisp(ticket, ticketString, clienId, 1);
+                await uispCreateTickets.createTicketUisp(ticket, ticketString, ticket.clienId, 1);
             } else {
                 console.log(`El ticket ya existe para el cliente ID: ${clienId}`);
             }
