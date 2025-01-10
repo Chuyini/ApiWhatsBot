@@ -52,19 +52,14 @@ async function createTicketUisp(sensorData, text, clienId, retries) {
             console.log("401: Intentando autenticación y metiendo a redis...");
 
             
-           let ok = await redis.setValue(sensorData.ip, sensorData, 600)
-           console.log("El status de redis :",ok);
+           await redis.setValue(sensorData.ip, sensorData, 172800);
+         
 
            //console.log("EL sensor data es: ",sensorData);
 
             //await loginUISP();
             //return await createTicketUisp(sensorData, text, clienId, retries - 1); // Reducir el contador de reintentos
         }
-
-
-
-
-
 
         console.error("Error al crear el ticket:", error.response ? error.response.data : error.message);
     }
@@ -145,25 +140,6 @@ async function closeTicket(sensorData, text) {
 }
 
 
-
-async function loginUISP() {
-
-
-
-    try {
-        const key = botInCRM.getApiKeyFromLocalStorage();
-
-        console.log("La llave es ", key);
-    } catch (error) {
-
-        console.error("ERROR AL INICIAR SESSION ", error);
-
-    }
-
-
-
-
-}
 
 
 
