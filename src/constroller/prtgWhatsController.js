@@ -2,6 +2,7 @@ const {
     request,
     response
 } = require("express");
+
 const processMessageR = require("../shared/processToPrtg");
 const chatGPTService = require("../service/chatGPT-service");
 const checkTime = require("../shared/checkTime");
@@ -118,16 +119,13 @@ async function buildInformation(sensorData) {
             text,
             numbers
         };
-
-
-
     }*/
 
     if (comments === "" || comments === null || comments === undefined || comments.includes("No comments")) {
         console.log("al parecer es NULL o vacía");
         comments = "vacio";
     } else {
-        
+
         comments = comments.trim();
         console.log("Probando el console log");
         console.log("La variable es: " + comments);
