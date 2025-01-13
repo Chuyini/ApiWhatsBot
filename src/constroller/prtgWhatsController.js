@@ -200,7 +200,7 @@ async function buildInformation(sensorData) {
 
     ///Sin son de baterias  se alarma 
     ///aqui podriamos definir los dispositivos de alta prioridad
-    if (sensorData.batery) {
+    if (sensorData.batery || priority.includes("MUY ALTA")) {
         text = `BATERIAS URGENTE:\n🏢EMPRESA/LUGAR: *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji}ESTADO:*${status}*\n\n🌐IP: *${ip}* \n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}* `;
         numbers.push("524434629327"); //yo
 

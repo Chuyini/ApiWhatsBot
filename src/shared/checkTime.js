@@ -8,7 +8,7 @@ async function checkTimeAndGreet(numbers, textBuilt) {
 
     let models = [];
 
-    // Construir los modelos de los templates para cada usuario
+    //Construir los modelos de los templates para cada usuario
     for (const number of numbers) {
         let model = whatsAppModel.TemplateBatery(number, textBuilt);
         models.push(model); // Agregar el modelo construido a la lista
@@ -32,7 +32,7 @@ async function checkTimeAndGreet(numbers, textBuilt) {
             })
         );
 
-        // Filtrar resultados para loguear fallos si es necesario
+        //Filtrar resultados para loguear fallos si es necesario
         const failedMessages = responses.filter((res) => !res.success);
         if (failedMessages.length > 0) {
             console.warn(`${failedMessages.length} mensajes fallaron al ser enviados.`);
