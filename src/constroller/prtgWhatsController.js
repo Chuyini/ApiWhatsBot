@@ -284,6 +284,7 @@ async function buildInformation(sensorData) {
 
                     text = sensorData.ip + ticket ;
                  }
+                 
 
             }
         }

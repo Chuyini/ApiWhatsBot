@@ -27,21 +27,21 @@ async function isThereTicketOnUisp(sensorData) {
         console.log("Buscando tickets relacionados con la IP:", ip);
 
         // Primera consulta: Buscar tickets generales
-       // Configuración para la primera consulta
-       const apiUrlToFindTickets = "https://45.189.154.77/crm/api/v1.0/ticketing/tickets?statuses%5B%5D=0&statuses%5B%5D=1&statuses%5B%5D=2&public=0";
+        // Configuración para la primera consulta
+        const apiUrlToFindTickets = "https://45.189.154.77/crm/api/v1.0/ticketing/tickets?statuses%5B%5D=0&statuses%5B%5D=1&statuses%5B%5D=2&public=0";
 
-       // Ejecutar ambas consultas en paralelo
-       const [ticketsResponse, idClient] = await Promise.all([
-           axios.get(apiUrlToFindTickets, {
-               headers: {
-                   "Content-Type": "application/json",
-                   "X-Auth-App-Key": process.env.UISP_PERMANENT_GET_KEY,
-               },
-               httpsAgent: agent,
-               timeout: 30000,
-           }),
-           found_Id_Uisp_Prtg.found_Id_Uisp_Prtg(sensorData)
-       ]);
+        // Ejecutar ambas consultas en paralelo
+        const [ticketsResponse, idClient] = await Promise.all([
+            axios.get(apiUrlToFindTickets, {
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-Auth-App-Key": process.env.UISP_PERMANENT_GET_KEY,
+                },
+                httpsAgent: agent,
+                timeout: 30000,
+            }),
+            found_Id_Uisp_Prtg.found_Id_Uisp_Prtg(sensorData)
+        ]);
         const tickets = ticketsResponse.data;
         if (!Array.isArray(tickets)) {
             throw new Error("La respuesta de la API no contiene un arreglo de tickets.");
@@ -72,10 +72,10 @@ async function isThereTicketOnUisp(sensorData) {
         }
 
 
-        
 
-        console.log("cliente id ",idClient);
-        
+
+        console.log("cliente id ", idClient);
+
 
         if (!idClient) {
             throw new Error("No se encontró ID del cliente asociado al sensor.");
@@ -97,8 +97,26 @@ async function isThereTicketOnUisp(sensorData) {
 
         const ticketsGroup = responseAllGropusTickets.data;
 
+        //antes de hacer un ticket cuando sabemos que no hay tickets de ese grupo, debemos saber si no esta suspendido 
+
+
+        //Se supone que como queremos encontrar tickets y son muy ambiguos
+            //pues usamos IA pero en esta  seccion de "isSupended" estamos aprovechando 
+            //que ya se hizo la consulta de los servicios para probar la funcion y ver si estan
+            //supendidos, esta con la finalida de no generar un time out gateway
+
+            const numberOfServices = await found_Id_Uisp_Prtg.ServicesOfCompany(idClient);//<-- hace la peticion a los servicios
+            //checa que el servicio no esté supendido cuando son varios
+            const isSupended = isDownServices(numberOfServices, sensorData);
+            if (isSupended) {
+
+                return `está suspendido`;//<-- como no regresa null no genera ticket
+            }
+
         if (!Array.isArray(ticketsGroup) || ticketsGroup.length === 0) {
             console.log("No se encontraron tickets para este cliente.");
+
+            
             return {
                 idClient: idClient,
                 ticket: null,
@@ -109,19 +127,8 @@ async function isThereTicketOnUisp(sensorData) {
 
 
         console.log("Tickets del grupo empresarial encontrados:", ticketsGroup.length);
-       
-        //Se supone que como queremos encontrar tickets y son muy ambiguos
-        //pues usamos IA pero en esta  seccion de "isSupended" estamos aprovechando 
-        //que ya se hizo la consulta de los servicios para probar la funcion y ver si estan
-        //supendidos, esta con la finalida de no generar un time out gateway
 
-        const numberOfServices = await found_Id_Uisp_Prtg.ServicesOfCompany(idClient);//<-- hace la peticion a los servicios
-        //checa que el servicio no esté supendido cuando son varios
-        const isSupended = isDownServices(numberOfServices, sensorData);
-        if (isSupended) {
 
-            return `está suspendido`;//<-- como no regresa null no genera ticket
-        }
 
 
 
@@ -135,10 +142,10 @@ async function isThereTicketOnUisp(sensorData) {
             };
         }
 
-        
-        
 
-        
+
+
+
 
 
         /**
@@ -222,7 +229,7 @@ async function isThereTicketOnUisp(sensorData) {
             };// Respuesta de la IA
         } else {
             console.log("No se encontraron coincidencias según la IA.");
-            console.log("Esto dijo la IA -> ",AIresponse);
+            console.log("Esto dijo la IA -> ", AIresponse);
             return {
                 idClient: idClient,
                 ticket: null,
@@ -237,7 +244,7 @@ async function isThereTicketOnUisp(sensorData) {
         } else {
             console.error("Error desconocido:", error.message);
         }
-         return {
+        return {
             idClient: null,
             ticket: null,
         };
@@ -260,7 +267,7 @@ function isDownServices(services, sensorData) {
     for (const service of [...servicesSuspended, ...servicesEnded]) {
         // Asegurarse de que service.name y sensorData.device no sean null o undefined
 
-        const serviceName = service.name; 
+        const serviceName = service.name;
         const sensorDeviceName = sensorData.device;
 
         // Calcular la similitud usando stringSimilarity.compareTwoStrings
@@ -284,9 +291,10 @@ module.exports = { isThereTicketOnUisp };
 
 /*
 Entonces,
-
--Primero checa que no haya tickets generados con la ip del sensor data.ip
+-Checa que no haya tickest de ese grupo
 -Segundo checa que no este suspendido ese servicio
+-Primero checa que no haya tickets generados con la ip del sensor data.ip
+
 -Tercero checa que si es un servicio y un ticket entonces es de servicio por inferencia
 -Cuarto checa la similiridad en los comentarios de los tickets que podrian ser el servicio alarmado
 -Quinto usa IA para saber si hay ticket creado
