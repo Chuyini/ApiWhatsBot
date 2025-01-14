@@ -134,7 +134,7 @@ async function isThereTicketOnUisp(sensorData) {
 
         if (isSupended) {
 
-            return "Esta supendido el servicios o cancelado";//<-- como no regresa null no genera ticket
+            return `*${sensorData.device}* está suspendido`;//<-- como no regresa null no genera ticket
         }
 
 
