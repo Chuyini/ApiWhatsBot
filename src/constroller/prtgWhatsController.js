@@ -258,7 +258,7 @@ async function buildInformation(sensorData) {
 
                     text = `🚮❌ *${sensorData.device}* *CANCELADO* \n\n\t\t🖥️ *RETIRAR DE PRTG* \n\n🌐 IP: ${sensorData.ip}\n`;
                 }else{
-                    text = "Ticket GENERADO"+ text; 
+                    text = "🎫 Ticket Existente"+ text; 
                 }
 
             }
@@ -286,7 +286,7 @@ async function buildInformation(sensorData) {
 
                     text = `🚮❌ *${sensorData.device}* *CANCELADO* \n\n\t\t🖥️ *RETIRAR DE PRTG* \n\n🌐 IP: ${sensorData.ip}\n`;
                 }else{
-                    text = "Ticket GENERADO"+ text; 
+                    text = "🎫 Ticket Existente"+ text; 
                 }
 
 
