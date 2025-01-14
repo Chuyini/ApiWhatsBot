@@ -280,7 +280,7 @@ async function buildInformation(sensorData) {
 
                     await ticketUisp.createTicketUisp(sensorData, text, idClient, 1);
 
-                } else if (tticket.includes("Esta suspendido")) { //cuando encuentra suspendido, regresa por whats ese mensaje
+                } else if (ticket.includes("Esta suspendido")) { //cuando encuentra suspendido, regresa por whats ese mensaje
 
                     text = `🚮*${sensorData.device}* cancelado \n\n Retirar de PRTG \n${sensorData.ip}`;
                 }
