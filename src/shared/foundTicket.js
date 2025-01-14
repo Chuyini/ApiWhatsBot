@@ -109,10 +109,21 @@ async function isThereTicketOnUisp(sensorData) {
 
 
         console.log("Tickets del grupo empresarial encontrados:", ticketsGroup.length);
+       
+        //Se supone que como queremos encontrar tickets y son muy ambiguos
+        //pues usamos IA pero en esta  seccion de "isSupended" estamos aprovechando 
+        //que ya se hizo la consulta de los servicios para probar la funcion y ver si estan
+        //supendidos, esta con la finalida de no generar un time out gateway
+
+        const numberOfServices = await found_Id_Uisp_Prtg.ServicesOfCompany(idClient);//<-- hace la peticion a los servicios
+        //checa que el servicio no esté supendido cuando son varios
+        const isSupended = isDownServices(numberOfServices, sensorData);
+        if (isSupended) {
+
+            return `${sensorData.device}* está suspendido`;//<-- como no regresa null no genera ticket
+        }
 
 
-
-        const numberOfServices = await found_Id_Uisp_Prtg.ServicesOfCompany(idClient);
 
 
         //Si solo hay un ticket y un servicio pues obvio el ticke debe ser de ese servicio
@@ -124,18 +135,10 @@ async function isThereTicketOnUisp(sensorData) {
             };
         }
 
-        //resulta que si hay mas servicios ahora solo hay que checar que no este suspendido
-        //Se supone que como queremos encontrar tickets y son muy ambiguos
-        //pues usamos IA pero en esta  seccion de "isSupended" estamos aprovechando 
-        //que ya se hizo la consulta de los servicios para probar la funcion y ver si estan
-        //supendidos, esta con la finalida de no generar un time out gateway
+        
+        
 
-        const isSupended = isDownServices(numberOfServices, sensorData);
-
-        if (isSupended) {
-
-            return `*${sensorData.device}* está suspendido`;//<-- como no regresa null no genera ticket
-        }
+        
 
 
         /**
