@@ -3,7 +3,6 @@ const redis = require("../models/redisConfCRUD");
 const uispCreateTickets = require("../shared/ticketsUisp");
 const foundTicketService = require("../shared/foundTicket");
 
-// Función para procesar los tickets en segundo plano
 const processTickets = async (PendingTickets) => {
     for (const [key, ticket] of Object.entries(PendingTickets)) {
         try {
@@ -14,10 +13,12 @@ const processTickets = async (PendingTickets) => {
 
             const ticketString = buildInformation(ticket);
 
-            console.log("Procesando ticket:", ticket);
+            console.log("Bloque de railway sensor data: ", ticket);
 
             // Buscar el cliente y ticket asociado
             const { idClient, ticket: foundTicket } = await foundTicketService.isThereTicketOnUisp(ticket);
+
+            console.log("Detalles del ticket encontrado: ", foundTicket);
 
             if (!foundTicket) {
                 console.log(`Creando ticket para el cliente ID: ${ticket.clienId}`);
@@ -31,7 +32,6 @@ const processTickets = async (PendingTickets) => {
     }
 };
 
-// Endpoint modificado: Responde inmediatamente y procesa en segundo plano
 const doTickets = async (req = request, res = response) => {
     try {
         // Obtén todos los datos almacenados en Redis
@@ -45,31 +45,23 @@ const doTickets = async (req = request, res = response) => {
         // Asignar la API Key globalmente
         global.apiKey = temporalAPI;
 
-        // Procesa los tickets en segundo plano
-        setImmediate(async () => {
-            try {
-                console.log("Iniciando procesamiento de tickets en segundo plano...");
-                await processTickets(PendingTickets);
-                console.log("Procesamiento de tickets completado.");
-            } catch (error) {
-                console.error("Error al procesar tickets en segundo plano:", error);
-            }
-        });
+        // Procesa los tickets pendientes
+        await processTickets(PendingTickets);
 
-        // Responder inmediatamente con un ACK
-        res.status(202).json({
-            msg: "Procesamiento de tickets iniciado",
+        res.status(200).json({
+            msg: "Éxito",
+            tickets: PendingTickets,
+            api: temporalAPI,
         });
     } catch (error) {
-        console.error("Error al iniciar el procesamiento de tickets:", error);
+        console.error("Error al procesar los tickets:", error);
 
         res.status(500).json({
-            msg: "Ocurrió un error al iniciar el procesamiento de tickets.",
+            msg: "Ocurrió un error al obtener los tickets.",
             error: error.message,
         });
     }
 };
-
 
 function buildInformation(sensorData) {
     if (!sensorData || typeof sensorData !== "object") {
@@ -94,6 +86,5 @@ function buildInformation(sensorData) {
 
     return `${statusEmoji}:\n🏢 EMPRESA/LUGAR: *${data.company}*\n\nDISPOSITIVO: *${data.device}*\n\n${statusEmoji} ESTADO: *${data.status}*\n\n🌐 IP: *${data.ip}*\n\nTIEMPO: *${data.time}*\n\nPRIORIDAD: *${data.priority}*\n\n${data.message}\n\n ${data.comments}\n\n etiquetas: ${data.tags}`;
 }
-
 
 module.exports = { doTickets };
