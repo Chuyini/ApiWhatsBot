@@ -94,7 +94,7 @@ async function buildInformation(sensorData) {
     //por fines de prueba vamos a definir apij¿key global como un valor incorrrecto
     //suponemos que la clave expiro y ebtro un nuevo ticket
 
-    global.apiKey = "valor xs";
+    //global.apiKey = "valor xs";
 
     //console.log("Valor inicial de prueba de API KEY: ", global.apiKey);
 
