@@ -108,9 +108,14 @@ async function isThereTicketOnUisp(sensorData) {
         const numberOfServices = await found_Id_Uisp_Prtg.ServicesOfCompany(idClient);//<-- hace la peticion a los servicios
         //checa que el servicio no esté supendido cuando son varios
         const isSupended = isDownServices(numberOfServices, sensorData);
+        console.log("esta suspendido: ", isSupended);
         if (isSupended) {
 
-            return `está suspendido`;//<-- como no regresa null no genera ticket
+            return {
+                idClient: idClient,
+                ticket: "Esta suspendido",
+            };
+            //<-- como no regresa null no genera ticket
         }
 
         if (!Array.isArray(ticketsGroup) || ticketsGroup.length === 0) {
