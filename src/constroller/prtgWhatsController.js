@@ -266,7 +266,7 @@ async function buildInformation(sensorData) {
             if (resumMesagge && resumMesagge.includes("simulado")) {
                 text = `📊PRUEBA SIMULADO📈\n\n${text}\n\nNo hacer caso.`;
             }
-            if (lowerCaseText.includes("repetir escalacion") && ((priority.includes("Alta") || tags.includes("prioridad:alta")) && lowerCaseText.includes("escalacion"))) {//si no es de comunicalo pero es un repetir escalacion
+            if (lowerCaseText.includes("repetir escalacion") || ((priority.includes("Alta") || tags.includes("prioridad:alta")) && lowerCaseText.includes("escalacion"))) {//si no es de comunicalo pero es un repetir escalacion
 
 
 
