@@ -90,7 +90,7 @@ async function buildInformation(sensorData) {
     let bandera = sensorData.bandera || "default";
     let numbers = ["524401050937", "524442478772", "524434629327"]; //Yo de trabajo, Debbie,El lic Frans, diana, daysimar
     let tags = sensorData.tags || ["defaultTag"];
-
+    let resumMesagge = "" || message.toLowerCase();
     //por fines de prueba vamos a definir apij¿key global como un valor incorrrecto
     //suponemos que la clave expiro y ebtro un nuevo ticket
 
@@ -103,13 +103,13 @@ async function buildInformation(sensorData) {
 
     //Personalizar el mensaje de $message
     try {
-        let resumMesagge = message.toLowerCase();
+
 
         if (resumMesagge.includes("no response")) {
             message = "Desconexión detectada. Favor de verificar: IP, SNMP (activo y contraseña), conexión de la antena (electricidad), frecuencia, configuración de la red, cableado, software/firmware, interferencias, configuraciones de seguridad, estado del servidor y credenciales de acceso.";
         }
     } catch (e) {
-        let resumMesagge = "";
+        
         console.error(`Error en el bloque del mensaje. Mensaje procesado: '${message}'. Error:`, e);
     }
 
