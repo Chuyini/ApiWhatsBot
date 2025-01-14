@@ -109,7 +109,7 @@ async function buildInformation(sensorData) {
             message = "Desconexión detectada. Favor de verificar: IP, SNMP (activo y contraseña), conexión de la antena (electricidad), frecuencia, configuración de la red, cableado, software/firmware, interferencias, configuraciones de seguridad, estado del servidor y credenciales de acceso.";
         }
     } catch (e) {
-        
+
         console.error(`Error en el bloque del mensaje. Mensaje procesado: '${message}'. Error:`, e);
     }
 
@@ -225,7 +225,7 @@ async function buildInformation(sensorData) {
         textToTemplate = textToTemplate.substring(0, 50);
 
         const specialNumber = ["524442475444", "524441967796", "524441574990", "524441184908", "524434629327", "524442478772"];
-        
+
         //const testNumbers = ["524434629327","524442478772","524441967796","524442475444","524401050937", "524441171133", "526643671066"];//yo,Debie, Lic, diana,yo trabajo,mama,itzel
         //numbers.push("524441184908"); //Ceron
 
@@ -254,9 +254,9 @@ async function buildInformation(sensorData) {
 
                     await ticketUisp.createTicketUisp(sensorData, text, idClient);
 
-                } else if(ticket.includes("Esta suspendido")) { //cuando encuentra suspendido, regresa por whats ese mensaje
+                } else if (ticket.includes("Esta suspendido")) { //cuando encuentra suspendido, regresa por whats ese mensaje
 
-                   text = sensorData.ip + ticket ;
+                    text = sensorData.ip + ticket;
                 }
 
             }
@@ -280,10 +280,10 @@ async function buildInformation(sensorData) {
 
                     await ticketUisp.createTicketUisp(sensorData, text, idClient, 1);
 
-                } else if(ticket.includes("Esta suspendido")) { //cuando encuentra suspendido, regresa por whats ese mensaje
+                } else if (tticket.includes("Esta suspendido")) { //cuando encuentra suspendido, regresa por whats ese mensaje
 
-                    text = sensorData.ip + ticket ;
-                 }
+                    text = `🚮*${sensorData.device}* cancelado \n\n Retirar de PRTG \n${sensorData.ip}`;
+                }
 
 
             }
