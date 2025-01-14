@@ -120,7 +120,7 @@ async function isThereTicketOnUisp(sensorData) {
         const isSupended = isDownServices(numberOfServices, sensorData);
         if (isSupended) {
 
-            return `${sensorData.device}* está suspendido`;//<-- como no regresa null no genera ticket
+            return `está suspendido`;//<-- como no regresa null no genera ticket
         }
 
 

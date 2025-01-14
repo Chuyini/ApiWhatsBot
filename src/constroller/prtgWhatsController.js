@@ -254,9 +254,9 @@ async function buildInformation(sensorData) {
 
                     await ticketUisp.createTicketUisp(sensorData, text, idClient);
 
-                } else if(ticket.includes("está suspendido")) { //cuando encuentra suspendido, regresa por whats ese mensaje
+                } else if(ticket == "está suspendido") { //cuando encuentra suspendido, regresa por whats ese mensaje
 
-                   text = ticket;
+                   text = sensorData.ip + ticket ;
                 }
 
             }
