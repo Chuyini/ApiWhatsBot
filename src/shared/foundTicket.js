@@ -280,3 +280,16 @@ function isDownServices(services, sensorData) {
 
 
 module.exports = { isThereTicketOnUisp };
+
+
+/*
+Entonces,
+
+-Primero checa que no haya tickets generados con la ip del sensor data.ip
+-Segundo checa que no este suspendido ese servicio
+-Tercero checa que si es un servicio y un ticket entonces es de servicio por inferencia
+-Cuarto checa la similiridad en los comentarios de los tickets que podrian ser el servicio alarmado
+-Quinto usa IA para saber si hay ticket creado
+
+
+*/
