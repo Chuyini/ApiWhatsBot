@@ -255,7 +255,7 @@ async function buildInformation(sensorData) {
                     await ticketUisp.createTicketUisp(sensorData, text, idClient);
                     text = "🎫✏️ Ticket Creado"+ text; 
 
-                } else if (ticket.includes("Esta suspendido")) { //cuando encuentra suspendido, regresa por whats ese mensaje
+                } else if (ticket == "Esta suspendido") { //cuando encuentra suspendido, regresa por whats ese mensaje
 
                     text = `🚮❌ *${sensorData.device}* *CANCELADO* \n\n\t\t🖥️ *RETIRAR DE PRTG* \n\n🌐 IP: ${sensorData.ip}\n`;
                 }else{
@@ -285,7 +285,7 @@ async function buildInformation(sensorData) {
                     text = "🎫✏️ Ticket Creado"+ text; 
 
 
-                } else if (ticket.includes("Esta suspendido")) { //cuando encuentra suspendido, regresa por whats ese mensaje
+                } else if (ticket == "Esta suspendido") { //cuando encuentra suspendido, regresa por whats ese mensaje
 
                     text = `🚮❌ *${sensorData.device}* *CANCELADO* \n\n\t\t🖥️ *RETIRAR DE PRTG* \n\n🌐 IP: ${sensorData.ip}\n`;
                 }else{
