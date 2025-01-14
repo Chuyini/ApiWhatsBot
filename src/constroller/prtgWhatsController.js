@@ -257,6 +257,8 @@ async function buildInformation(sensorData) {
                 } else if (ticket.includes("Esta suspendido")) { //cuando encuentra suspendido, regresa por whats ese mensaje
 
                     text = `🚮❌ *${sensorData.device}* *CANCELADO* \n\n\t\t🖥️ *RETIRAR DE PRTG* \n\n🌐 IP: ${sensorData.ip}\n`;
+                }else{
+                    text = "Ticket GENERADO"+ text; 
                 }
 
             }
@@ -283,6 +285,8 @@ async function buildInformation(sensorData) {
                 } else if (ticket.includes("Esta suspendido")) { //cuando encuentra suspendido, regresa por whats ese mensaje
 
                     text = `🚮❌ *${sensorData.device}* *CANCELADO* \n\n\t\t🖥️ *RETIRAR DE PRTG* \n\n🌐 IP: ${sensorData.ip}\n`;
+                }else{
+                    text = "Ticket GENERADO"+ text; 
                 }
 
 
