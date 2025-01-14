@@ -282,7 +282,7 @@ async function buildInformation(sensorData) {
 
                 } else if (ticket.includes("Esta suspendido")) { //cuando encuentra suspendido, regresa por whats ese mensaje
 
-                    text = `🚮*${sensorData.device}* cancelado \n\n Retirar de PRTG \n${sensorData.ip}`;
+                    text = `🚮*${sensorData.device}* cancelado \n\n Retirar de PRTG \nIP: ${sensorData.ip}`;
                 }
 
 
