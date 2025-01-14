@@ -40,7 +40,7 @@ const Recived = async (req = request, res = response) => {
         numbers.forEach(number => {
             messageQueue.add({
                 sensorInfo,
-                number 
+                number
             });
         });
 
@@ -109,6 +109,7 @@ async function buildInformation(sensorData) {
             message = "Desconexión detectada. Favor de verificar: IP, SNMP (activo y contraseña), conexión de la antena (electricidad), frecuencia, configuración de la red, cableado, software/firmware, interferencias, configuraciones de seguridad, estado del servidor y credenciales de acceso.";
         }
     } catch (e) {
+        let resumMesagge = "";
         console.error(`Error en el bloque del mensaje. Mensaje procesado: '${message}'. Error:`, e);
     }
 
@@ -202,6 +203,12 @@ async function buildInformation(sensorData) {
     ///aqui podriamos definir los dispositivos de alta prioridad
     if (sensorData.batery || priority.includes("MUY ALTA")) {
         text = `BATERIAS URGENTE:\n🏢EMPRESA/LUGAR: *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji}ESTADO:*${status}*\n\n🌐IP: *${ip}* \n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}* `;
+
+        if (resumMesagge && resumMesagge.includes("simulado")) {
+            text = `PRUEBA SIMULADO\n\n${text}\n\nNo hacer caso.`;
+        }
+
+
         numbers.push("524434629327"); //yo
 
         // checkTime.checkTimeAndGreet();
@@ -230,7 +237,9 @@ async function buildInformation(sensorData) {
         if (lowerCaseComuni.includes("comunicalo") || tags.includes("comunicalo") /*&& !/^192\.168\./.test(lowerCaseIp)*/) {
             AIresponse = await chatGPTService.GetMessageChatGPT("Puedes resumir lo siguiente es para mandarlo como reporte solo pon algo sencillo no agregues codigos de error, además pregunta si sucede algo con la electricidad o alguna afectacion ya que es comunicalo y ellos son un isp. No agreges emogies :" + message);
             text = `\n🏢 *${company}*\n\nSERVICIO: *${device}*\n\n${statusEmoji} ESTADO: *${status}*\n\n🌐 IP: *${ip}*\n\nTIEMPO: *${time}*\n\n${AIresponse}\n\n${comments}`;
-
+            if (resumMesagge && resumMesagge.includes("simulado")) {
+                text = `PRUEBA SIMULADO\n\n${text}\n\nNo hacer caso.`;
+            }
             if ((lowerCaseText.includes("fallo escalacion") || lowerCaseText.includes("repetir escalacion"))) {
 
 
@@ -252,6 +261,9 @@ async function buildInformation(sensorData) {
         } else {
             // AIresponse = await chatGPTService.GetMessageChatGPT(message); <-- no necesitamos algun reporte cuando este en OK
             text = `Sensor Alert ${statusEmoji}:\n🏢 EMPRESA/LUGAR: *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji} ESTADO: *${status}*\n\n🌐 IP: *${ip}*\n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}*\n\n${message}\n\n🔗 LINK UISP: *${linkUisp}*\n\n ${comments}\n\n etiquetas: ${tags}`;
+            if (resumMesagge && resumMesagge.includes("simulado")) {
+                text = `PRUEBA SIMULADO\n\n${text}\n\nNo hacer caso.`;
+            }
             if (lowerCaseText.includes("repetir escalacion") && ((priority.includes("Alta") || tags.includes("prioridad:alta")) && lowerCaseText.includes("escalacion"))) {//si no es de comunicalo pero es un repetir escalacion
 
 
