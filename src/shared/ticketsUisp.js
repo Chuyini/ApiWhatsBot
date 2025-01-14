@@ -2,8 +2,8 @@ const whatsAppModel = require("../shared/modelsWhatsApp");
 const axios = require("axios");
 const moment = require("moment");
 const https = require('https');
-const botInCRM = require('../shared/botInCRM');
 const redis = require("../models/redisConfCRUD");
+const server2 = require("../shared/callServer2");
 
 async function createTicketUisp(sensorData, text, clienId, retries) {
     try {
@@ -53,6 +53,10 @@ async function createTicketUisp(sensorData, text, clienId, retries) {
 
             
            await redis.setValue(sensorData.ip, sensorData, 172800);
+           setImmediate(async()=>{
+            await server2.triggerActionS2();
+
+           })
          
 
            //console.log("EL sensor data es: ",sensorData);
