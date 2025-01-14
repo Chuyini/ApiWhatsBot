@@ -83,7 +83,7 @@ function buildInformation(sensorData) {
 
     const data = { ...defaults, ...sensorData }; // Combina los datos con los valores por defecto
     const statusEmoji = data.status.toLowerCase().includes("fallo") ? "🔴" : "🟢";
-
+    let text =`${statusEmoji}:\n🏢 EMPRESA/LUGAR: *${data.company}*\n\nDISPOSITIVO: *${data.device}*\n\n${statusEmoji} ESTADO: *${data.status}*\n\n🌐 IP: *${data.ip}*\n\nTIEMPO: *${data.time}*\n\nPRIORIDAD: *${data.priority}*\n\n${data.message}\n\n ${data.comments}\n\n etiquetas: ${data.tags}`;
     const message = "" || sensorData.message;
     const resumMesagge = "" || message.toLowerCase();
 
@@ -91,7 +91,7 @@ function buildInformation(sensorData) {
         text = `📊PRUEBA SIMULADO📈\n\n${text}\n\nNo hacer caso.`;
     }
 
-    return `${statusEmoji}:\n🏢 EMPRESA/LUGAR: *${data.company}*\n\nDISPOSITIVO: *${data.device}*\n\n${statusEmoji} ESTADO: *${data.status}*\n\n🌐 IP: *${data.ip}*\n\nTIEMPO: *${data.time}*\n\nPRIORIDAD: *${data.priority}*\n\n${data.message}\n\n ${data.comments}\n\n etiquetas: ${data.tags}`;
+    return text;
 }
 
 module.exports = { doTickets };
