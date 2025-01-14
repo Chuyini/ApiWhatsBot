@@ -70,4 +70,30 @@ const doTickets = async (req = request, res = response) => {
     }
 };
 
+
+function buildInformation(sensorData) {
+    if (!sensorData || typeof sensorData !== "object") {
+        throw new Error("Datos del sensor inválidos o no proporcionados.");
+    }
+
+    // Valores por defecto
+    const defaults = {
+        company: "DefaultCompany",
+        device: "DefaultDevice",
+        ip: "192.168.1.1",
+        status: "unknown",
+        time: "00:00",
+        comments: "No comments",
+        message: "No message",
+        priority: "low",
+        tags: ["defaultTag"],
+    };
+
+    const data = { ...defaults, ...sensorData }; // Combina los datos con los valores por defecto
+    const statusEmoji = data.status.toLowerCase().includes("fallo") ? "🔴" : "🟢";
+
+    return `${statusEmoji}:\n🏢 EMPRESA/LUGAR: *${data.company}*\n\nDISPOSITIVO: *${data.device}*\n\n${statusEmoji} ESTADO: *${data.status}*\n\n🌐 IP: *${data.ip}*\n\nTIEMPO: *${data.time}*\n\nPRIORIDAD: *${data.priority}*\n\n${data.message}\n\n ${data.comments}\n\n etiquetas: ${data.tags}`;
+}
+
+
 module.exports = { doTickets };
