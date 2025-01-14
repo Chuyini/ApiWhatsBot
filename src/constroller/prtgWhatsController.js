@@ -280,10 +280,10 @@ async function buildInformation(sensorData) {
 
                     await ticketUisp.createTicketUisp(sensorData, text, idClient, 1);
 
-                } else {
+                } else if(ticket.includes("está suspendido")) { //cuando encuentra suspendido, regresa por whats ese mensaje
 
-                    console.log("Ya habia un ticket");
-                }
+                    text = ticket;
+                 }
 
             }
         }
