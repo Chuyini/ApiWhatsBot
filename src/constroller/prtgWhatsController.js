@@ -12,7 +12,7 @@ const infromationCRM = require("../shared/foundIDsUisp");
 const Queue = require('bull');
 const Bottleneck = require('bottleneck');
 
-let contadorMasive = 0;
+let contadorMasive;
 
 
 
@@ -64,9 +64,9 @@ const Recived = async (req = request, res = response) => {
 
 
 
-        if (!global.contador) { global.contador = 0; } else { global.contador++; }
+        if (!contadorMasive) { contadorMasive = 0; } else { contadorMasive++; }
 
-        console.log("Numero de falla masiva", global.contador );
+        console.log("Numero de falla masiva", contadorMasive );
 
 
 
