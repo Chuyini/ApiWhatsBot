@@ -61,7 +61,7 @@ const Recived = async (req = request, res = response) => {
 
         //agregamos a la coola de procesos
         messageQueue.add({ sensorInfo });
-        messageQueue.process()
+        
 
 
 
@@ -86,26 +86,8 @@ const Recived = async (req = request, res = response) => {
         return res.status(500).send("Error processing event.");
     }
 };
-const getLog = (req = request, res = response) => {
-    try {
-        return res.status(200).json(requestLog);
-    } catch (error) {
-        console.error("Error al obtener el log:", error);
-        return res.status(500).send("Error obteniendo el log.");
-    }
-};
 
-// Monitoreo de la cola (registro continuo en consola)
-const monitorQueue = async () => {
-    setInterval(async () => {
-        const jobCounts = await messageQueue.getJobCounts();
-        console.log(
-            `[Monitor de Cola] Procesando: ${jobCounts.active}, Pendientes: ${jobCounts.waiting}, Completados: ${jobCounts.completed}`
-        );
-    }, 10000); // Intervalo de monitoreo: 10 segundos
-};
 
-monitorQueue();
 
 async function buildInformation(sensorData) {
 
