@@ -16,6 +16,7 @@ const Bottleneck = require('bottleneck');
 // Crear una cola de mensajes
 const messageQueue = new Queue('messageQueue');
 
+
 // Configurar Bottleneck para la limitación de velocidad
 const limiter = new Bottleneck({
     maxConcurrent: 1, // Número máximo de tareas concurrentes
@@ -61,7 +62,7 @@ const Recived = async (req = request, res = response) => {
 
         //agregamos a la coola de procesos
         messageQueue.add({ sensorInfo });
-        
+
 
 
 
@@ -327,6 +328,21 @@ async function buildInformation(sensorData) {
         };
     }
 }
+messageQueue.on('waiting', (jobId) => {
+    console.log(`Job ${jobId} is waiting in the queue.`);
+});
+
+messageQueue.on('active', (job) => {
+    console.log(`Job ${job.id} is now active. Processing...`);
+});
+
+messageQueue.on('completed', (job) => {
+    console.log(`Job ${job.id} completed successfully.`);
+});
+
+messageQueue.on('failed', (job, err) => {
+    console.error(`Job ${job.id} failed with error:`, err);
+});
 
 function extractNumbersAndText(text) {
     let match = text.match(/^(\d+)\s*-\s*(.*)/);
@@ -351,7 +367,15 @@ function extractNumberFromCompany(company) {
     return match ? match[1] : null;
 }
 
+
+
+
+
+
+
 module.exports = {
     Recived,
     buildInformation
 };
+
+
