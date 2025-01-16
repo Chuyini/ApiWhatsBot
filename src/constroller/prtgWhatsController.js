@@ -280,7 +280,7 @@ async function buildInformation(sensorData) {
             if (resumMesagge && resumMesagge.includes("simulado")) {
                 text = `📊PRUEBA SIMULADO📈\n\n${text}\n\nNo hacer caso.`;
             }
-            if ((lowerCaseText.includes("fallo escalacion") || lowerCaseText.includes("repetir escalacion"))) {
+            if ((lowerCaseText.includes("fallo escalación") || lowerCaseText.includes("repetir escalacion"))) {
 
 
                 const { idClient, ticket } = await foundTicket.isThereTicketOnUisp(sensorData);
