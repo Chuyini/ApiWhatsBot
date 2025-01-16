@@ -37,7 +37,7 @@ messageQueue.process(async (job) => {
     const { sensorData } = job.data; // Obtener datos del trabajo
     console.log(`Procesando mensaje para el número: ${sensorData.device}`);
     // Simulamos el procesamiento con una espera
-    await new Promise((resolve) => setTimeout(resolve, 1000)); // 1 segundo
+    
     console.log(`Mensaje procesado exitosamente para el número: ${sensorData.device}`);
 });
 
