@@ -22,6 +22,31 @@ const limiter = new Bottleneck({
     minTime: 60000 / 100 // Intervalo mínimo de tiempo entre tareas (100 mensajes por minuto)
 });
 
+// Almacenamiento en memoria para las solicitudes recibidas
+let requestLog = [];
+
+// Tiempo de espera entre mensajes simulados
+const WAIT_TIME = 5000; // 5 segundos
+
+
+// Función para procesar mensajes
+const processQueue = async (job) => {
+    const { sensorInfo, number } = job.data;
+   console.log("Procesamiento de cola");
+    try {
+        // Simula un procesamiento (espera el tiempo configurado)
+        await new Promise(resolve => setTimeout(resolve, WAIT_TIME));
+        console.log(`Mensaje enviado correctamente a ${number}`);
+    } catch (error) {
+        console.error(`Error enviando mensaje a ${number}:`, error);
+    }
+};
+
+// Procesar mensajes en la cola
+messageQueue.process(async (job) => {
+    return processQueue(job);
+});
+
 const Recived = async (req = request, res = response) => {
 
     try {
@@ -31,8 +56,13 @@ const Recived = async (req = request, res = response) => {
             console.error("No sensor data found in request.");
             return res.status(400).send("No sensor data found in request.");
         }
+
+        requestLog.push({
+            timestamp: new Date(),
+            data: sensorData
+        });
   
-        
+
         const {
             text: sensorInfo,
             numbers
@@ -64,6 +94,14 @@ const Recived = async (req = request, res = response) => {
     } catch (error) {
         console.error("Error in Recived function:", error);
         return res.status(500).send("Error processing event.");
+    }
+};
+const getLog = (req = request, res = response) => {
+    try {
+        return res.status(200).json(requestLog);
+    } catch (error) {
+        console.error("Error al obtener el log:", error);
+        return res.status(500).send("Error obteniendo el log.");
     }
 };
 
