@@ -31,15 +31,16 @@ const WAIT_TIME = 5000; // 5 segundos
 
 // Función para procesar mensajes
 const processQueue = async (job) => {
- 
-   console.log("Procesamiento de cola");
-    /*try {
+    const { sensorInfo, number } = job.data;
+
+    console.log(`Procesando mensaje en la cola para el número: ${number}`);
+    try {
         // Simula un procesamiento (espera el tiempo configurado)
-        await new Promise(resolve => setTimeout(resolve, WAIT_TIME));
-        console.log(`Mensaje enviado correctamente a ${number}`);
+        await new Promise((resolve) => setTimeout(resolve, WAIT_TIME));
+        console.log(`Mensaje procesado exitosamente para el número: ${number}`);
     } catch (error) {
-        console.error(`Error enviando mensaje a ${number}:`, error);
-    }*/
+        console.error(`Error al procesar el mensaje para el número ${number}:`, error);
+    }
 };
 
 // Procesar mensajes en la cola
@@ -61,7 +62,7 @@ const Recived = async (req = request, res = response) => {
             timestamp: new Date(),
             data: sensorData
         });
-  
+
 
         const {
             text: sensorInfo,
@@ -106,6 +107,17 @@ const getLog = (req = request, res = response) => {
         return res.status(500).send("Error obteniendo el log.");
     }
 };
+
+// Monitoreo de la cola (registro continuo en consola)
+const monitorQueue = async () => {
+    setInterval(async () => {
+        const jobCounts = await messageQueue.getJobCounts();
+        console.log(
+            `[Monitor de Cola] Procesando: ${jobCounts.active}, Pendientes: ${jobCounts.waiting}, Completados: ${jobCounts.completed}`
+        );
+    }, 10000); // Intervalo de monitoreo: 10 segundos
+};
+monitorQueue();
 
 async function buildInformation(sensorData) {
 
@@ -239,6 +251,8 @@ async function buildInformation(sensorData) {
             break;
     }
 
+
+
     ///Sin son de baterias  se alarma 
     ///aqui podriamos definir los dispositivos de alta prioridad
     if (sensorData.batery || priority.includes("MUY ALTA")) {
@@ -293,13 +307,13 @@ async function buildInformation(sensorData) {
                 if (ticket == null) {
 
                     await ticketUisp.createTicketUisp(sensorData, text, idClient);
-                    text = "🎫✏️ Ticket Creado"+ text; 
+                    text = "🎫✏️ Ticket Creado" + text;
 
                 } else if (ticket == "Esta suspendido") { //cuando encuentra suspendido, regresa por whats ese mensaje
 
                     text = `🚮❌ *${sensorData.device}* *CANCELADO* \n\n\t\t🖥️ *RETIRAR DE PRTG* \n\n🌐 IP: ${sensorData.ip}\n`;
-                }else{
-                    text = "🎫 Ticket Existente"+ text; 
+                } else {
+                    text = "🎫 Ticket Existente" + text;
                 }
 
             }
@@ -309,7 +323,7 @@ async function buildInformation(sensorData) {
             if (resumMesagge && resumMesagge.includes("simulado")) {
                 text = `📊PRUEBA SIMULADO📈\n\n${text}\n\nNo hacer caso.`;
             }
-            if (lowerCaseText.includes("repetir escalacion") || ((priority.includes("Alta") || tags.includes("prioridad:alta")) && lowerCaseText.includes("fallo escalación")) ) {//si no es de comunicalo pero es un repetir escalacion
+            if (lowerCaseText.includes("repetir escalacion") || ((priority.includes("Alta") || tags.includes("prioridad:alta")) && lowerCaseText.includes("fallo escalación"))) {//si no es de comunicalo pero es un repetir escalacion
 
 
 
@@ -322,14 +336,14 @@ async function buildInformation(sensorData) {
                 if (ticket == null) {
 
                     await ticketUisp.createTicketUisp(sensorData, text, idClient, 1);
-                    text = "🎫✏️ Ticket Creado"+ text; 
+                    text = "🎫✏️ Ticket Creado" + text;
 
 
                 } else if (ticket == "Esta suspendido") { //cuando encuentra suspendido, regresa por whats ese mensaje
 
                     text = `🚮❌ *${sensorData.device}* *CANCELADO* \n\n\t\t🖥️ *RETIRAR DE PRTG* \n\n🌐 IP: ${sensorData.ip}\n`;
-                }else{
-                    text = "🎫 Ticket Existente"+ text; 
+                } else {
+                    text = "🎫 Ticket Existente" + text;
                 }
 
 
