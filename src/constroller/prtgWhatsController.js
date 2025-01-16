@@ -41,7 +41,7 @@ messageQueue.process(async (job) => {
     const { sensorData } = job.data; // Obtener datos del trabajo
     console.log(`Procesando mensaje para el número: ${sensorData.device}`);
     // Simulamos el procesamiento con una espera
-    
+
     console.log(`Mensaje procesado exitosamente para el número: ${sensorData.device}`);
 });
 
@@ -64,12 +64,10 @@ const Recived = async (req = request, res = response) => {
 
 
 
-        //Fallas masivas contador
+        if (!global.contador) { global.contador = 0; } else { global.contador++; }
 
-        contadorMasive ++;
+        console.log("Numero de falla masiva", global.contador );
 
-        console.log("Numero de falla masiva",contadorMasive);
-        
 
 
 
