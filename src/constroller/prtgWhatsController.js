@@ -31,7 +31,7 @@ const WAIT_TIME = 5000; // 5 segundos
 
 // Función para procesar mensajes
 const processQueue = async (job) => {
-    const { sensorInfo, number } = job.data;
+ 
    console.log("Procesamiento de cola");
     /*try {
         // Simula un procesamiento (espera el tiempo configurado)
