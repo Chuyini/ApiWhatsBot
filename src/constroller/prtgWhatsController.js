@@ -104,7 +104,6 @@ async function buildInformation(sensorData) {
     //Personalizar el mensaje de $message
     try {
 
-
         if (resumMesagge.includes("no response")) {
             message = "Desconexión detectada. Favor de verificar: IP, SNMP (activo y contraseña), conexión de la antena (electricidad), frecuencia, configuración de la red, cableado, software/firmware, interferencias, configuraciones de seguridad, estado del servidor y credenciales de acceso.";
         }
@@ -269,7 +268,7 @@ async function buildInformation(sensorData) {
             if (resumMesagge && resumMesagge.includes("simulado")) {
                 text = `📊PRUEBA SIMULADO📈\n\n${text}\n\nNo hacer caso.`;
             }
-            if (lowerCaseText.includes("repetir escalacion") ) {//si no es de comunicalo pero es un repetir escalacion
+            if (lowerCaseText.includes("repetir escalacion") || ((priority.includes("Alta") || tags.includes("prioridad:alta")) && lowerCaseText.includes("fallo escalación")) ) {//si no es de comunicalo pero es un repetir escalacion
 
 
 
