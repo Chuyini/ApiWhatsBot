@@ -12,6 +12,10 @@ const infromationCRM = require("../shared/foundIDsUisp");
 const Queue = require('bull');
 const Bottleneck = require('bottleneck');
 
+let contadorMasive = 0;
+
+
+
 
 // Crear una cola de mensajes
 const messageQueue = new Queue('messageQueue');
@@ -60,8 +64,12 @@ const Recived = async (req = request, res = response) => {
 
 
 
-        //agregamos a la coola de procesos
-        messageQueue.add({ sensorInfo });
+        //Fallas masivas contador
+
+        contadorMasive ++;
+
+        console.log("Numero de falla masiva",contadorMasive);
+        
 
 
 
