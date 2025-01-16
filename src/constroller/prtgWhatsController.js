@@ -29,23 +29,15 @@ let requestLog = [];
 const WAIT_TIME = 5000; // 5 segundos
 
 
-// Función para procesar mensajes
-const processQueue = async (job) => {
-    const { sensorInfo, number } = job.data;
 
-    console.log(`Procesando mensaje en la cola para el número: ${number}`);
-    try {
-        // Simula un procesamiento (espera el tiempo configurado)
-        await new Promise((resolve) => setTimeout(resolve, WAIT_TIME));
-        console.log(`Mensaje procesado exitosamente para el número: ${number}`);
-    } catch (error) {
-        console.error(`Error al procesar el mensaje para el número ${number}:`, error);
-    }
-};
 
 // Procesar mensajes en la cola
 messageQueue.process(async (job) => {
-    return processQueue(job);
+    const { sensorData } = job.data; // Obtener datos del trabajo
+    console.log(`Procesando mensaje para el número: ${sensorData.device}`);
+    // Simulamos el procesamiento con una espera
+    await new Promise((resolve) => setTimeout(resolve, 1000)); // 1 segundo
+    console.log(`Mensaje procesado exitosamente para el número: ${sensorData.device}`);
 });
 
 const Recived = async (req = request, res = response) => {
@@ -58,11 +50,6 @@ const Recived = async (req = request, res = response) => {
             return res.status(400).send("No sensor data found in request.");
         }
 
-        requestLog.push({
-            timestamp: new Date(),
-            data: sensorData
-        });
-
 
         const {
             text: sensorInfo,
@@ -71,12 +58,11 @@ const Recived = async (req = request, res = response) => {
 
 
 
-        numbers.forEach(number => {
-            messageQueue.add({
-                sensorInfo,
-                number
-            });
-        });
+
+        //agregamos a la coola de procesos
+        messageQueue.add({ sensorInfo });
+
+
 
         const promises = numbers.map(async (number) => {
             console.log(`Sending message: "${sensorInfo}" to number: ${number}`);
@@ -117,6 +103,7 @@ const monitorQueue = async () => {
         );
     }, 10000); // Intervalo de monitoreo: 10 segundos
 };
+
 monitorQueue();
 
 async function buildInformation(sensorData) {
@@ -136,7 +123,6 @@ async function buildInformation(sensorData) {
     let linkUisp = sensorData.linkUisp || "http://default-link.com";
     let lowerCaseText = sensorData.status ? sensorData.status.toLowerCase() : "unknown";
     let lowerCaseComuni = company.toLowerCase();
-    let lowerCaseIp = ip.toLowerCase();
     let text = sensorData.text || "Default text";
     let AIresponse = sensorData.AIresponse || "Default AI response";
     let idUispService = extractNumberFromCompany(company);
@@ -312,7 +298,9 @@ async function buildInformation(sensorData) {
                 } else if (ticket == "Esta suspendido") { //cuando encuentra suspendido, regresa por whats ese mensaje
 
                     text = `🚮❌ *${sensorData.device}* *CANCELADO* \n\n\t\t🖥️ *RETIRAR DE PRTG* \n\n🌐 IP: ${sensorData.ip}\n`;
+
                 } else {
+
                     text = "🎫 Ticket Existente" + text;
                 }
 
