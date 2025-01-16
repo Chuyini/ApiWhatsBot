@@ -62,7 +62,7 @@ const Recived = async (req = request, res = response) => {
                 devices: []
             };
         } else {
-            if (sensorData.status.includes("fallo")) {
+            if (sensorData.status.includes("Fallo")) {
                 const device = {
                     "name": sensorData.device,
                     "ip": sensorData.ip
@@ -88,7 +88,7 @@ const Recived = async (req = request, res = response) => {
 
 
 
-        console.log("Numero de falla masiva",);
+        console.log("Numero de falla masiva",global.statusAndDevices.devices.length);
 
 
 
