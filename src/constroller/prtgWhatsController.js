@@ -61,6 +61,7 @@ const Recived = async (req = request, res = response) => {
 
         //agregamos a la coola de procesos
         messageQueue.add({ sensorInfo });
+        messageQueue.process()
 
 
 
