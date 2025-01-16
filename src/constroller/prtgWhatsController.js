@@ -12,7 +12,7 @@ const infromationCRM = require("../shared/foundIDsUisp");
 const Queue = require('bull');
 const Bottleneck = require('bottleneck');
 
-let contadorMasive;
+
 
 
 
@@ -56,6 +56,29 @@ const Recived = async (req = request, res = response) => {
         }
 
 
+        if (!global.statusAndDevices) {
+            global.statusAndDevices = {
+                status: false,
+                devices: []
+            };
+        } else {
+            if (sensorData.status.includes("fallo")) {
+                const device = {
+                    "name": sensorData.device,
+                    "ip": sensorData.ip
+                };
+                global.statusAndDevices.devices.push(device);
+            }
+        }
+
+        if (global.statusAndDevices.devices.length > 3) {
+            console.log("falla masiva");
+            global.statusAndDevices.status = true;
+            console.log("Se informará en plantilla: ", global.statusAndDevices.status);
+        }
+
+
+
         const {
             text: sensorInfo,
             numbers
@@ -64,9 +87,8 @@ const Recived = async (req = request, res = response) => {
 
 
 
-        if (!contadorMasive) { contadorMasive = 0; } else { contadorMasive++; }
 
-        console.log("Numero de falla masiva", contadorMasive );
+        console.log("Numero de falla masiva",);
 
 
 
