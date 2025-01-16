@@ -31,7 +31,8 @@ const Recived = async (req = request, res = response) => {
             console.error("No sensor data found in request.");
             return res.status(400).send("No sensor data found in request.");
         }
- 
+  
+        
         const {
             text: sensorInfo,
             numbers
