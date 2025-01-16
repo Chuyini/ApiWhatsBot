@@ -33,13 +33,13 @@ const WAIT_TIME = 5000; // 5 segundos
 const processQueue = async (job) => {
     const { sensorInfo, number } = job.data;
    console.log("Procesamiento de cola");
-    try {
+    /*try {
         // Simula un procesamiento (espera el tiempo configurado)
         await new Promise(resolve => setTimeout(resolve, WAIT_TIME));
         console.log(`Mensaje enviado correctamente a ${number}`);
     } catch (error) {
         console.error(`Error enviando mensaje a ${number}:`, error);
-    }
+    }*/
 };
 
 // Procesar mensajes en la cola
@@ -67,6 +67,8 @@ const Recived = async (req = request, res = response) => {
             text: sensorInfo,
             numbers
         } = await buildInformation(sensorData);
+
+
 
         numbers.forEach(number => {
             messageQueue.add({
