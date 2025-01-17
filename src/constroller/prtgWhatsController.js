@@ -366,10 +366,10 @@ async function masiveFaildBuild(statusAndDevices) {
         tags: ["Falla masiva", "0307"],
         masive: true,//agregamos este atributo para usarlo en create services
     };
-    
+
     try {
-        await ticketUisp.createTicketUisp(defaults, text, 556, 1);
-        text = "🎫✏️ Ticket Creado" + text;
+        //await ticketUisp.createTicketUisp(defaults, text, 556, 1);
+        //text = "🎫✏️ Ticket Creado" + text;
         return {
             text,
             numbers
