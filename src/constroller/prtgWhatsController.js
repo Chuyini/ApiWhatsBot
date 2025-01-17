@@ -11,39 +11,8 @@ const foundTicket = require("../shared/foundTicket");
 const infromationCRM = require("../shared/foundIDsUisp");
 const Queue = require('bull');
 const Bottleneck = require('bottleneck');
-
-
-
-
-
-
-// Crear una cola de mensajes
-const messageQueue = new Queue('messageQueue');
-
-
-// Configurar Bottleneck para la limitación de velocidad
-const limiter = new Bottleneck({
-    maxConcurrent: 1, // Número máximo de tareas concurrentes
-    minTime: 60000 / 100 // Intervalo mínimo de tiempo entre tareas (100 mensajes por minuto)
-});
-
-// Almacenamiento en memoria para las solicitudes recibidas
-let requestLog = [];
-
-// Tiempo de espera entre mensajes simulados
-const WAIT_TIME = 5000; // 5 segundos
-
-
-
-
-// Procesar mensajes en la cola
-messageQueue.process(async (job) => {
-    const { sensorData } = job.data; // Obtener datos del trabajo
-    console.log(`Procesando mensaje para el número: ${sensorData.device}`);
-    // Simulamos el procesamiento con una espera
-
-    console.log(`Mensaje procesado exitosamente para el número: ${sensorData.device}`);
-});
+const NodeCache = require("node-cache");
+const statusCache = new NodeCache(); // Configuración estándar
 
 const Recived = async (req = request, res = response) => {
 
@@ -56,58 +25,43 @@ const Recived = async (req = request, res = response) => {
             return res.status(400).send("No sensor data found in request.");
         }
 
+        // Obtener o inicializar el estado global en el caché
+        let statusAndDevices = statusCache.get("statusAndDevices");
 
-        //Esta variable global va a guardar en memoria las entradas de los sensores
-
-        if (!global.statusAndDevices) {
-            global.statusAndDevices = {
+        if (!statusAndDevices) {
+            // Si no existe en el caché, inicializamos
+            statusAndDevices = {
                 status: false,
                 devices: []
             };
-        } else {
-            if (sensorData.status.includes("Fallo")) {
-                const device = {
-                    "name": sensorData.device,
-                    "ip": sensorData.ip
-                };
-                global.statusAndDevices.devices.push(device);
-            }
         }
 
-        if (global.statusAndDevices.devices.length > 3) {
-            console.log("falla masiva");
+        // Si hay un fallo, lo agregamos a la lista de dispositivos
+        if (sensorData.status.includes("Fallo")) {
+            const device = {
+                name: sensorData.device,
+                ip: sensorData.ip
+            };
+            statusAndDevices.devices.push(device);
+        }
 
-            console.log("Se informará en plantilla: ", global.statusAndDevices.status);
+        // Actualizar el caché con los nuevos datos
+        statusCache.set("statusAndDevices", statusAndDevices);
+
+        // Verificar si hay falla masiva
+        if (statusAndDevices.devices.length > 2) {
+            console.log("Falla masiva detectada");
+
             const result = await masiveFaildBuild(sensorData);
             sensorInfo = result.text;
             numbers = result.numbers;
-
         } else {
-
             const result = await buildInformation(sensorData);
             sensorInfo = result.text;
             numbers = result.numbers;
-
-
-
-
         }
 
-
-
-
-
-
-
-
-
-
-
-        console.log("Numero de falla masiva", global.statusAndDevices.devices.length);
-
-
-
-
+        console.log("Número de fallas masivas: ", statusAndDevices.devices.length);
 
         const promises = numbers.map(async (number) => {
             console.log(`Sending message: "${sensorInfo}" to number: ${number}`);
@@ -122,7 +76,7 @@ const Recived = async (req = request, res = response) => {
             }
         });
 
-        
+
         await Promise.all(promises);
 
         return res.status(200).send("EVENT_RECEIVED");
