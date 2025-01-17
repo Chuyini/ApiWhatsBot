@@ -356,7 +356,7 @@ async function masiveFaildBuild(statusAndDevices) {
     .map(element => `🔴 Nombre: ${element.name}\n Ip: ${element.ip}\n\n`)
     .join(""); // Unir todas las líneas en un solo string
 
-    text = "🚨 Falla masiva " + text;
+    text = "🚨 Falla masiva\n" + text;
 
 
     console.log("El texto es ", text);
