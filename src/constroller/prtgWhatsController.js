@@ -97,7 +97,6 @@ const Recived = async (req = request, res = response) => {
 
         await Promise.all(promises);
         
-
         return res.status(200).send("EVENT_RECEIVED");
     } catch (error) {
         console.error("Error in Recived function:", error);
