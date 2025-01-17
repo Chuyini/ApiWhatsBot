@@ -64,19 +64,6 @@ const Recived = async (req = request, res = response) => {
             const result = await buildInformation(sensorData);
             sensorInfo = result.text;
             numbers = result.numbers;
-            const promises2 = numbers.map(async (number) => {
-                console.log(`Sending message: "${sensorInfo}" to number: ${number}`);
-                console.log("*********************************\n\n");
-                try {
-                    await processMessageR.ProcessToPrtg(sensorInfo, number);
-                    console.log(`Message sent to ${number}`);
-                    console.log("*********************************\n\n");
-                } catch (error) {
-                    console.error(`Failed to send message to ${number}:`, error);
-                    console.log("*********************************\n\n");
-                }
-            });
-            await Promise.all(promises2);
         }
 
 
@@ -94,11 +81,22 @@ const Recived = async (req = request, res = response) => {
         });
 
 
-        
+        const promises2 = numbers.map(async (number) => {
+            console.log(`Sending message: "${sensorInfo}" to number: ${number}`);
+            console.log("*********************************\n\n");
+            try {
+                await processMessageR.ProcessToPrtg(sensorInfo, number);
+                console.log(`Message sent to ${number}`);
+                console.log("*********************************\n\n");
+            } catch (error) {
+                console.error(`Failed to send message to ${number}:`, error);
+                console.log("*********************************\n\n");
+            }
+        });
 
 
         await Promise.all(promises);
-       
+        
 
         return res.status(200).send("EVENT_RECEIVED");
     } catch (error) {
