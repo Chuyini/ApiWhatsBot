@@ -347,7 +347,7 @@ async function masiveFaildBuild(statusAndDevices) {
     console.log("status and devices ",statusAndDevices);
 
     const devicesAlarmed = statusAndDevices.devices;
-    const numbers = ["524442475444", "524441967796", "524441574990", "524441184908", "524434629327", "524442478772"];
+    const numbers = [ "524434629327" ];
 
     let text = devicesAlarmed
     .map(element => `🔴 Nombre: ${element.name}\n Ip: ${element.ip}\n\n`)
