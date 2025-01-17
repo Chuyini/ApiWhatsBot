@@ -410,8 +410,14 @@ async function masiveFaildBuild() {
 
 
     //el estatus dice si no ha alarmado 
-    if (global.statusAndDevices.devices.status === false) {
+    /*if (global.statusAndDevices.devices.status === false) {
 
+        
+
+
+    }*/
+
+    try {
         await ticketUisp.createTicketUisp(defaults, text, 556, 1);
         text = "🎫✏️ Ticket Creado" + text;
         global.statusAndDevices.devices.status = true; //con esto decimos que ya alarmamos
@@ -419,11 +425,6 @@ async function masiveFaildBuild() {
             text,
             numbers
         };
-
-
-    }
-
-    try {
         //checkTime.checkTimeAndGreet(numbers,text)
     } catch (error) {
 
