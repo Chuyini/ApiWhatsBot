@@ -13,7 +13,7 @@ const Queue = require('bull');
 const Bottleneck = require('bottleneck');
 const NodeCache = require("node-cache");
 const statusCache = new NodeCache({
-    stdTTL: 60, // Tiempo de vida estándar (en segundos) para los elementos
+    stdTTL: 70, // Tiempo de vida estándar (en segundos) para los elementos
     checkperiod: 120 // Intervalo para limpiar los elementos expirados
 }); // Configuración estándar
 
