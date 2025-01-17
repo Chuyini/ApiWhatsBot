@@ -29,6 +29,8 @@ const Recived = async (req = request, res = response) => {
         }
 
         // Obtener o inicializar el estado global en el caché
+        //cuando se termine el tiempo en cache volvera a inicializar la variable en false
+
         let statusAndDevices = statusCache.get("statusAndDevices");
 
         if (!statusAndDevices) {
@@ -46,6 +48,9 @@ const Recived = async (req = request, res = response) => {
                 ip: sensorData.ip
             };
             statusAndDevices.devices.push(device);
+            const ttl = statusCache.getTtl("statusAndDevices");
+            console.log("TTL: ",ttl);
+
             console.log("Número de fallas masivas: ", statusAndDevices.devices.length);
 
         }
@@ -55,10 +60,17 @@ const Recived = async (req = request, res = response) => {
 
         // Verificar si hay falla masiva
         if (statusAndDevices.devices.length > 2) {
+
             console.log("Falla masiva detectada");
 
+            statusAndDevices.status = true;
+
+            statusCache.set("statusAndDevices", statusAndDevices);//<-- volvemos a actualizar
+
             const result = await masiveFaildBuild(statusAndDevices);
+
             sensorInfo = result.text;
+
             numbers = result.numbers;
         } else {
             const result = await buildInformation(sensorData);
