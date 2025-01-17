@@ -48,6 +48,7 @@ messageQueue.process(async (job) => {
 const Recived = async (req = request, res = response) => {
 
     try {
+        let text, numbers;
         const sensorData = req.body;
 
         if (!sensorData) {
@@ -75,36 +76,34 @@ const Recived = async (req = request, res = response) => {
 
         if (global.statusAndDevices.devices.length > 3) {
             console.log("falla masiva");
-            
+
             console.log("Se informará en plantilla: ", global.statusAndDevices.status);
-            const {
-                text: sensorInfo,
-                numbers
-            } = await masiveFaildBuild(sensorData);
+            const result = await masiveFaildBuild(sensorData);
+            text = result.text;
+            numbers = result.numbers;
 
-        }else{
+        } else {
 
-            const {
-                text: sensorInfo,
-                numbers
-            } = await buildInformation(sensorData);
+            const result = await buildInformation(sensorData);
+            text = result.text;
+            numbers = result.numbers;
 
-           
+
 
 
         }
 
-        
-
-
-
-        
 
 
 
 
 
-        console.log("Numero de falla masiva",global.statusAndDevices.devices.length);
+
+
+
+
+
+        console.log("Numero de falla masiva", global.statusAndDevices.devices.length);
 
 
 
@@ -180,7 +179,7 @@ async function buildInformation(sensorData) {
     }
 
 
- 
+
     if (comments === "" || comments === null || comments === undefined || comments.includes("No comments")) {
         console.log("al parecer es NULL o vacía");
         comments = "vacio";
@@ -384,22 +383,15 @@ function extractNumberFromCompany(company) {
 }
 
 
-async function masiveFaildBuild(){
+async function masiveFaildBuild() {
 
     const devicesAlarmed = global.statusAndDevices.devices;
     const numbers = ["524442475444", "524441967796", "524441574990", "524441184908", "524434629327", "524442478772"];
-    
-
-
-    
 
     let text = devicesAlarmed.forEach(element => {
-       `🔴 Nombre:${element.name}\n Ip: ${element.ip}\n\n ` ;
+        `🔴 Nombre:${element.name}\n Ip: ${element.ip}\n\n `;
     });
 
-
-
-    
     text = "🚨 Falla masiva" + text;
 
 
@@ -412,16 +404,13 @@ async function masiveFaildBuild(){
         comments: "No comments",
         message: text,
         priority: "Muy Alta",
-        tags: ["Falla masiva" , "0307"],
+        tags: ["Falla masiva", "0307"],
         masive: true,//agregamos este atributo para usarlo en create services
     };
 
 
-
-
-
     //el estatus dice si no ha alarmado 
-    if (global.statusAndDevices.devices.status  === false ) {
+    if (global.statusAndDevices.devices.status === false) {
 
         await ticketUisp.createTicketUisp(defaults, text, 556, 1);
         text = "🎫✏️ Ticket Creado" + text;
@@ -432,17 +421,17 @@ async function masiveFaildBuild(){
         };
 
 
-    } 
+    }
 
     try {
         //checkTime.checkTimeAndGreet(numbers,text)
     } catch (error) {
 
         console.log(error);
-        
+
     }
 
-    
+
 
 }
 
