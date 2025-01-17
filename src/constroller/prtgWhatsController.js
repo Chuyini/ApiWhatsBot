@@ -12,7 +12,10 @@ const infromationCRM = require("../shared/foundIDsUisp");
 const Queue = require('bull');
 const Bottleneck = require('bottleneck');
 const NodeCache = require("node-cache");
-const statusCache = new NodeCache(); // Configuración estándar
+const statusCache = new NodeCache({
+    stdTTL: 600, // Tiempo de vida estándar (en segundos) para los elementos
+    checkperiod: 120 // Intervalo para limpiar los elementos expirados
+}); // Configuración estándar
 
 const Recived = async (req = request, res = response) => {
 
@@ -52,7 +55,7 @@ const Recived = async (req = request, res = response) => {
         if (statusAndDevices.devices.length > 2) {
             console.log("Falla masiva detectada");
 
-            const result = await masiveFaildBuild(sensorData);
+            const result = await masiveFaildBuild(statusAndDevices);
             sensorInfo = result.text;
             numbers = result.numbers;
         } else {
@@ -338,9 +341,9 @@ function extractNumberFromCompany(company) {
 }
 
 
-async function masiveFaildBuild() {
+async function masiveFaildBuild(statusAndDevices) {
 
-    const devicesAlarmed = global.statusAndDevices.devices;
+    const devicesAlarmed = statusAndDevices.devices;
     const numbers = ["524442475444", "524441967796", "524441574990", "524441184908", "524434629327", "524442478772"];
 
     let text = devicesAlarmed.forEach(element => {
