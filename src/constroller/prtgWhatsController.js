@@ -361,7 +361,7 @@ async function masiveFaildBuild(statusAndDevices) {
         status: "Fallo ",
         time: "00:00",
         comments: "No comments",
-        message: text,
+        message: "text",
         priority: "Muy Alta",
         tags: ["Falla masiva", "0307"],
         masive: true,//agregamos este atributo para usarlo en create services
