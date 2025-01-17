@@ -91,7 +91,7 @@ const Recived = async (req = request, res = response) => {
 };
 
 
-
+  
 async function buildInformation(sensorData) {
 
     if (!sensorData || typeof sensorData !== "object") {
