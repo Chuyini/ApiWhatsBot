@@ -4,6 +4,7 @@ const moment = require("moment");
 const https = require('https');
 const redis = require("../models/redisConfCRUD");
 const server2 = require("../shared/callServer2");
+const { getRandomValues } = require("crypto");
 
 async function createTicketUisp(sensorData, text, clienId, retries) {
     try {
@@ -11,14 +12,21 @@ async function createTicketUisp(sensorData, text, clienId, retries) {
             rejectUnauthorized: false, // Deshabilitar validación SSL
         });
         // Validar datos de entrada
-        if (!sensorData || !sensorData.time || !text) {
+        if (!text || !clienId) {
             throw new Error("Datos insuficientes para crear el ticket.");
         }
 
         // Variables iniciales
         const clientId = clienId
-        const subject = "NOC003 - SIN SERVICIO";
-        const date = sensorData.time;
+        switch (true) {
+            case sensorData.masive === true:
+                subject = "NOC004 - FALLA MASIVA";
+                break;
+            default:
+                subject = "NOC003 - SIN SERVICIO";
+                break;
+        }
+        const date = sensorData.time || new Date().toLocaleString('en-GB', { timeZone: 'UTC' });
 
         //Esta funcion hara que el bot inicie sesion de ser necesario
 
@@ -51,9 +59,11 @@ async function createTicketUisp(sensorData, text, clienId, retries) {
         if (error.response && error.response.status === 401 && retries > 0) {
             console.log("401: Intentando autenticación y metiendo a redis...");
 
+            const key = sensorData.masive ? getRandomValues(23) : sensorData.ip; //si hay falla masiva toma un valor random 
+
             
-           await redis.setValue(sensorData.ip, sensorData, 172800);
-           setImmediate(async()=>{
+            await redis.setValue(key, sensorData, 172800);
+            setImmediate(async()=>{
             await server2.triggerActionS2();
 
            })

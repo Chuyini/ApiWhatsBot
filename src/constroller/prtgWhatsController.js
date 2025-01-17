@@ -56,6 +56,8 @@ const Recived = async (req = request, res = response) => {
         }
 
 
+        //Esta variable global va a guardar en memoria las entradas de los sensores
+
         if (!global.statusAndDevices) {
             global.statusAndDevices = {
                 status: false,
@@ -73,16 +75,30 @@ const Recived = async (req = request, res = response) => {
 
         if (global.statusAndDevices.devices.length > 3) {
             console.log("falla masiva");
-            global.statusAndDevices.status = true;
+            
             console.log("Se informará en plantilla: ", global.statusAndDevices.status);
+            const {
+                text: sensorInfo,
+                numbers
+            } = await masiveFaildBuild(sensorData);
+
+        }else{
+
+            const {
+                text: sensorInfo,
+                numbers
+            } = await buildInformation(sensorData);
+
+           
+
+
         }
 
+        
 
 
-        const {
-            text: sensorInfo,
-            numbers
-        } = await buildInformation(sensorData);
+
+        
 
 
 
@@ -164,21 +180,7 @@ async function buildInformation(sensorData) {
     }
 
 
-    /*if (bandera == 1) {//esta bandera solo la usa el sensor de 24hrs
-
-
-        //esta funcions e encarga de mandar las plantillas pero necesita de los numeros 
-        //los pusheamos
-        checkTime.checkTimeAndGreet();
-        text = "";
-        console.log("la ip a buscar es " + lowerCaseIp);
-
-        return {
-            text,
-            numbers
-        };
-    }*/
-
+ 
     if (comments === "" || comments === null || comments === undefined || comments.includes("No comments")) {
         console.log("al parecer es NULL o vacía");
         comments = "vacio";
@@ -294,7 +296,7 @@ async function buildInformation(sensorData) {
             if (resumMesagge && resumMesagge.includes("simulado")) {
                 text = `📊PRUEBA SIMULADO📈\n\n${text}\n\nNo hacer caso.`;
             }
-            if ((lowerCaseText.includes("fallo escalación") || lowerCaseText.includes("repetir escalacion"))) {
+            if ((lowerCaseText.includes("fallo escalación") || lowerCaseText.includes("repetir escalacion")) && !tags.includes("planta")) {
 
 
                 const { idClient, ticket } = await foundTicket.isThereTicketOnUisp(sensorData);
@@ -304,8 +306,8 @@ async function buildInformation(sensorData) {
 
                 if (ticket == null) {
 
-                    await ticketUisp.createTicketUisp(sensorData, text, idClient);
-                    text = "🎫✏️ Ticket Creado" + text;
+                    //await ticketUisp.createTicketUisp(sensorData, text, idClient);
+                    //text = "🎫✏️ Ticket Creado" + text;
 
                 } else if (ticket == "Esta suspendido") { //cuando encuentra suspendido, regresa por whats ese mensaje
 
@@ -323,7 +325,7 @@ async function buildInformation(sensorData) {
             if (resumMesagge && resumMesagge.includes("simulado")) {
                 text = `📊PRUEBA SIMULADO📈\n\n${text}\n\nNo hacer caso.`;
             }
-            if (lowerCaseText.includes("repetir escalacion") || ((priority.includes("Alta") || tags.includes("prioridad:alta")) && lowerCaseText.includes("fallo escalación"))) {//si no es de comunicalo pero es un repetir escalacion
+            if (lowerCaseText.includes("repetir escalacion") || ((priority.includes("Alta") || tags.includes("prioridad:alta")) && lowerCaseText.includes("fallo escalación")) && !tags.includes("planta")) {//si no es de comunicalo pero es un repetir escalacion
 
 
 
@@ -335,8 +337,8 @@ async function buildInformation(sensorData) {
 
                 if (ticket == null) {
 
-                    await ticketUisp.createTicketUisp(sensorData, text, idClient, 1);
-                    text = "🎫✏️ Ticket Creado" + text;
+                    //await ticketUisp.createTicketUisp(sensorData, text, idClient, 1);
+                    //text = "🎫✏️ Ticket Creado" + text;
 
 
                 } else if (ticket == "Esta suspendido") { //cuando encuentra suspendido, regresa por whats ese mensaje
@@ -356,21 +358,7 @@ async function buildInformation(sensorData) {
         };
     }
 }
-messageQueue.on('waiting', (jobId) => {
-    console.log(`Job ${jobId} is waiting in the queue.`);
-});
 
-messageQueue.on('active', (job) => {
-    console.log(`Job ${job.id} is now active. Processing...`);
-});
-
-messageQueue.on('completed', (job) => {
-    console.log(`Job ${job.id} completed successfully.`);
-});
-
-messageQueue.on('failed', (job, err) => {
-    console.error(`Job ${job.id} failed with error:`, err);
-});
 
 function extractNumbersAndText(text) {
     let match = text.match(/^(\d+)\s*-\s*(.*)/);
@@ -396,7 +384,67 @@ function extractNumberFromCompany(company) {
 }
 
 
+async function masiveFaildBuild(){
 
+    const devicesAlarmed = global.statusAndDevices.devices;
+    const numbers = ["524442475444", "524441967796", "524441574990", "524441184908", "524434629327", "524442478772"];
+    
+
+
+    
+
+    let text = devicesAlarmed.forEach(element => {
+       `🔴 Nombre:${element.name}\n Ip: ${element.ip}\n\n ` ;
+    });
+
+
+
+    
+    text = "🚨 Falla masiva" + text;
+
+
+    const defaults = {
+        company: 307,
+        device: "Falla masiva",
+        ip: "0.0.0.0",
+        status: "Fallo ",
+        time: "00:00",
+        comments: "No comments",
+        message: text,
+        priority: "Muy Alta",
+        tags: ["Falla masiva" , "0307"],
+        masive: true,//agregamos este atributo para usarlo en create services
+    };
+
+
+
+
+
+    //el estatus dice si no ha alarmado 
+    if (global.statusAndDevices.devices.status  === false ) {
+
+        await ticketUisp.createTicketUisp(defaults, text, 556, 1);
+        text = "🎫✏️ Ticket Creado" + text;
+        global.statusAndDevices.devices.status = true; //con esto decimos que ya alarmamos
+        return {
+            text,
+            numbers
+        };
+
+
+    } 
+
+    try {
+        //checkTime.checkTimeAndGreet(numbers,text)
+    } catch (error) {
+
+        console.log(error);
+        
+    }
+
+    
+
+}
 
 
 

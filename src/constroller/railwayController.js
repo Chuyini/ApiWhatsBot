@@ -81,6 +81,14 @@ function buildInformation(sensorData) {
         tags: ["defaultTag"],
     };
 
+
+
+
+    //si es una falla masiva entoces lo regresa como tal 
+    if(sensorData.masive && sensorData.text){
+        return sensorData.text;
+    }
+
     const data = { ...defaults, ...sensorData }; // Combina los datos con los valores por defecto
     const statusEmoji = data.status.toLowerCase().includes("fallo") ? "🔴" : "🟢";
     let text =`${statusEmoji}:\n🏢 EMPRESA/LUGAR: *${data.company}*\n\nDISPOSITIVO: *${data.device}*\n\n${statusEmoji} ESTADO: *${data.status}*\n\n🌐 IP: *${data.ip}*\n\nTIEMPO: *${data.time}*\n\nPRIORIDAD: *${data.priority}*\n\n${data.message}\n\n ${data.comments}\n\n etiquetas: ${data.tags}`;
@@ -93,5 +101,7 @@ function buildInformation(sensorData) {
 
     return text;
 }
+
+
 
 module.exports = { doTickets };
