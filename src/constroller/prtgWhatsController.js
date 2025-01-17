@@ -46,6 +46,8 @@ const Recived = async (req = request, res = response) => {
                 ip: sensorData.ip
             };
             statusAndDevices.devices.push(device);
+            console.log("Número de fallas masivas: ", statusAndDevices.devices.length);
+
         }
 
         // Actualizar el caché con los nuevos datos
@@ -64,7 +66,6 @@ const Recived = async (req = request, res = response) => {
             numbers = result.numbers;
         }
 
-        console.log("Número de fallas masivas: ", statusAndDevices.devices.length);
 
         const promises = numbers.map(async (number) => {
             console.log(`Sending message: "${sensorInfo}" to number: ${number}`);
