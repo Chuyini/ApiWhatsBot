@@ -366,16 +366,7 @@ async function masiveFaildBuild(statusAndDevices) {
         tags: ["Falla masiva", "0307"],
         masive: true,//agregamos este atributo para usarlo en create services
     };
-
-
-    //el estatus dice si no ha alarmado 
-    /*if (global.statusAndDevices.devices.status === false) {
-
-        
-
-
-    }*/
-
+    
     try {
         await ticketUisp.createTicketUisp(defaults, text, 556, 1);
         text = "🎫✏️ Ticket Creado" + text;

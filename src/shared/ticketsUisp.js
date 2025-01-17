@@ -4,7 +4,8 @@ const moment = require("moment");
 const https = require('https');
 const redis = require("../models/redisConfCRUD");
 const server2 = require("../shared/callServer2");
-const { getRandomValues } = require("crypto");
+const crypto = require('crypto');
+
 
 async function createTicketUisp(sensorData, text, clienId, retries) {
     try {
@@ -59,8 +60,9 @@ async function createTicketUisp(sensorData, text, clienId, retries) {
         if (error.response && error.response.status === 401 && retries > 0) {
             console.log("401: Intentando autenticación y metiendo a redis...");
 
-            const key = sensorData.masive ? getRandomValues(23) : sensorData.ip; //si hay falla masiva toma un valor random 
-
+            const key = sensorData.masive
+            ? crypto.randomBytes(16).toString('hex') // Genera un string hexadecimal aleatorio
+            : sensorData.ip;
             
             await redis.setValue(key, sensorData, 172800);
             setImmediate(async()=>{
