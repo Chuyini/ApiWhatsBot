@@ -48,7 +48,7 @@ messageQueue.process(async (job) => {
 const Recived = async (req = request, res = response) => {
 
     try {
-        let text, numbers;
+        let sensorInfo, numbers;
         const sensorData = req.body;
 
         if (!sensorData) {
@@ -79,13 +79,13 @@ const Recived = async (req = request, res = response) => {
 
             console.log("Se informará en plantilla: ", global.statusAndDevices.status);
             const result = await masiveFaildBuild(sensorData);
-            text = result.text;
+            sensorInfo = result.text;
             numbers = result.numbers;
 
         } else {
 
             const result = await buildInformation(sensorData);
-            text = result.text;
+            sensorInfo = result.text;
             numbers = result.numbers;
 
 
