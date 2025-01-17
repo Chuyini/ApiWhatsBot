@@ -379,7 +379,6 @@ async function masiveFaildBuild(statusAndDevices) {
     try {
         await ticketUisp.createTicketUisp(defaults, text, 556, 1);
         text = "🎫✏️ Ticket Creado" + text;
-        global.statusAndDevices.devices.status = true; //con esto decimos que ya alarmamos
         return {
             text,
             numbers
