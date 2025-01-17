@@ -353,8 +353,10 @@ async function masiveFaildBuild(statusAndDevices) {
         `🔴 Nombre:${element.name}\n Ip: ${element.ip}\n\n `;
     });
 
-    text = "🚨 Falla masiva" + text;
+    text = "🚨 Falla masiva " + text;
 
+
+    console.log("El texto es ", text);
 
     const defaults = {
         company: 307,
