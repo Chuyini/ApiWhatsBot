@@ -349,9 +349,9 @@ async function masiveFaildBuild(statusAndDevices) {
     const devicesAlarmed = statusAndDevices.devices;
     const numbers = ["524442475444", "524441967796", "524441574990", "524441184908", "524434629327", "524442478772"];
 
-    let text = devicesAlarmed.forEach(element => {
-        `🔴 Nombre:${element.name}\n Ip: ${element.ip}\n\n `;
-    });
+    let text = devicesAlarmed
+    .map(element => `🔴 Nombre: ${element.name}\n Ip: ${element.ip}\n\n`)
+    .join(""); // Unir todas las líneas en un solo string
 
     text = "🚨 Falla masiva " + text;
 
