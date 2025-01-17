@@ -122,6 +122,7 @@ const Recived = async (req = request, res = response) => {
             }
         });
 
+        
         await Promise.all(promises);
 
         return res.status(200).send("EVENT_RECEIVED");
