@@ -12,13 +12,14 @@ const infromationCRM = require("../shared/foundIDsUisp");
 const Queue = require('bull');
 const Bottleneck = require('bottleneck');
 const NodeCache = require("node-cache");
+const AsyncLock = require("async-lock");
+const lock = new AsyncLock();
 const statusCache = new NodeCache({
     stdTTL: 70, // Tiempo de vida estándar (en segundos) para los elementos
     checkperiod: 120 // Intervalo para limpiar los elementos expirados
 }); // Configuración estándar
 
 const Recived = async (req = request, res = response) => {
-
     try {
         let sensorInfo, numbers;
         const sensorData = req.body;
@@ -28,76 +29,60 @@ const Recived = async (req = request, res = response) => {
             return res.status(400).send("No sensor data found in request.");
         }
 
-        // Obtener o inicializar el estado global en el caché
-        //cuando se termine el tiempo en cache volvera a inicializar la variable en false
+        // Usar un bloqueo para manejar el acceso al cache
+        await lock.acquire("statusAndDevices", async () => {
+            let statusAndDevices = statusCache.get("statusAndDevices");
 
-        let statusAndDevices = statusCache.get("statusAndDevices");
+            if (!statusAndDevices) {
+                // Si no existe en el caché, inicializamos
+                statusAndDevices = {
+                    status: false,
+                    devices: []
+                };
+            }
 
-        if (!statusAndDevices) {
-            // Si no existe en el caché, inicializamos
-            statusAndDevices = {
-                status: false,
-                devices: []
-            };
-        }
+            // Si hay un fallo, lo agregamos a la lista de dispositivos
+            if (sensorData.status.includes("Fallo")) {
+                const device = {
+                    name: sensorData.device,
+                    ip: sensorData.ip
+                };
+                statusAndDevices.devices.push(device);
+                console.log("Número de fallas masivas: ", statusAndDevices.devices.length);
+            }
 
-        // Si hay un fallo, lo agregamos a la lista de dispositivos
-        if (sensorData.status.includes("Fallo")) {
-            const device = {
-                name: sensorData.device,
-                ip: sensorData.ip
-            };
-            statusAndDevices.devices.push(device);
-            const ttl = statusCache.getTtl("statusAndDevices");
-            console.log("TTL: ",ttl);
+            // Actualizar el caché con los nuevos datos
+            statusCache.set("statusAndDevices", statusAndDevices);
 
-            console.log("Número de fallas masivas: ", statusAndDevices.devices.length);
+            // Verificar si hay falla masiva
+            if (statusAndDevices.devices.length > 2) {
+                console.log("Falla masiva detectada");
+                statusAndDevices.status = true;
+                statusCache.set("statusAndDevices", statusAndDevices);
 
-        }
-
-        // Actualizar el caché con los nuevos datos
-        statusCache.set("statusAndDevices", statusAndDevices);
-
-        // Verificar si hay falla masiva
-        if (statusAndDevices.devices.length > 2) {
-
-            console.log("Falla masiva detectada");
-
-            statusAndDevices.status = true;
-
-            statusCache.set("statusAndDevices", statusAndDevices);//<-- volvemos a actualizar
-
-            const result = await masiveFaildBuild(statusAndDevices);
-
-            sensorInfo = result.text;
-
-            numbers = result.numbers;
-        } else {
-            const result = await buildInformation(sensorData);
-            sensorInfo = result.text;
-            numbers = result.numbers;
-        }
-
-
-        const promises = numbers.map(async (number) => {
-            console.log(`Sending message: "${sensorInfo}" to number: ${number}`);
-            console.log("*********************************\n\n");
-            try {
-                await processMessageR.ProcessToPrtg(sensorInfo, number);
-                console.log(`Message sent to ${number}`);
-                console.log("*********************************\n\n");
-            } catch (error) {
-                console.error(`Failed to send message to ${number}:`, error);
-                console.log("*********************************\n\n");
+                const result = await masiveFaildBuild(statusAndDevices);
+                sensorInfo = result.text;
+                numbers = result.numbers;
+            } else {
+                const result = await buildInformation(sensorData);
+                sensorInfo = result.text;
+                numbers = result.numbers;
             }
         });
 
-
-       
-
+        // Enviar notificaciones
+        const promises = numbers.map(async (number) => {
+            console.log(`Sending message: "${sensorInfo}" to number: ${number}`);
+            try {
+                await processMessageR.ProcessToPrtg(sensorInfo, number);
+                console.log(`Message sent to ${number}`);
+            } catch (error) {
+                console.error(`Failed to send message to ${number}:`, error);
+            }
+        });
 
         await Promise.all(promises);
-        
+
         return res.status(200).send("EVENT_RECEIVED");
     } catch (error) {
         console.error("Error in Recived function:", error);
