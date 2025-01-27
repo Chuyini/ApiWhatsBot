@@ -1,6 +1,8 @@
 const https = require("https");
 const axios = require("axios");
 const stringSimilarity = require('string-similarity');
+const toolsPostUISPPrtg = require("../shared/UtilsPrtgUisp");
+
 
 async function found_Id_Uisp_Prtg(sensorData) {
     try {
@@ -20,7 +22,7 @@ async function found_Id_Uisp_Prtg(sensorData) {
             throw new Error("Las etiquetas no están disponibles o no son una cadena.");
         }
          // Extraer ID de cliente desde los comentarios
-         const idFromComments = await identifyIDClient(sensorData);
+         const idFromComments = await toolsPostUISPPrtg.identifyIDClient(sensorData);
          if (idFromComments) {
              return idFromComments // ID encontrado en comentarios, no se hizo consulta
          }
@@ -69,27 +71,7 @@ async function found_Id_Uisp_Prtg(sensorData) {
     }
 }
 
-function identifyIDClient(sensorData) {
-    // Esta función obtendrá el ID de cliente de los comentarios
 
-    if (!sensorData || !sensorData.comments) {
-        console.error("Elementos faltantes o error en el bloque de identificar el ID de los comentarios");
-        return null;
-    }
-
-    const message = sensorData.comments;
-    const match = message.match(/#\$idClientU=([^\s]+)/);
-
-    if (!match) {
-        console.error('El mensaje no contiene un ID de cliente');
-        return null;
-    } else {
-        const identifierPRTG_message = match[1];
-        console.log("Éxito en encontrar el ID de Cliente en los mensajes");
-
-        return identifierPRTG_message;
-    }
-}
 
 async function ServicesOfCompany(clientID) {
     try {

@@ -3,7 +3,7 @@ const axios = require("axios");
 const found_Id_Uisp_Prtg = require("../shared/foundIDsUisp");
 const chatGPTService = require("../service/chatGPT-service");
 const stringSimilarity = require('string-similarity');
-const { Console } = require("console");
+const toolsPostUISPPrtg = require("../shared/UtilsPrtgUisp");
 
 async function isThereTicketOnUisp(sensorData) {
 
