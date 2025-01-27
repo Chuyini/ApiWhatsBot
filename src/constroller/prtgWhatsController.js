@@ -328,7 +328,7 @@ function extractNumbersAndText(text) {
 
 function concatLink(id) {
     if (id) {
-        return "https://uisp.elpoderdeinternet.mx/crm/client/" + id;
+        return "https://uisp.elpoderdeinternet.mx/nms/subscribers/" + id;
     } else {
         return "https://uisp.elpoderdeinternet.mx/crm";
     }
