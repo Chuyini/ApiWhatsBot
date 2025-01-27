@@ -8,9 +8,8 @@ const chatGPTService = require("../service/chatGPT-service");
 const checkTime = require("../shared/checkTime");
 const ticketUisp = require("../shared/ticketsUisp");
 const foundTicket = require("../shared/foundTicket");
-const infromationCRM = require("../shared/foundIDsUisp");
-const Queue = require('bull');
-const Bottleneck = require('bottleneck');
+const toolsPostUISPPrtg = require("../shared/UtilsPrtgUisp");
+
 const NodeCache = require("node-cache");
 const AsyncLock = require("async-lock");
 const lock = new AsyncLock();
@@ -180,8 +179,8 @@ async function buildInformation(sensorData) {
 
 
 
-    //let id = extractNumbersAndText(company);
-    linkUisp = concatLink(idUispService);
+    let id = toolsPostUISPPrtg.identifySiteID(sensorData);
+    linkUisp = concatLink(id);
     priority = priority.trim();
 
     if (message == undefined || message == null) {
@@ -387,6 +386,15 @@ async function masiveFaildBuild(statusAndDevices) {
 
 
 
+}
+
+async function checkIPServices(sensorData) {
+
+    
+
+
+
+    
 }
 
 
