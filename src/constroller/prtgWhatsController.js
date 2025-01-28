@@ -101,7 +101,7 @@ async function buildInformation(sensorData) {
     let ip = sensorData.ip || "192.168.1.1";
     let status = sensorData.status || "unknown";
     let time = sensorData.time || "00:00";
-
+    let comments = sensorData.comments || "No comments";
     let message = sensorData.message || "No message";
     let priority = sensorData.priority || "low";
     let statusEmoji = "🔴";
