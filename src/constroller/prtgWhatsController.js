@@ -388,16 +388,6 @@ async function masiveFaildBuild(statusAndDevices) {
 
 }
 
-async function checkIPServices(sensorData) {
-
-    
-
-
-
-    
-}
-
-
 
 
 module.exports = {

@@ -193,6 +193,7 @@ function identifySiteID(sensorData) {
 
         throw new Error("Error en el bloque de obtener el ID  de sitio de los comentarios");
     }
+    const message = sensorData.comments;
     // Validar y extraer el identificador del mensaje de comentarios
     const match = message?.match(/#\$Site=([^\s]+)/);
     if (!match) {
