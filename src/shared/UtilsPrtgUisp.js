@@ -197,7 +197,7 @@ function identifySiteID(sensorData) {
     // Validar y extraer el identificador del mensaje de comentarios
     const match = message?.match(/#\$Site=([^\s]+)/);
     if (!match) {
-        console.error('El mensaje no hace MATCH con el formato para ID de Sitio');
+        console.warn('El mensaje no hace MATCH con el formato para ID de Sitio');
         return null;
     }else{
         return match;
