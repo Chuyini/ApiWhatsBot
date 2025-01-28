@@ -143,13 +143,14 @@ async function buildInformation(sensorData) {
             dirtyComments = dirtyComments.replace(`#$Site=${sitioId}`, "");
             dirtyComments = dirtyComments.replace(`#$IP_Publica=`, "IP_Servicio: ");
 
-            console.log(`Intento ${3 - attempts}: ${dirtyComments}`);
+            console.log(`Intento ${attempts}: ${dirtyComments}`);
         }
 
         if (attempts === 0 && dirtyComments.includes("$#")) {
             console.log("Se alcanzó el número máximo de intentos y aún hay marcadores de `#$` sin procesar.");
         }
         comments = dirtyComments;//<-- comentarios ya limpios
+        console.log("comentarios sucios: ", comments);
 
     } catch (error) {
         console.error("Error en el bloque de limpiar los comentarios: ", error.message);
