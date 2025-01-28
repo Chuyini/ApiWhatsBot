@@ -125,36 +125,37 @@ async function buildInformation(sensorData) {
 
     try {
         let dirtyComments = sensorData.comments || "No comments";
-        
+
         if (!dirtyComments || dirtyComments.includes("No comments")) {
             console.log("al parecer es NULL o vacía");
             dirtyComments = "vacio";
         }
-    
+
         let attempts = 3; //se asegura un máximo de 3 intentos
-    
+
         while (dirtyComments.includes("$#") && attempts > 0) {
             attempts--;
-    
+
             const idClient = await toolsPostUISPPrtg.identifyIDClient(sensorData);
             const sitioId = await toolsPostUISPPrtg.identifySiteID(sensorData);
-    
+
             dirtyComments = dirtyComments.replace(`#$idClientU=${idClient}`, "");
             dirtyComments = dirtyComments.replace(`#$Site=${sitioId}`, "");
             dirtyComments = dirtyComments.replace(`#$IP_Publica=`, "IP_Servicio: ");
-    
+
             console.log(`Intento ${3 - attempts}: ${dirtyComments}`);
         }
-    
+
         if (attempts === 0 && dirtyComments.includes("$#")) {
             console.log("Se alcanzó el número máximo de intentos y aún hay marcadores de `#$` sin procesar.");
         }
-        
+        comments = dirtyComments;//<-- comentarios ya limpios
+
     } catch (error) {
         console.error("Error en el bloque de limpiar los comentarios: ", error.message);
     }
-    
-    
+
+
 
 
 
