@@ -123,34 +123,7 @@ async function buildInformation(sensorData) {
     //console.log("Valor inicial de prueba de API KEY: ", global.apiKey);
 
 
-    try {
-        let dirtyComments = sensorData.comments || "No comments";
-        let attempts = 1;
-
-        if (!dirtyComments || dirtyComments.includes("No comments")) {
-            console.log("al parecer es NULL o vacía");
-            dirtyComments = "vacio";
-        }
-
-
-        while (dirtyComments.includes("$#") && attempts > 0) {
-
-            attempts--;
-
-            const idClient = await toolsPostUISPPrtg.identifyIDClient(sensorData);
-            const sitioId = await toolsPostUISPPrtg.identifySiteID(sensorData);
-
-            dirtyComments = dirtyComments.replace(`#$idClientU=${idClient}`, "");
-            dirtyComments = dirtyComments.replace(`#$Site=${sitioId}`, "");
-            dirtyComments = dirtyComments.replace(`#$IP_Publica=`, "IP_Servicio: ");
-
-            console.log(`Intento ${4 - attempts}: ${dirtyComments}`);
-        }
-
-        return dirtyComments;
-    } catch (error) {
-        console.error("Error en el bloque de limpiar los comentarios:  ", error.message);
-    }
+    
 
 
 
