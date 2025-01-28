@@ -28,7 +28,7 @@ async function postMessageIDSite(PRTG_device, newMessage) {
         });
     } catch (e) {
 
-        console.error("Error en el bloque de Editar mensajes en PRTG: ", e);
+        console.error("Error en el bloque de postear un id de sitio mensajes en PRTG: ", e);
 
     }
 
@@ -63,7 +63,38 @@ async function postMessageIDClient(PRTG_device, newMessage) {
 
         console.log("Mensaje enviado con éxito");
     } catch (e) {
-        console.error("Error en el bloque de Editar mensajes en PRTG:", e);
+        console.error("Error en el bloque postear un nuevo id de cliente mensajes en PRTG:", e);
+    }
+}
+
+async function postMessageIPComments(PRTG_device, newMessage) {
+    try {
+        if (!newMessage || !PRTG_device || !PRTG_device.objid) {
+            throw new Error("Faltaron parámetros");
+        }
+
+        // Normaliza el mensaje para evitar secuencias de escape extra
+        const normalizedMessage = newMessage.replace(/\r?\n/g, "\n").trim(); // Reemplaza \r\n o \r por \n
+        const encodedMessage = encodeURIComponent(normalizedMessage); // Codifica el mensaje para la URL
+
+        const apiUrlDevicePRTG = `http://45.189.154.179:8045/api/setobjectproperty.htm?name=comments&value=${encodedMessage}&id=${PRTG_device.objid}&apitoken=${process.env.PRTG_UISP_DEVICE}`;
+
+
+        console.log(`Mensaje para ${PRTG_device.name}: ${normalizedMessage} | ID: ${PRTG_device.objid}`);
+
+        // Realizar la solicitud HTTP
+        await axios.get(apiUrlDevicePRTG, {
+            headers: {
+                Accept: '*/*',
+                'Accept-Encoding': 'gzip, deflate, br',
+                Connection: 'keep-alive',
+            },
+            timeout: 30000,
+        });
+
+        console.log("Mensaje enviado con éxito");
+    } catch (e) {
+        console.error("Error en el bloque de actualizar la ip  mensajes en PRTG:", e);
     }
 }
 
@@ -168,54 +199,87 @@ async function cleanAndRepostMessage(PRTG_device) {
 
 
 function identifyIDClient(sensorData) {
-    if (!sensorData || !sensorData.comments) {
-        console.error("Elementos faltantes o error en el bloque de identificar el ID de los comentarios");
-        return null;
-    }
-
-    // Normaliza el mensaje para evitar problemas con secuencias de escape
-    const message = sensorData.comments.replace(/\r?\n/g, "\n").trim();
-    const match = message.match(/#\$idClientU=([^\s]+)/);
-
-    if (!match) {
-        console.error("El mensaje no contiene un ID de cliente");
-        return null;
-    } else {
-        const identifierPRTG_message = match[1];
-        console.log("Éxito en encontrar el ID de Cliente en los mensajes");
-        return identifierPRTG_message;
-    }
-}
-
-function identifySiteID(sensorData) {
 
     try {
-        if(!sensorData){
-            console.log(sensorData);
-    
-            throw new Error("Error en el bloque de obtener el ID  de sitio de los comentarios");
+        if (!sensorData || !sensorData.comments) {
+            console.error("Elementos faltantes o error en el bloque de identificar el ID de los comentarios");
+            return null;
         }
+
+        // Normaliza el mensaje para evitar problemas con secuencias de escape
+        const message = sensorData.comments.replace(/\r?\n/g, "\n").trim();
+        const match = message.match(/#\$idClientU=([^\s]+)/);
+
+        if (!match) {
+            console.error("El mensaje no contiene un ID de cliente");
+            return null;
+        } else {
+            const identifierPRTG_message = match[1];
+            console.log("Éxito en encontrar el ID de Cliente en los mensajes", identifierPRTG_message);
+            return identifierPRTG_message;
+        }
+
+    } catch (error) {
+
+        console.log("Error en el bloque de identificar el cliente ", error);
+
+    }
+
+}
+function identifySiteID(sensorData) {
+    try {
+        if (!sensorData || !sensorData.comments) {
+            throw new Error("Error en el bloque de obtener el ID de sitio de los comentarios");
+        }
+
         const message = sensorData.comments;
         // Validar y extraer el identificador del mensaje de comentarios
         const match = message?.match(/#\$Site=([^\s]+)/);
         if (!match) {
-            console.warn('El mensaje no hace MATCH con el formato para ID de Sitio');
+            console.error('El mensaje no hace MATCH con el formato para ID de Sitio');
             return null;
-        }else{
-            return match;
+        } else {
+            console.log("El match id sitio es: ", match[1]);
+            const cleanIdSite = match[1].replace("#$Sitio=", ""); // Extraer el ID de sitio limpio
+            return cleanIdSite;
         }
-        
     } catch (error) {
+        console.log("Error en el bloque de identificar el ID de sitio ", error);
+    }
+}
 
-        console.error("Error bloque id identificador ", error);
-        
+
+
+
+
+function identifyIPPublic(sensorData) {
+
+    try {
+        if (!sensorData || !sensorData.comments) {
+
+            throw new Error("Error en el bloque de obtener el ID  de sitio de los comentarios");
+        }
+        const message = sensorData.comments;
+        // Validar y extraer el identificador del mensaje de comentarios
+        const match = message?.match(/#\$IP_Publica=([^\s]+)/);
+        if (!match) {
+            console.warn('El mensaje no hace MATCH con el formato para IP Publica');
+            return null;
+        } else {
+            console.log("El match de ip Publica es: ", match[1]);
+            const cleanIP = match[1].replace("#$IP_Publica=", "");
+            return cleanIP;
+        }
+
+    } catch (error) {
+        console.log("Error en el bloque de identiciar la IP Publica: ", error);
     }
 
-    
+
 
 }
 
 
 
 
-module.exports = { isIdSiteOkay, postMessageIDSite, postMessageIDClient, cleanAndRepostMessage, identifyIDClient, identifySiteID }
+module.exports = { isIdSiteOkay, postMessageIDSite, postMessageIDClient, cleanAndRepostMessage, identifyIDClient, identifySiteID, identifyIPPublic,postMessageIPComments }

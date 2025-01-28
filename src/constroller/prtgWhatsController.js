@@ -90,7 +90,7 @@ const Recived = async (req = request, res = response) => {
 };
 
 
-  
+
 async function buildInformation(sensorData) {
 
     if (!sensorData || typeof sensorData !== "object") {
@@ -101,7 +101,7 @@ async function buildInformation(sensorData) {
     let ip = sensorData.ip || "192.168.1.1";
     let status = sensorData.status || "unknown";
     let time = sensorData.time || "00:00";
-    let comments = sensorData.comments || "No comments";
+
     let message = sensorData.message || "No message";
     let priority = sensorData.priority || "low";
     let statusEmoji = "🔴";
@@ -121,6 +121,31 @@ async function buildInformation(sensorData) {
     //global.apiKey = "va lor xs";
 
     //console.log("Valor inicial de prueba de API KEY: ", global.apiKey);
+
+
+    try {
+        let dirtyComments = sensorData.comments || "No comments";
+        let attempts = 4;
+
+        while ((dirtyComments.includes("$#") || attempts > 0) && attempts > 0) {
+            attempts--;
+
+            const idClient = await toolsPostUISPPrtg.identifyIDClient(sensorData);
+            const sitioId = await toolsPostUISPPrtg.identifySiteID(sensorData);
+
+            dirtyComments = dirtyComments.replace(`#$idClientU=${idClient}`, "");
+            dirtyComments = dirtyComments.replace(`#$Site=${sitioId}`, "");
+            dirtyComments = dirtyComments.replace(`#$IP_Publica=`, "IP_Servicio: ");
+
+            console.log(`Intento ${4 - attempts}: ${dirtyComments}`);
+        }
+
+        return dirtyComments;
+    } catch (error) {
+        console.error("Error en el bloque de limpiar los comentarios:  ", error.message);
+    }
+
+
 
 
 
@@ -343,14 +368,14 @@ function extractNumberFromCompany(company) {
 
 async function masiveFaildBuild(statusAndDevices) {
 
-    console.log("status and devices ",statusAndDevices);
+    console.log("status and devices ", statusAndDevices);
 
     const devicesAlarmed = statusAndDevices.devices;
-    const numbers = [ "524434629327" ];
+    const numbers = ["524434629327"];
 
     let text = devicesAlarmed
-    .map(element => `🔴 Nombre: ${element.name}\n Ip: ${element.ip}\n\n`)
-    .join(""); // Unir todas las líneas en un solo string
+        .map(element => `🔴 Nombre: ${element.name}\n Ip: ${element.ip}\n\n`)
+        .join(""); // Unir todas las líneas en un solo string
 
     text = "🚨 Falla masiva\n" + text;
 
