@@ -127,7 +127,14 @@ async function buildInformation(sensorData) {
         let dirtyComments = sensorData.comments || "No comments";
         let attempts = 1;
 
-        while ((dirtyComments.includes("$#") || attempts > 0) ) {
+        if (!dirtyComments || dirtyComments.includes("No comments")) {
+            console.log("al parecer es NULL o vacía");
+            dirtyComments = "vacio";
+        }
+
+
+        while (dirtyComments.includes("$#") && attempts > 0) {
+
             attempts--;
 
             const idClient = await toolsPostUISPPrtg.identifyIDClient(sensorData);
@@ -204,7 +211,7 @@ async function buildInformation(sensorData) {
 
 
 
-    let id = toolsPostUISPPrtg.identifySiteID(sensorData);
+    let id = await toolsPostUISPPrtg.identifySiteID(sensorData);
     linkUisp = concatLink(id);
     priority = priority.trim();
 
