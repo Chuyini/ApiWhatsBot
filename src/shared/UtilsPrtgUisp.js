@@ -189,20 +189,29 @@ function identifyIDClient(sensorData) {
 
 function identifySiteID(sensorData) {
 
-    if(!sensorData || !sensorData.comments){
-        console.log(sensorData);
+    try {
+        if(!sensorData){
+            console.log(sensorData);
+    
+            throw new Error("Error en el bloque de obtener el ID  de sitio de los comentarios");
+        }
+        const message = sensorData.comments;
+        // Validar y extraer el identificador del mensaje de comentarios
+        const match = message?.match(/#\$Site=([^\s]+)/);
+        if (!match) {
+            console.warn('El mensaje no hace MATCH con el formato para ID de Sitio');
+            return null;
+        }else{
+            return match;
+        }
+        
+    } catch (error) {
 
-        throw new Error("Error en el bloque de obtener el ID  de sitio de los comentarios");
+        console.error("Error bloque id identificador ", error);
+        
     }
-    const message = sensorData.comments;
-    // Validar y extraer el identificador del mensaje de comentarios
-    const match = message?.match(/#\$Site=([^\s]+)/);
-    if (!match) {
-        console.warn('El mensaje no hace MATCH con el formato para ID de Sitio');
-        return null;
-    }else{
-        return match;
-    }
+
+    
 
 }
 
