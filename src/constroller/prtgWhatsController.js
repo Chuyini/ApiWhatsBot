@@ -139,6 +139,7 @@ async function buildInformation(sensorData) {
             const idClient = await toolsPostUISPPrtg.identifyIDClient(sensorData);
             const sitioId = await toolsPostUISPPrtg.identifySiteID(sensorData);
 
+            console.log(`variables a encontrar ${idClient}, ${sitioId}`);
             dirtyComments = dirtyComments.replace(`#$idClientU=${idClient}`, "");
             dirtyComments = dirtyComments.replace(`#$Site=${sitioId}`, "");
             dirtyComments = dirtyComments.replace(`#$IP_Publica=`, "IP_Servicio: ");
