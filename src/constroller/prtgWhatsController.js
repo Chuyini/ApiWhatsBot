@@ -124,7 +124,7 @@ async function buildInformation(sensorData) {
 
 
     try {
-        let dirtyComments = sensorData.comments || "No comments";
+        let dirtyComments = sensorData.comments;
 
         if (!dirtyComments || dirtyComments.includes("No comments")) {
             console.log("al parecer es NULL o vacía");
@@ -133,7 +133,7 @@ async function buildInformation(sensorData) {
 
         let attempts = 3; //se asegura un máximo de 3 intentos
 
-        while (dirtyComments.includes("$#") && attempts > 0) {
+        while (dirtyComments.includes("#$") && attempts > 0) {
             attempts--;
 
             const idClient = await toolsPostUISPPrtg.identifyIDClient(sensorData);
