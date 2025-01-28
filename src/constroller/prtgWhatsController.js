@@ -125,9 +125,9 @@ async function buildInformation(sensorData) {
 
     try {
         let dirtyComments = sensorData.comments || "No comments";
-        let attempts = 4;
+        let attempts = 1;
 
-        while ((dirtyComments.includes("$#") || attempts > 0) && attempts > 0) {
+        while ((dirtyComments.includes("$#") || attempts > 0) ) {
             attempts--;
 
             const idClient = await toolsPostUISPPrtg.identifyIDClient(sensorData);
