@@ -190,6 +190,7 @@ function identifyIDClient(sensorData) {
 function identifySiteID(sensorData) {
 
     if(!sensorData || !sensorData.comments){
+        console.log(sensorData);
 
         throw new Error("Error en el bloque de obtener el ID  de sitio de los comentarios");
     }
