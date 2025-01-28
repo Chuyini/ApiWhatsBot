@@ -201,7 +201,7 @@ async function cleanAndRepostMessage(PRTG_device) {
 function identifyIDClient(sensorData) {
 
     try {
-        if (!sensorData || !sensorData.comments) {
+        if (!sensorData) {
             console.error("Elementos faltantes o error en el bloque de identificar el ID de los comentarios");
             return null;
         }
