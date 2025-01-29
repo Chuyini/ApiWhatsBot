@@ -228,7 +228,7 @@ function identifyIDClient(sensorData) {
 }
 function identifySiteID(sensorData) {
     try {
-        if (!sensorData || !sensorData.comments) {
+        if (!sensorData) {
             throw new Error("Error en el bloque de obtener el ID de sitio de los comentarios");
         }
 
@@ -255,7 +255,7 @@ function identifySiteID(sensorData) {
 function identifyIPPublic(sensorData) {
 
     try {
-        if (!sensorData || !sensorData.comments) {
+        if (!sensorData) {
 
             throw new Error("Error en el bloque de obtener el ID  de sitio de los comentarios");
         }
