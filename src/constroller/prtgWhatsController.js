@@ -142,7 +142,7 @@ async function buildInformation(sensorData) {
             console.log(`variables a encontrar ${idClient}, ${sitioId}`);
             dirtyComments = dirtyComments.replace(`#$idClientU=${idClient}`, "");
             dirtyComments = dirtyComments.replace(`#$Site=${sitioId}`, "");
-            dirtyComments = dirtyComments.replace(`#$IP_Publica=`, "IP_Servicio: ");
+            dirtyComments = dirtyComments.replace(`#$IP_Publica=`, "💻IP_Servicio: ");
 
             console.log(`Intento ${attempts}: ${dirtyComments}`);
         }
@@ -222,9 +222,7 @@ async function buildInformation(sensorData) {
     linkUisp = concatLink(id);
     priority = priority.trim();
 
-    if (message == undefined || message == null) {
-        message = "Posible error de conexión";
-    }
+   
 
     switch (priority) {
         case "*":
