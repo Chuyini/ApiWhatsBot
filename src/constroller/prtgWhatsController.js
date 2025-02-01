@@ -222,7 +222,7 @@ async function buildInformation(sensorData) {
     linkUisp = concatLink(id);
     priority = priority.trim();
 
-   
+
 
     switch (priority) {
         case "*":
@@ -273,10 +273,15 @@ async function buildInformation(sensorData) {
 
         textToTemplate = textToTemplate.substring(0, 50);
 
-        const specialNumber = ["524442475444", "524441967796", "524441574990", "524441184908", "524434629327", "524442478772", "524441452315"];
+        const specialNumber = ["524442475444", "524441967796", "524441574990", "524441184908", "524434629327", "524442478772"];
 
         //const testNumbers = ["524434629327","524442478772","524441967796","524442475444","524401050937", "524441171133", "526643671066"];//yo,Debie, Lic, diana,yo trabajo,mama,itzel
         //numbers.push("524441184908"); //Ceron
+        const idService = toolsPostUISPPrtg.identifyIDClient(sensorData);
+        if (idService === 886) {
+
+            specialNumber.push("524441452315");
+        }
 
         checkTime.checkTimeAndGreet(specialNumber, textToTemplate);
 
