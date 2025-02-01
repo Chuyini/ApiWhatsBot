@@ -277,11 +277,13 @@ async function buildInformation(sensorData) {
 
         //const testNumbers = ["524434629327","524442478772","524441967796","524442475444","524401050937", "524441171133", "526643671066"];//yo,Debie, Lic, diana,yo trabajo,mama,itzel
         //numbers.push("524441184908"); //Ceron
-        const idService = toolsPostUISPPrtg.identifyIDClient(sensorData);
-        if (idService === 886) {
 
-            specialNumber.push("524441452315");
-        }
+        //Identificar el id de cliente
+        const idService = toolsPostUISPPrtg.identifyIDClient(sensorData);
+        if (idService === 886) {//<-- si es farmacia
+
+            specialNumber.push("524441452315"); //<-- insertamos a ELI
+        } 
 
         checkTime.checkTimeAndGreet(specialNumber, textToTemplate);
 
