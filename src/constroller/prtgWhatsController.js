@@ -258,6 +258,7 @@ async function buildInformation(sensorData) {
 
 
         numbers.push("524434629327"); //yo
+        numbers.push("524441542315");//
 
         // checkTime.checkTimeAndGreet();
         //text = "";
