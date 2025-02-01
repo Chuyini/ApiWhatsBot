@@ -280,7 +280,7 @@ async function buildInformation(sensorData) {
 
         //Identificar el id de cliente
         const idService = toolsPostUISPPrtg.identifyIDClient(sensorData);
-        if (idService === 886) {//<-- si es farmacia
+        if (idService === "886") {//<-- si es farmacia
 
             specialNumber.push("524441452315"); //<-- insertamos a ELI
         } 
