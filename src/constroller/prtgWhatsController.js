@@ -54,19 +54,19 @@ const Recived = async (req = request, res = response) => {
             statusCache.set("statusAndDevices", statusAndDevices);
 
             // Verificar si hay falla masiva
-            if (statusAndDevices.devices.length > 2) {
-                console.log("Falla masiva detectada");
-                statusAndDevices.status = true;
-                statusCache.set("statusAndDevices", statusAndDevices);
+            /* if (statusAndDevices.devices.length > 2) {
+                   console.log("Falla masiva detectada");
+                   statusAndDevices.status = true;
+                   statusCache.set("statusAndDevices", statusAndDevices);
+   
+                   const result = await masiveFaildBuild(statusAndDevices);
+                   sensorInfo = result.text;
+                   numbers = result.numbers;
+               } else {*/
+            const result = await buildInformation(sensorData);
+            sensorInfo = result.text;
+            numbers = result.numbers;
 
-                const result = await masiveFaildBuild(statusAndDevices);
-                sensorInfo = result.text;
-                numbers = result.numbers;
-            } else {
-                const result = await buildInformation(sensorData);
-                sensorInfo = result.text;
-                numbers = result.numbers;
-            }
         });
 
         // Enviar notificaciones
@@ -280,10 +280,10 @@ async function buildInformation(sensorData) {
 
         //Identificar el id de cliente
         const idService = toolsPostUISPPrtg.identifyIDClient(sensorData);
-        if (idService === "886") {//<-- si es farmacia
+        if (idService == "886") {//<-- si es farmacia
 
             specialNumber.push("524441452315"); //<-- insertamos a ELI
-        } 
+        }
 
         checkTime.checkTimeAndGreet(specialNumber, textToTemplate);
 
@@ -313,7 +313,7 @@ async function buildInformation(sensorData) {
 
                 } else if (ticket == "Esta suspendido") { //cuando encuentra suspendido, regresa por whats ese mensaje
 
-                    text = `🚮❌ *${sensorData.device}* *CANCELADO* \n\n\t\t🖥️ *RETIRAR DE PRTG* \n\n🌐 IP: ${sensorData.ip}\n`;
+                    text = `*${company}*\n🚮❌ *${sensorData.device}* *CANCELADO* \n\n\t\t🖥️ *RETIRAR DE PRTG* \n\n🌐 IP: ${sensorData.ip}\n`;
 
                 } else {
 

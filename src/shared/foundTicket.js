@@ -269,7 +269,7 @@ function isDownServices(services, sensorData) {
     const { servicesSuspended, servicesEnded } = services;
 
     // Iterar sobre los servicios suspendidos y terminados
-    for (const service of [...servicesSuspended, ...servicesEnded]) {
+    for (const service of servicesEnded) {
         // Asegurarse de que service.name y sensorData.device no sean null o undefined
 
         const serviceName = service.name;
