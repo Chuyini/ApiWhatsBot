@@ -104,7 +104,7 @@ async function buildInformation(sensorData) {
     let comments = sensorData.comments || "No comments";
     let message = sensorData.message || "No message";
     let priority = sensorData.priority || "low";
-    let statusEmoji = "🔴";
+    let statusEmoji = "☠️🔴";
     let linkUisp = sensorData.linkUisp || "http://default-link.com";
     let lowerCaseText = sensorData.status ? sensorData.status.toLowerCase() : "unknown";
     let lowerCaseComuni = company.toLowerCase();
@@ -159,11 +159,6 @@ async function buildInformation(sensorData) {
 
 
 
-
-
-
-
-
     //Personalizar el mensaje de $message
     try {
 
@@ -213,6 +208,9 @@ async function buildInformation(sensorData) {
 
     } else if (lowerCaseText.includes("repetir escalacion") || lowerCaseText.includes("fallo escalacion")) {
         statusEmoji = "🔴🔧";
+
+    }else if((lowerCaseText.includes("fallo") && (resumMesagge.includes("pérdida de paquetes") ||resumMesagge.includes("ping excesivo")) )  || (lowerCaseText.includes("fallo escalacion") && (resumMesagge.includes("pérdida de paquetes") ||resumMesagge.includes("ping excesivo")) )){
+        statusEmoji = "⚠️🔴"
 
     }
 
