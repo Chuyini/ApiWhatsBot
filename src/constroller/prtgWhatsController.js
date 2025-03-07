@@ -209,7 +209,7 @@ async function buildInformation(sensorData) {
     } else if (lowerCaseText.includes("repetir escalacion") || lowerCaseText.includes("fallo escalacion")) {
         statusEmoji = "🔴🔧";
 
-    }else if((lowerCaseText.includes("fallo") && (resumMesagge.includes("pérdida de paquetes") ||resumMesagge.includes("ping excesivo")) )  || (lowerCaseText.includes("fallo escalacion") && (resumMesagge.includes("pérdida de paquetes") ||resumMesagge.includes("ping excesivo")) )){
+    }else if((lowerCaseText.includes("fallo") && (resumMesagge.includes("pérdida de paquetes") ||resumMesagge.includes("tiempo de ping")) )  || (lowerCaseText.includes("fallo escalacion") && (resumMesagge.includes("pérdida de paquetes") ||resumMesagge.includes("tiempo de ping")) )){
         statusEmoji = "⚠️🔴"
 
     }
