@@ -49,6 +49,7 @@ async function botCheckSchedule() {
 
     }
 
+    console.log(arraySet);
 
 
 
@@ -58,43 +59,53 @@ async function botCheckSchedule() {
 
     }
 
-    const prompt = `Eres un analizador de tareas para telecomunicaciones. Sigue ESTOS PASOS ESTRICTAMENTE:
+    const prompt = `Eres un asistente para análisis de tareas en telecomunicaciones. Sigue ESTOS PASOS:
 
-1. FILTRAR TAREAS:
-   - Revisa TÍTULO y DESCRIPCIÓN
-   - Busca EXACTAMENTE estos patrones:
-     * "RBS" seguido de espacio (Ej: "RBS ZAPO")
-     * "radio base" (con o sin guión/plural)
-     * Códigos de la lista (Ejemplo: CAFAO, CRPDR, ZIBATA1)
-   
-2. VERIFICAR DATOS:
-   - Extrae de CADA tarea:
-     ✔️ Estatus: 1 (activo) o 0 (inactivo)
-     ✔️ Fecha: Cualquier formato existente
-   
-3. FORMATEAR RESULTADO:
-   - Si HAY coincidencias válidas:
-     #001
-     [EMOJI] [TÍTULO COMPLETO] - Tarea [FECHA ORIGINAL]
-   
-   - Si NO HAY coincidencias:
-     #000
+1. DETECCIÓN RADIOBASES:
+✔️ Buscar en título y descripción:
+   - Términos: "RBS", "radio base", "rb", "mantenimiento"
+   - Códigos válidos (ZAPO, CRPDR, ZIBATA1)
+   - Nombres completos (Ej: "CDMX RBS CAMINO REAL")
 
-REGLAS INQUEBRANTABLES:
-• Emojis: 🔵 (si estatus=1) | 🛸 (si estatus=0)
-• Orden: Emoji → Título → "Tarea" + Fecha
-• Fecha: COPIAR TAL CUAL sin modificar
-• Solo incluir tareas con palabras clave EXPLÍCITAS
+2. CLASIFICACIÓN:
+✔️ Por cada coincidencia válida:
+   • Estatus (1 = Activo / 0 = Inactivo)
+   • Fecha original sin modificar
+   • Título completo
+
+3. FORMATEO FINAL:
+🟢 Si hay coincidencias:
+   #001
+   Posible Censos 🔵 cantida de SOLO estatus 1
+   [Emoji] [Título] - Fecha: [Fecha]
+   
+🔴 Si no hay coincidencias:
+   #000
+
+REGLAS ESTRICTAS:
+✓ Encabezado: "Posibles  Censos " + 🔵 + cantidad de estatus 1
+✓ Emojis por tarea: 🔵 (estatus 1) |👽 (estatus 0)
+✓ Conservar formato original de fechas
+✓ Incluir máximo 1 coincidencia por radio base
 
 EJEMPLOS CORRECTOS:
-🔵 Mantenimiento RBS ZAPO - Tarea 2024/03/22
-🛸 Cambio en radio base CRPDR - Tarea 22-Mar
+#001
+Posibles Censos 🔵3
+🔵 RBS ZAPO - Fecha: 2024-03-27
+👽 Actualización CRPDR - Fecha: Q2
+🔵 Revisión CAFAO - Fecha: 27/Mar
 
-TAREAS A ANALIZAR (formato JSON):
-${reportToBot}
+TAREAS VÁLIDAS:
+- AGS RBS CAFA*
+- CDMX RBS TRAC*
+- QRO ZIBATA*
+- Mantenimiento radio base*
 
-RESPONDER SOLO CON EL FORMATO INDICADO.`
+Toma en cuenta que quermos ver si hay una posible tarea a la cual podamos aprovechar para hacer un censo ese día
 
+Datos a analizar: ${reportToBot}
+
+Responder EXCLUSIVAMENTE en este formato.`;
     const AIresponse = await chatGPT.GetMessageChatGPT(prompt.trim());
     console.log(AIresponse);
     console.log(prompt);
