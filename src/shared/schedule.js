@@ -34,7 +34,7 @@ async function botCheckSchedule() {
 
     let reportToBot = 'Reporte de Tareas\n';
 
-    const data = response['data'];
+    const data = response['data'][0];
     const arraySet = new Set();
     console.log("LOS DATOS SON: ",data);
     //quitamos repetidos
@@ -52,7 +52,7 @@ async function botCheckSchedule() {
 
     }
 
-    
+
 
     console.log(arraySet);
 
