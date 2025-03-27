@@ -258,7 +258,7 @@ async function buildInformation(sensorData) {
         //await checkTime.checkTimeAndGreet(numbers, textCH);
 
         return {
-            textCH,
+            text: textCH,
             numbers
         };
 
