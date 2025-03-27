@@ -122,7 +122,8 @@ ILEVA, IND, INPOSA, VIR, LAGOS, LGK, MAG, MOR, MSTV, ONE, PEDR, SNFE,
 SAC, TECNO, VPZ, VMAG1, 
 VMAG2, WTC, HEROES, PALM, TAMER
 
-Toma en cuenta que quermos ver si hay una posible tarea a la cual podamos aprovechar para hacer un censo ese día por eso se te pasan las tareas y tu debes inferir se se va  a hacer algo a una radio base
+Toma en cuenta que quermos ver si hay una posible tarea a la cual podamos aprovechar para hacer un censo ese día por eso se te pasan las tareas y tu debes inferir se se va  a hacer algo a una radio base,
+NO TOMES EN CUENTA LOS INCREMENTOS DE CAPACIDAD NI LAS LINEAS DE VISTA ADEMÁS corrije ese formato de fecha
 
 Datos a analizar: ${output}
 
