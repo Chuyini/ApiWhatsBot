@@ -125,7 +125,7 @@ VMAG2, WTC, HEROES, PALM, TAMER
 
 Toma en cuenta que quermos ver si hay una posible tarea a la cual podamos aprovechar para hacer un censo ese día por eso se te pasan las tareas y tu debes inferir se se va  a hacer algo a una radio base
 
-Datos a analizar: ${reportToBot}
+Datos a analizar: ${arraySet}
 
 Responder EXCLUSIVAMENTE en este formato.`;
 
