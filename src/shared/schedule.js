@@ -36,7 +36,7 @@ async function botCheckSchedule() {
 
     const data = response['data'];
     const arraySet = new Set();
-    console.log(response);
+    console.log(data);
     //quitamos repetidos
     for (const task in data) {
 
