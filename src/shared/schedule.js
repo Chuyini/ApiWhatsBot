@@ -106,11 +106,30 @@ TAREAS VÁLIDAS:
 - QRO ZIBATA*
 - Mantenimiento radio base*
 
+RADIO BASES QUE CONOCEMOS ABREVIADAS:
+CAFAA, CAFAO, INOX, POP, ZACA, CRPO, CRFE, CRPDR, 
+FISUR, FIINS, FAR, TLANE, NEZA, ONEP, OTERO, P3P,
+ TRAC, TOREO, ZAPO, RINN, ATR, C4, CAMR, DAVID, 
+ RAMON, PCMASSIVE, RIIN, SALTO, CTRO, ARA, CUER, 
+ DIME, MOLTEN, NSTL, STTBX, TEX, TCSA, VRFC, GPMICH, PAZ, MELI, MFLO, ALTAM, APOD, BURO, LSILLA, LOMAL, 
+LOMAS, TOPO, CRPAC, EMZ, FAO,
+STBX, CMRPU, APSO, FASST, CIM, CVA, 
+BCO, MRQZ, GNDO, CRUZ, NABO, ONEA, 
+SNGIL, SNJN, VITAE, WIRE, ZANHIA,
+ZIBATA1, ZIBATA2, FAECH, MIR, 
+VAL, ASFA, BCN, CAB, CHP, CRO,
+CUM, CUCO, FEIME, GM, GAIA, HIM, HIQ, ARZ, HPAN, 
+ILEVA, IND, INPOSA, VIR, LAGOS, LGK, MAG, MOR, MSTV, ONE, PEDR, SNFE, 
+SAC, TECNO, VPZ, VMAG1, 
+VMAG2, WTC, HEROES, PALM, TAMER
+
 Toma en cuenta que quermos ver si hay una posible tarea a la cual podamos aprovechar para hacer un censo ese día
 
 Datos a analizar: ${reportToBot}
 
 Responder EXCLUSIVAMENTE en este formato.`;
+
+
     const AIresponse = await chatGPT.GetMessageChatGPT(prompt.trim());
     console.log(AIresponse);
     console.log(prompt);
