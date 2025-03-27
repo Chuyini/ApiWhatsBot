@@ -85,7 +85,7 @@ async function botCheckSchedule() {
     
     Respuesta sólo con el formato especificado sin comentarios adicionales.`;
 
-    const AIresponse = await chatGPT.GetMessageChatGPT("prompt.trim()");
+    const AIresponse = await chatGPT.GetMessageChatGPT(prompt.trim());
     console.log(AIresponse);
     console.log(prompt);
     return AIresponse;
