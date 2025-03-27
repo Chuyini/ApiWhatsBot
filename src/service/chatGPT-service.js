@@ -16,7 +16,7 @@ async function GetMessageChatGPT(text) {
                 role: "user",
                 content: text
             }],
-            temperature: 0, // Controlar la aleatoriedad
+            temperature: 1, // Controlar la aleatoriedad
             
         });
         

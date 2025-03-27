@@ -42,7 +42,7 @@ async function botCheckSchedule() {
             'title': task.title,
             'description': task.description,
             'fecha': task.date,
-            'estatus':task.status
+            'estatus': task.status
         }
         arraySet.add(jsonR);
 
@@ -58,43 +58,42 @@ async function botCheckSchedule() {
 
     }
 
-    const prompt = `Eres un analizador inteligente de tareas para telecomunicaciones. Procesa los datos con este flujo:
+    const prompt = `Eres un analizador de tareas para telecomunicaciones. Sigue ESTOS PASOS ESTRICTAMENTE:
 
-    1. DETECCIÓN DE RADIOBASES:
-       - Buscar en título/descripción:
-       • Términos clave: "radio base", "RBS", "rb", "mantenimiento"
-       • Códigos (Ej: ZAPO, CRPDR, INOX)
-       • Nombres completos (Ej: "CDMX RBS CAMINO REAL")
-    
-    2. EXTRACCIÓN DE DATOS:
-       - Para cada coincidencia identificar:
-       a) Estatus (1 = Activa/0 = Inactiva)
-       b) Título completo de la tarea
-       c) Fecha en cualquier formato
-    
-    3. FORMATEO ESTRICTO:
-       - Si hay resultados:
-         #001
-         [Emoji] [Título] - Tarea [Fecha] 
-         Ejemplo: 
-         🔵 Mantenimiento RBS ZAPO 15-Mar-2024
-         👽 Actualización CRPDR - Tarea 2024/03/16
-    
-       - Sin coincidencias: 
-         #000
-    
-    Reglas clave:
-    • Emojis: 🔵 (estatus 1) / 👽 (estatus 0)
-    • Orden exacto: Emoji > Título > "Tarea"(si hay 👽) + Fecha original
-    • Conservar formato de fecha como en los datos de entrada
-    • Incluir hasta 2 razones clave por línea si aplica
-    
-    Lista de referencia rápida (radiobases válidas):
-    AGS RBS ZACA*, CDMX CRFE*, QRO ZIBATA*, SLP WTC
-    
-    Tareas a procesar: ${reportToBot}
-    
-    Entregar sólo el formato solicitado sin explicaciones.`;
+1. FILTRAR TAREAS:
+   - Revisa TÍTULO y DESCRIPCIÓN
+   - Busca EXACTAMENTE estos patrones:
+     * "RBS" seguido de espacio (Ej: "RBS ZAPO")
+     * "radio base" (con o sin guión/plural)
+     * Códigos de la lista (Ejemplo: CAFAO, CRPDR, ZIBATA1)
+   
+2. VERIFICAR DATOS:
+   - Extrae de CADA tarea:
+     ✔️ Estatus: 1 (activo) o 0 (inactivo)
+     ✔️ Fecha: Cualquier formato existente
+   
+3. FORMATEAR RESULTADO:
+   - Si HAY coincidencias válidas:
+     #001
+     [EMOJI] [TÍTULO COMPLETO] - Tarea [FECHA ORIGINAL]
+   
+   - Si NO HAY coincidencias:
+     #000
+
+REGLAS INQUEBRANTABLES:
+• Emojis: 🔵 (si estatus=1) | 🛸 (si estatus=0)
+• Orden: Emoji → Título → "Tarea" + Fecha
+• Fecha: COPIAR TAL CUAL sin modificar
+• Solo incluir tareas con palabras clave EXPLÍCITAS
+
+EJEMPLOS CORRECTOS:
+🔵 Mantenimiento RBS ZAPO - Tarea 2024/03/22
+🛸 Cambio en radio base CRPDR - Tarea 22-Mar
+
+TAREAS A ANALIZAR (formato JSON):
+${reportToBot}
+
+RESPONDER SOLO CON EL FORMATO INDICADO.`
 
     const AIresponse = await chatGPT.GetMessageChatGPT(prompt.trim());
     console.log(AIresponse);
