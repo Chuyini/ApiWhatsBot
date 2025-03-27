@@ -36,7 +36,7 @@ async function botCheckSchedule() {
 
     const data = response['data'];
     const arraySet = new Set();
-    console.log("LOS DATOS SON: ",data);
+    console.log("LOS DATOS SON: ", data);
     //quitamos repetidos
 
 
@@ -47,22 +47,21 @@ async function botCheckSchedule() {
             'fecha': task.date,
             'estatus': task.status
         }
-        
+
         arraySet.add(jsonR);
-        
+
     });
 
-   
-
-    console.log("TAREAS ARMADAS: ",arraySet); 
 
 
+    console.log("TAREAS ARMADAS: ", arraySet);
 
-    for (const task in arraySet) {
 
-        reportToBot = reportToBot + task.id + "\n" + task.title + "\n" + task.description + "\n\n";
 
-    }
+    let output = "Datos a analizar:\n";
+    arraySet.forEach(item => {
+        output += `title: ${item.title}, description: ${item.description}, fecha: ${item.fecha}, estatus: ${item.estatus}\n`; // Personaliza según estructura
+    });
 
     const prompt = `Eres un asistente para análisis de tareas en telecomunicaciones. Sigue ESTOS PASOS:
 
@@ -125,7 +124,7 @@ VMAG2, WTC, HEROES, PALM, TAMER
 
 Toma en cuenta que quermos ver si hay una posible tarea a la cual podamos aprovechar para hacer un censo ese día por eso se te pasan las tareas y tu debes inferir se se va  a hacer algo a una radio base
 
-Datos a analizar: ${arraySet}
+Datos a analizar: ${output}
 
 Responder EXCLUSIVAMENTE en este formato.`;
 
