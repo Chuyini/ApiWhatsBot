@@ -38,8 +38,9 @@ async function botCheckSchedule() {
     const arraySet = new Set();
     console.log("LOS DATOS SON: ",data);
     //quitamos repetidos
-    for (const task in data) {
 
+
+    data.forEach(task => {
         let jsonR = {
             'title': task.title,
             'description': task.description,
@@ -49,9 +50,10 @@ async function botCheckSchedule() {
         console.log("Tarea ", task);
         console.log("Titulo: ",task['title']);
         arraySet.add(jsonR);
+        
+    });
 
-
-    }
+   
 
     console.log(arraySet);
 
