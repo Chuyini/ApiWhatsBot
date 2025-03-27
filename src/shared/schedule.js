@@ -123,8 +123,8 @@ SAC, TECNO, VPZ, VMAG1,
 VMAG2, WTC, HEROES, PALM, TAMER
 
 Toma en cuenta que quermos ver si hay una posible tarea a la cual podamos aprovechar para hacer un censo ese día por eso se te pasan las tareas y tu debes inferir se se va  a hacer algo a una radio base,
-NO TOMES EN CUENTA LOS INCREMENTOS DE CAPACIDAD NI LAS LINEAS DE VISTA ADEMÁS corrije ese formato de fecha
-TAMPOCO LAS SOLICITUDES DE ACCESO
+NO TOMES EN CUENTA LOS INCREMENTOS DE CAPACIDAD NI LAS LINEAS DE VISTA ADEMÁS corrije ese formato de fecha, TAMPOCO LAS SOLICITUDES DE ACCESO, NI LIBERACIONES DE IP, QUIERO QUE HAGAS BIEN LAS INFERENCIAS
+Tambien solo puede haber o #000 es decir no hay nada que indique que se va a una radiobase o #001
 
 Datos a analizar: ${output}
 
