@@ -9,6 +9,7 @@ const checkTime = require("../shared/checkTime");
 const ticketUisp = require("../shared/ticketsUisp");
 const foundTicket = require("../shared/foundTicket");
 const toolsPostUISPPrtg = require("../shared/UtilsPrtgUisp");
+const schedule =  require("../shared/schedule");
 
 const NodeCache = require("node-cache");
 const AsyncLock = require("async-lock");
@@ -112,9 +113,10 @@ async function buildInformation(sensorData) {
     let AIresponse = sensorData.AIresponse || "Default AI response";
     let idUispService = extractNumberFromCompany(company);
     let bandera = sensorData.bandera || "default";
-    let numbers = ["524401050937", "524442478772", "524434629327"]; //Yo de trabajo, Debbie,El lic Frans, diana, daysimar
+    let numbers = ["524401050937", "524442478772", "524434629327"]; //Yo de trabajo, Debie, yo personal
     let tags = sensorData.tags || ["defaultTag"];
     let resumMesagge = "" || message.toLowerCase();
+    let sensorcomment = sensorData.sensorcomment || "No sensor comment";
     //por fines de prueba vamos a definir apij¿key global como un valor incorrrecto
     //suponemos que la clave expiro y ebtro un nuevo ticket
 
@@ -244,6 +246,27 @@ async function buildInformation(sensorData) {
     }
 
 
+    if(!sensorcomment.includes("No sensor comment") && sensorcomment.includes("Schedule")){
+
+        numbers.push("524442475444"); //Diana
+        numbers.push("524441574990"); //Daysimar
+
+        const textCH = await schedule.botCheckSchedule();
+
+
+
+        checkTime.checkTimeAndGreet(numbers, textCH);
+
+        return {
+            text,
+            numbers
+        };
+
+
+
+    }
+
+
 
     ///Sin son de baterias  se alarma 
     ///aqui podriamos definir los dispositivos de alta prioridad
@@ -343,7 +366,7 @@ async function buildInformation(sensorData) {
 
                 } else if (ticket == "Esta suspendido") { //cuando encuentra suspendido, regresa por whats ese mensaje
 
-                    text = `🚮❌ *${sensorData.device}* *CANCELADO* \n\n\t\t🖥️ *RETIRAR DE PRTG* \n\n🌐 IP: ${sensorData.ip}\n`;
+                    text = `🚮❌ ${sensorData.company}\n *${sensorData.device}* *CANCELADO* \n\n\t\t🖥️ *RETIRAR DE PRTG* \n\n🌐 IP: ${sensorData.ip}\n`;
                 } else {
                     text = "🎫 Ticket Existente" + text;
                 }
@@ -360,14 +383,6 @@ async function buildInformation(sensorData) {
 }
 
 
-function extractNumbersAndText(text) {
-    let match = text.match(/^(\d+)\s*-\s*(.*)/);
-    if (match) {
-        return match[1];
-    } else {
-        return null;
-    }
-}
 
 function concatLink(id) {
     if (id) {
