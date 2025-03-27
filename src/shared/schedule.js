@@ -10,13 +10,24 @@ async function botCheckSchedule() {
         String(time.getMonth() + 1).padStart(2, '0') + '-' +
         String(time.getDate()).padStart(2, '0');
 
-
-
-    const response = await axios.get(`https://45.189.154.77/crm/api/v1.0/scheduling/jobs?dateFrom=${formattedTime}&dateTo=${formattedTime}&statuses%5B%5D=1&statuses%5B%5D=0`, {
-
-        "Content-Type": "application/json",
-        "X-Auth-App-Key": process.env.UISP_PERMANENT_GET_KEY,
+    const agent = new https.Agent({
+        rejectUnauthorized: false,
     });
+
+
+
+
+    const response = await axios.get(
+        `https://45.189.154.77/crm/api/v1.0/scheduling/jobs?dateFrom=${formattedTime}&dateTo=${formattedTime}&statuses[]=1&statuses[]=0`,
+        {
+            headers: {
+                "Content-Type": "application/json",
+                "X-Auth-App-Key": process.env.UISP_PERMANENT_GET_KEY,
+            },
+            httpsAgent: agent, // Configuración del agente
+            timeout: 30000,    // Tiempo de espera
+        }
+    );
 
     let reportToBot = 'Reporte de Tareas\n';
 
