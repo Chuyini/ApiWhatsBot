@@ -255,10 +255,10 @@ async function buildInformation(sensorData) {
 
 
 
-        checkTime.checkTimeAndGreet(numbers, textCH);
+        //await checkTime.checkTimeAndGreet(numbers, textCH);
 
         return {
-            text,
+            textCH,
             numbers
         };
 
