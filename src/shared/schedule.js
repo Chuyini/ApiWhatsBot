@@ -46,11 +46,13 @@ async function botCheckSchedule() {
             'fecha': task.date,
             'estatus': task.status
         }
-        console.log(task);
-        arraySet.add(jsonR);
+        console.log("Titulo: ",task.title);
+        
 
 
     }
+
+    
 
     console.log(arraySet);
 
