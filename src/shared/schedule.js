@@ -34,10 +34,11 @@ async function botCheckSchedule() {
 
     let reportToBot = 'Reporte de Tareas\n';
 
+    const data = response.data;
     const arraySet = new Set();
     console.log(response);
     //quitamos repetidos
-    for (const task in response) {
+    for (const task in data) {
 
         let jsonR = {
             'title': task.title,
