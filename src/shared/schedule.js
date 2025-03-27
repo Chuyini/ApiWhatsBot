@@ -6,7 +6,7 @@ const https = require('https');
 
 
 async function botCheckSchedule() {
-    
+
 
     const time = new Date(); // Obtiene la fecha actual
     const formattedTime = time.getFullYear() + '-' +
@@ -40,7 +40,9 @@ async function botCheckSchedule() {
 
         let jsonR = {
             'title': task.title,
-            'description': task.description
+            'description': task.description,
+            'fecha': task.date,
+            'estatus':task.status
         }
         arraySet.add(jsonR);
 
@@ -56,34 +58,43 @@ async function botCheckSchedule() {
 
     }
 
-    const prompt = `Eres un asistente especializado en telecomunicaciones. Analiza las tareas proporcionadas siguiendo estos pasos:
+    const prompt = `Eres un analizador inteligente de tareas para telecomunicaciones. Procesa los datos con este flujo:
 
-    1. IDENTIFICACIÓN RADIOBASES:
-       - Busca en títulos y descripciones estos patrones:
-       * Palabras clave: "radio base", "radiobase", "RBS", "mantenimiento", "cambio de tecnología"
-       * Códigos de radiobases (ej: CAFAO, INOX, CRPDR, ZAPO)
-       * Nombres completos (ej: "CDMX RBS CAMINO REAL", "AGS RBS ZACATECANO")
+    1. DETECCIÓN DE RADIOBASES:
+       - Buscar en título/descripción:
+       • Términos clave: "radio base", "RBS", "rb", "mantenimiento"
+       • Códigos (Ej: ZAPO, CRPDR, INOX)
+       • Nombres completos (Ej: "CDMX RBS CAMINO REAL")
     
-    2. CRITERIOS DE INCLUSIÓN:
-       - Considera cualquier mención aunque esté mal escrita (radio-base, radiobases, rb, etc.)
-       - Incluye mantenimientos preventivos/correctivos, actualizaciones o despliegues
-       - Prioriza detección sobre precisión (incluye aunque sea posible relación)
+    2. EXTRACCIÓN DE DATOS:
+       - Para cada coincidencia identificar:
+       a) Estatus (1 = Activa/0 = Inactiva)
+       b) Título completo de la tarea
+       c) Fecha en cualquier formato
     
-    3. FORMATEO DE RESPUESTA:
-       - Si hay coincidencias válidas:
+    3. FORMATEO ESTRICTO:
+       - Si hay resultados:
          #001
-         [Número]. [Título de tarea] - [Razón de coincidencia]
-         Ej: 1. Mantenimiento RBS ZAPO - Coincide con código de radiobase
+         [Emoji] [Título] - Tarea [Fecha] 
+         Ejemplo: 
+         🔵 Mantenimiento RBS ZAPO 15-Mar-2024
+         👽 Actualización CRPDR - Tarea 2024/03/16
     
-       - Si no hay coincidencias:
+       - Sin coincidencias: 
          #000
     
-    Ejemplos de radiobases válidos (case-insensitive):
-    AGS RBS CAFA*, CDMX RBS CAMINO*, GDL RBS C4, QRO RBS ZIBATA*, SLP RBS WORLD TRADE*
+    Reglas clave:
+    • Emojis: 🔵 (estatus 1) / 👽 (estatus 0)
+    • Orden exacto: Emoji > Título > "Tarea"(si hay 👽) + Fecha original
+    • Conservar formato de fecha como en los datos de entrada
+    • Incluir hasta 2 razones clave por línea si aplica
     
-    Tareas a analizar: ${reportToBot}
+    Lista de referencia rápida (radiobases válidas):
+    AGS RBS ZACA*, CDMX CRFE*, QRO ZIBATA*, SLP WTC
     
-    Respuesta sólo con el formato especificado sin comentarios adicionales.`;
+    Tareas a procesar: ${reportToBot}
+    
+    Entregar sólo el formato solicitado sin explicaciones.`;
 
     const AIresponse = await chatGPT.GetMessageChatGPT(prompt.trim());
     console.log(AIresponse);
