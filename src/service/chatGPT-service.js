@@ -10,19 +10,14 @@ const openai = new OpenAI({
 
 async function GetMessageChatGPT(text) {
     try {
-        const response = await openai.chat.completions.create({ 
-            model: "GPT-4o mini",
-            messages: [
-                {
-                    role: "system",
-                    content: "Eres un técnico en telecomunicaciones."
-                },
-                {
-                    role: "user",
-                    content: text
-                }
-            ],
+        const response = await openai.chat.completions.create({
+            model: "gpt-3.5-turbo",
+            messages: [{
+                role: "user",
+                content: text
+            }],
             temperature: 1, // Controlar la aleatoriedad
+            
         });
         
 
