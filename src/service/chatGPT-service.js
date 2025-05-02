@@ -17,7 +17,6 @@ async function GetMessageChatGPT(text) {
                 content: text
             }],
             temperature: 1, // Controlar la aleatoriedad
-            
         });
         
 
@@ -32,5 +31,7 @@ async function GetMessageChatGPT(text) {
 }
 
 module.exports = {
+
     GetMessageChatGPT
+
 };
