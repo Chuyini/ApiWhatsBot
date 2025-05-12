@@ -21,8 +21,8 @@ async function connectDB() {
 // 🔹 Función para consultar la clave en la colección "keys"
 async function getKey() {
     const db = await connectDB();
-    const id = new ObjectId("682226c4b0e32d958bba4146"); // 🔹 ID fijo
-    const result = await db.collection("keys").findOne({ _id: id });
+    
+    const result = await db.collection("keys").findOne({ id: 1 });//id fijo
 
     return result?.key || "⚠️ No se encontró la clave"; // 🔹 Retorna el valor de "key"
 }
