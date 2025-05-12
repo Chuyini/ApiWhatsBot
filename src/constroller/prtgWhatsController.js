@@ -119,10 +119,14 @@ async function buildInformation(sensorData) {
     let sensorcomment = sensorData.sensorcomment || "No sensor comment";
     //por fines de prueba vamos a definir apij¿key global como un valor incorrrecto
     //suponemos que la clave expiro y ebtro un nuevo ticket
-
+    let failMasive = false;
     //global.apiKey = "va lor xs";
 
     //console.log("Valor inicial de prueba de API KEY: ", global.apiKey);
+
+    if(device.includes("🚨Falla masiva 20") || device.includes("Falla masiva")) {
+        failMasive = true;
+    }
 
 
     try {
@@ -328,10 +332,10 @@ async function buildInformation(sensorData) {
 
                 sensorData.clienId = idClient;
 
-                if (ticket == null) {
+                if (ticket == null || failMasive == true) {
 
-                    //await ticketUisp.createTicketUisp(sensorData, text, idClient);
-                    //text = "🎫✏️ Ticket Creado" + text;
+                    await ticketUisp.createTicketUisp(sensorData, text, idClient);
+                    text = "🎫✏️ Ticket Creado" + text;
 
                 } else if (ticket == "Esta suspendido") { //cuando encuentra suspendido, regresa por whats ese mensaje
 
@@ -355,14 +359,14 @@ async function buildInformation(sensorData) {
 
 
                 const { idClient, ticket } = await foundTicket.isThereTicketOnUisp(sensorData);
-                console.log("esto dio la resupuesta : ", ticket);
+                console.log("esto dio la resupuesta en cualquier dispositivo menos comunicalo : ", ticket);
                 sensorData.clienId = idClient;
 
 
-                if (ticket == null) {
+                if (ticket == null || failMasive == true) {
 
-                    //await ticketUisp.createTicketUisp(sensorData, text, idClient, 1);
-                    //text = "🎫✏️ Ticket Creado" + text;
+                    await ticketUisp.createTicketUisp(sensorData, text, idClient, 1);
+                    text = "🎫✏️ Ticket Creado" + text;
 
 
                 } else if (ticket == "Esta suspendido") { //cuando encuentra suspendido, regresa por whats ese mensaje
