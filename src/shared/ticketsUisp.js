@@ -5,6 +5,7 @@ const https = require('https');
 const redis = require("../models/redisConfCRUD");
 const server2 = require("../shared/callServer2");
 const crypto = require('crypto');
+const db = require("../shared/db");//mongo db en railway
 
 
 async function createTicketUisp(sensorData, text, clienId, retries) {
@@ -38,13 +39,16 @@ async function createTicketUisp(sensorData, text, clienId, retries) {
 
         // Crear los datos del reporte
         const data = whatsAppModel.CreateServiceReport(clientId, subject, dateSpecialFormat, text);
-
+        const apiKey = await db.getKey();//se obtiene la llave
         // Enviar la solicitud a la API de UISP
+        //si hay un error se manda actualizar la llave a la base de datos y se vuele a intentar una vez mas
+
+
         const apiUrl = process.env.UISP_API_URL || "https://45.189.154.77/crm/api/v1.0/ticketing/tickets";
         const response = await axios.post(apiUrl, data, {
             headers: {
                 "Content-Type": "application/json",
-                "X-Auth-App-Key": global.apiKey,
+                "X-Auth-App-Key": apiKey,
             },
             httpsAgent: agent, //agente que no valida los certificados https
         });
@@ -59,6 +63,17 @@ async function createTicketUisp(sensorData, text, clienId, retries) {
         //para no entrar en un bucle infinito, hace intentos en la variable retries
         if (error.response && error.response.status === 401 && retries > 0) {
             console.log("401: Intentando autenticación y metiendo a redis...");
+            const apiUrl = process.env.UISP_API_URL || "https://45.189.154.77/crm/api/v1.0/ticketing/tickets";
+            const newApiKey = await updateKeyUisp(); // Actualiza la API key
+            const response = await axios.post(apiUrl, data, {
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-Auth-App-Key": newApiKey,
+                },
+                httpsAgent: agent, //agente que no valida los certificados https
+            });
+
+
 
             /*const key = sensorData.masive
             ? crypto.randomBytes(16).toString('hex') // Genera un string hexadecimal aleatorio
@@ -69,9 +84,9 @@ async function createTicketUisp(sensorData, text, clienId, retries) {
             await server2.triggerActionS2();
 
            })*/
-         
 
-           //console.log("EL sensor data es: ",sensorData);
+
+            //console.log("EL sensor data es: ",sensorData);
 
             //await loginUISP();
             //return await createTicketUisp(sensorData, text, clienId, retries - 1); // Reducir el contador de reintentos
@@ -86,7 +101,7 @@ async function closeTicket(sensorData, text) {
 
 
     try {
- 
+
         //primero verificamos el user id de 
 
 
@@ -153,6 +168,17 @@ async function closeTicket(sensorData, text) {
         console.error("Error al crear el ticket:", error.response ? error.response.data : error.message);
     }
 
+}
+
+
+async function updateKeyUisp() {
+    try {
+        const response = await axios.get("https://logbotusip-production.up.railway.app/api");
+        console.log("✅ Datos recibidos:", response.data);
+        return response.data.apiKey;
+    } catch (error) {
+        console.error("⚠️ Error en la solicitud:", error.message);
+    }
 }
 
 
