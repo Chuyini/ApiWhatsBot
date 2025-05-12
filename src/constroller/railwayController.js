@@ -2,7 +2,7 @@ const { request, response } = require("express");
 const redis = require("../models/redisConfCRUD");
 const uispCreateTickets = require("../shared/ticketsUisp");
 const foundTicketService = require("../shared/foundTicket");
-
+const db = require("../shared/db");//mongo db en railway
 const processTickets = async (PendingTickets) => {
     for (const [key, ticket] of Object.entries(PendingTickets)) {
         try {
@@ -40,13 +40,16 @@ const doTickets = async (req = request, res = response) => {
 
         // Verifica si la API key está presente en el body
         const temporalAPI = req.body.apiKey || "API key no proporcionada";
-        console.log("API Key recibida: ", temporalAPI);
+        console.log("API Key recibida desde el servidor railway: ", temporalAPI);
+        console.log("Ahora consultar en la base de datos si existe la API key: ");
+
 
         // Asignar la API Key globalmente
         global.apiKey = temporalAPI;
-
+        const keyFromDb = await db.getKey();
         // Procesa los tickets pendientes
         //await processTickets(PendingTickets);
+        console.log("API Key desde la base de datos: ", keyFromDb);
 
         res.status(200).json({
             msg: "Éxito",
