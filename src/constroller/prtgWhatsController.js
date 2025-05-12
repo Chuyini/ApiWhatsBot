@@ -123,19 +123,7 @@ async function buildInformation(sensorData) {
     //global.apiKey = "va lor xs";
 
     //console.log("Valor inicial de prueba de API KEY: ", global.apiKey);
-    console.log("entra a la condicion de la falla masiva: ",device);
-    console.log("El estatus es: ",statusEmoji);
-    if (device.includes("🚨Falla masiva 20") || device.includes("Falla masiva") || device.includes("🟢 🚨Falla masiva 20")) {
-
-        if (statusEmoji.includes("☠️🔴")) {
-            db.updateFailMasive(1); // Actualiza el valor a 1 (falla masiva)
-
-        } else if(statusEmoji.includes("🟢")) {
-            console.log("No hay falla masiva, actualizando a 0");
-            db.updateFailMasive(0); // Actualiza el valor a 0 (sin falla masiva)
-        }
-    }
-
+    
 
     try {
         let dirtyComments = sensorData.comments;
@@ -226,6 +214,21 @@ async function buildInformation(sensorData) {
     } else if ((lowerCaseText.includes("fallo") && (resumMesagge.includes("perdida de paquetes") || resumMesagge.includes("tiempo de ping"))) || (lowerCaseText.includes("fallo escalacion") && (resumMesagge.includes("perdida de paquetes") || resumMesagge.includes("tiempo de ping")))) {
         statusEmoji = "⚠️🔴"
 
+    }
+    console.log("entra a la condicion de la falla masiva: ",device);
+    console.log("El estatus es: ",statusEmoji);
+    
+
+
+    if (device.includes("🚨Falla masiva 20") || device.includes("Falla masiva") || device.includes("🟢 🚨Falla masiva 20")) {
+
+        if (statusEmoji.includes("☠️🔴")) {
+            db.updateFailMasive(1); // Actualiza el valor a 1 (falla masiva)
+
+        } else if(statusEmoji.includes("🟢")) {
+            console.log("No hay falla masiva, actualizando a 0");
+            db.updateFailMasive(0); // Actualiza el valor a 0 (sin falla masiva)
+        }
     }
 
 
