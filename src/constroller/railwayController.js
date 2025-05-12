@@ -35,8 +35,8 @@ const processTickets = async (PendingTickets) => {
 const doTickets = async (req = request, res = response) => {
     try {
         // Obtén todos los datos almacenados en Redis
-        const PendingTickets = await redis.getAllKeysAndValues();
-        console.log("Tickets pendientes obtenidos de Redis:", PendingTickets);
+        //const PendingTickets = await redis.getAllKeysAndValues();
+        //console.log("Tickets pendientes obtenidos de Redis:", PendingTickets);
 
         // Verifica si la API key está presente en el body
         const temporalAPI = req.body.apiKey || "API key no proporcionada";
@@ -46,7 +46,7 @@ const doTickets = async (req = request, res = response) => {
         global.apiKey = temporalAPI;
 
         // Procesa los tickets pendientes
-        await processTickets(PendingTickets);
+        //await processTickets(PendingTickets);
 
         res.status(200).json({
             msg: "Éxito",
