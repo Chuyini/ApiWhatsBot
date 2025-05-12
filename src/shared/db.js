@@ -35,6 +35,7 @@ async function isFailMasive() {
 
     return result?.fail || 0; // 🔹 Retorna el valor de 0 o 1 y por defecto 0
 }
+
 async function updateFailMasive(value) {
     const db = await connectDB();
 
