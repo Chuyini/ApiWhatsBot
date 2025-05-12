@@ -129,7 +129,8 @@ async function buildInformation(sensorData) {
         if (statusEmoji.includes("☠️🔴")) {
             db.updateFailMasive(1); // Actualiza el valor a 1 (falla masiva)
 
-        } else {
+        } else if(statusEmoji.includes("🟢")) {
+            console.log("No hay falla masiva, actualizando a 0");
             db.updateFailMasive(0); // Actualiza el valor a 0 (sin falla masiva)
         }
     }
