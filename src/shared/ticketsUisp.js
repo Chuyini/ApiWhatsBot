@@ -60,7 +60,7 @@ async function createTicketUisp(sensorData, text, clienId, retries) {
         if (error.response && error.response.status === 401 && retries > 0) {
             console.log("401: Intentando autenticación y metiendo a redis...");
 
-            const key = sensorData.masive
+            /*const key = sensorData.masive
             ? crypto.randomBytes(16).toString('hex') // Genera un string hexadecimal aleatorio
             : sensorData.ip;
             
@@ -68,7 +68,7 @@ async function createTicketUisp(sensorData, text, clienId, retries) {
             setImmediate(async()=>{
             await server2.triggerActionS2();
 
-           })
+           })*/
          
 
            //console.log("EL sensor data es: ",sensorData);
