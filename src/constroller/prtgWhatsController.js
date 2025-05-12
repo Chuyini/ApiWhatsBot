@@ -123,7 +123,7 @@ async function buildInformation(sensorData) {
     //global.apiKey = "va lor xs";
 
     //console.log("Valor inicial de prueba de API KEY: ", global.apiKey);
-
+    console.log("entra a la condicion de la falla masiva ");
     if (device.includes("🚨Falla masiva 20") || device.includes("Falla masiva")) {
 
         if (statusEmoji.includes("☠️🔴")) {
