@@ -366,6 +366,7 @@ async function buildInformation(sensorData) {
                 if (ticket == null || failMasive == true) {
 
                     await ticketUisp.createTicketUisp(sensorData, text, idClient, 1);
+                    console.log(idClient, "id client en el ticket ");
                     text = "🎫✏️ Ticket Creado" + text;
 
 
