@@ -262,6 +262,15 @@ function TemplateWelcome(number) {
 }
 
 function CreateServiceReport(clientId,subject,createdAt,commentBody) {
+    clientId = Number.parseInt(clientId, 10);
+
+    if (isNaN(clientId)) {
+        console.error("⚠️ Error: clientId no es un número válido!");
+        return;
+    }
+
+
+
     let data = JSON.stringify({
         "subject": subject,
         "clientId": clientId,
