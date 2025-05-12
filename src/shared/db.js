@@ -21,10 +21,34 @@ async function connectDB() {
 // 🔹 Función para consultar la clave en la colección "keys"
 async function getKey() {
     const db = await connectDB();
-    
+
     const result = await db.collection("keys").findOne({ id: 1 });//id fijo
 
     return result?.key || "⚠️ No se encontró la clave"; // 🔹 Retorna el valor de "key"
 }
 
-module.exports = { connectDB, getKey };
+
+async function isFailMasive() {
+    const db = await connectDB();
+
+    const result = await db.collection("masive").findOne({ id: 1 });//id fijo
+
+    return result?.fail || 0; // 🔹 Retorna el valor de 0 o 1 y por defecto 0
+}
+async function updateFailMasive(value) {
+    const db = await connectDB();
+
+    const result = await db.collection("masive").updateOne(
+        { id: 1 }, // 🔹 Busca el documento con id fijo
+        { $set: { fail: value} } // 🔹 Actualiza el campo "fail"
+    );
+
+    return result.matchedCount > 0
+        ? "✅ Documento actualizado!"
+        : "⚠️ No se encontró el documento.";
+}
+
+
+
+
+module.exports = { connectDB, getKey, isFailMasive,updateFailMasive };

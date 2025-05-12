@@ -9,8 +9,8 @@ const checkTime = require("../shared/checkTime");
 const ticketUisp = require("../shared/ticketsUisp");
 const foundTicket = require("../shared/foundTicket");
 const toolsPostUISPPrtg = require("../shared/UtilsPrtgUisp");
-const schedule =  require("../shared/schedule");
-
+const schedule = require("../shared/schedule");
+const db = require("../shared/db"); // MongoDB en Railway
 const NodeCache = require("node-cache");
 const AsyncLock = require("async-lock");
 const lock = new AsyncLock();
@@ -113,19 +113,25 @@ async function buildInformation(sensorData) {
     let AIresponse = sensorData.AIresponse || "Default AI response";
     let idUispService = extractNumberFromCompany(company);
     let bandera = sensorData.bandera || "default";
-    let numbers = ["524401050937", "524442478772", "524434629327","524442309641"]; //Yo de trabajo, Debie, yo personal, Armando
+    let numbers = ["524401050937", "524442478772", "524434629327", "524442309641"]; //Yo de trabajo, Debie, yo personal, Armando
     let tags = sensorData.tags || ["defaultTag"];
     let resumMesagge = "" || message.toLowerCase();
     let sensorcomment = sensorData.sensorcomment || "No sensor comment";
     //por fines de prueba vamos a definir apij¿key global como un valor incorrrecto
     //suponemos que la clave expiro y ebtro un nuevo ticket
-    let failMasive = false;
+
     //global.apiKey = "va lor xs";
 
     //console.log("Valor inicial de prueba de API KEY: ", global.apiKey);
 
-    if(device.includes("🚨Falla masiva 20") || device.includes("Falla masiva")) {
-        failMasive = true;
+    if (device.includes("🚨Falla masiva 20") || device.includes("Falla masiva")) {
+
+        if (statusEmoji.includes("☠️🔴")) {
+            db.updateFailMasive(1); // Actualiza el valor a 1 (falla masiva)
+
+        } else {
+            db.updateFailMasive(0); // Actualiza el valor a 0 (sin falla masiva)
+        }
     }
 
 
@@ -215,7 +221,7 @@ async function buildInformation(sensorData) {
     } else if (lowerCaseText.includes("repetir escalacion") || lowerCaseText.includes("fallo escalacion")) {
         statusEmoji = "🔴🔧";
 
-    }else if((lowerCaseText.includes("fallo") && (resumMesagge.includes("perdida de paquetes") ||resumMesagge.includes("tiempo de ping")) )  || (lowerCaseText.includes("fallo escalacion") && (resumMesagge.includes("perdida de paquetes") ||resumMesagge.includes("tiempo de ping")) )){
+    } else if ((lowerCaseText.includes("fallo") && (resumMesagge.includes("perdida de paquetes") || resumMesagge.includes("tiempo de ping"))) || (lowerCaseText.includes("fallo escalacion") && (resumMesagge.includes("perdida de paquetes") || resumMesagge.includes("tiempo de ping")))) {
         statusEmoji = "⚠️🔴"
 
     }
@@ -250,7 +256,7 @@ async function buildInformation(sensorData) {
     }
 
 
-    if(!sensorcomment.includes("No sensor comment") && sensorcomment.includes("Schedule")){
+    if (!sensorcomment.includes("No sensor comment") && sensorcomment.includes("Schedule")) {
 
         numbers.push("524442475444"); //Diana
         numbers.push("524441574990"); //Daysimar
@@ -289,7 +295,7 @@ async function buildInformation(sensorData) {
         //text = "";
         numbers.push("524441967796"); //el lic
         numbers.push("524442475444"); //Diana
-        
+
         //numbers.push("524441574990"); //Daysimar
 
 
@@ -331,8 +337,9 @@ async function buildInformation(sensorData) {
                 console.log("esto dio la resupuesta : ", ticket);
 
                 sensorData.clienId = idClient;
+                const masiveFail = db.isFailMasive();
 
-                if (ticket == null || failMasive == true) {
+                if (ticket == null || masiveFail == 0) {
 
                     await ticketUisp.createTicketUisp(sensorData, text, idClient);
                     text = "🎫✏️ Ticket Creado" + text;
@@ -362,10 +369,13 @@ async function buildInformation(sensorData) {
                 console.log("esto dio la resupuesta en cualquier dispositivo menos comunicalo : ", ticket);
                 sensorData.clienId = idClient;
 
+                const masiveFail = db.isFailMasive(); // <-- Cambié a isFailMasive() para obtener el valor correcto
 
-                if (ticket == null || failMasive == true) {
+
+                if (ticket == null || masiveFail == 0) {
 
                     await ticketUisp.createTicketUisp(sensorData, text, idClient, 1);
+
                     console.log(idClient, "id client en el ticket ");
                     text = "🎫✏️ Ticket Creado" + text;
 
