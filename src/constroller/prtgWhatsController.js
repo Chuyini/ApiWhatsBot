@@ -124,7 +124,7 @@ async function buildInformation(sensorData) {
 
     //console.log("Valor inicial de prueba de API KEY: ", global.apiKey);
     console.log("entra a la condicion de la falla masiva: ",device);
-    if (device.includes("🚨Falla masiva 20") || device.includes("Falla masiva") || device.includes("🟢 🚨Falla masiva 2")) {
+    if (device.includes("🚨Falla masiva 20") || device.includes("Falla masiva") || device.includes("🟢 🚨Falla masiva 20")) {
 
         if (statusEmoji.includes("☠️🔴")) {
             db.updateFailMasive(1); // Actualiza el valor a 1 (falla masiva)
