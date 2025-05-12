@@ -9,7 +9,7 @@ async function connectDB() {
         try {
             await client.connect();
             console.log("✅ Conectado a MongoDB desde Vercel!");
-            dbInstance = client.db(process.env.MONGO_DB_NAME); // 🔹 Usa el nombre de la BD correcto
+            dbInstance = client.db("test"); // 🔹 Usa el nombre de la BD correcto
         } catch (error) {
             console.error("⚠️ Error en conexión:", error.message);
             process.exit(1);
