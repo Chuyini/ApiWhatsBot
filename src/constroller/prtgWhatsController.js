@@ -202,7 +202,7 @@ async function buildInformation(sensorData) {
             statusEmoji = "🟢";
         }
     } else if (lowerCaseText.includes("desconocido")) {
-        statusEmoji = "⚪ PRTG";
+        statusEmoji = "⚪⏬";
         numbers = numbers.filter(number => number !== "524442478772");; // Sacamos a Debie para que no siga alarmando
     } else if (lowerCaseText.includes("ok")) {
 
