@@ -286,7 +286,7 @@ async function buildInformation(sensorData) {
     ///Sin son de baterias  se alarma 
     ///aqui podriamos definir los dispositivos de alta prioridad
     if (sensorData.batery || priority.includes("MUY ALTA") || tags.includes("critical")) {
-        text = `BATERIAS URGENTE:\n🏢EMPRESA/LUGAR: *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji}ESTADO:*${status}*\n\n🌐IP: *${ip}* \n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}* `;
+        text = `Criticos ${statusEmoji}:\n🏢 EMPRESA/LUGAR: *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji} ESTADO: *${status}*\n\n🌐 IP: *${ip}*\n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}*\n\n${message}\n\n🔗 LINK UISP: *${linkUisp}*\n\n ${comments}\n\n etiquetas: ${tags}`;
 
         if (resumMesagge && resumMesagge.includes("simulado")) {
             text = `📊PRUEBA SIMULADO📈\n\n${text}\n\nNo hacer caso.`;
@@ -344,7 +344,7 @@ async function buildInformation(sensorData) {
                 sensorData.clienId = idClient;
                 const masiveFail = db.isFailMasive();
 
-                if (ticket == null || masiveFail == 0) {
+                if (ticket == null || masiveFail == 0 ||!tags.includes("planta") || !tags.includes("planta")) {
 
                     await ticketUisp.createTicketUisp(sensorData, text, idClient);
                     text = "🎫✏️ Ticket Creado" + text;
@@ -377,7 +377,7 @@ async function buildInformation(sensorData) {
                 const masiveFail = db.isFailMasive(); // <-- Cambié a isFailMasive() para obtener el valor correcto
 
 
-                if (ticket == null || masiveFail == 0) {
+                if (ticket == null || masiveFail == 0 ||!tags.includes("planta")) {//condicion para crear un ticket es que no haya tickets, no haya falla masiva y no sea de planta
 
                     await ticketUisp.createTicketUisp(sensorData, text, idClient, 1);
 
