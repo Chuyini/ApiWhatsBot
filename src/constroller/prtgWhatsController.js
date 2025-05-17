@@ -367,7 +367,7 @@ async function buildInformation(sensorData) {
                 text = `📊PRUEBA SIMULADO📈\n\n${text}\n\nNo hacer caso.`;
             }
             if (tags.includes("planta")) {
-                text = "⚡PLANTA ELECTRICA\n" + text;
+                text = "⚡*PLANTA ELECTRICA*\n\n" + text;
             }
             if ((lowerCaseText.includes("fallo escalación") || lowerCaseText.includes("repetir escalacion")) && !tags.includes("planta")) {
 
@@ -400,7 +400,7 @@ async function buildInformation(sensorData) {
                 text = `📊PRUEBA SIMULADO📈\n\n${text}\n\nNo hacer caso.`;
             }
             if (tags.includes("planta")) {
-                text = "⚡PLANTA ELECTRICA \n" + text;
+                text = "⚡*PLANTA ELECTRICA*\n\n" + text;
             }
             if (lowerCaseText.includes("repetir escalacion") || ((priority.includes("Alta") || tags.includes("prioridad:alta")) && lowerCaseText.includes("fallo escalación")) && !tags.includes("planta")) {//si no es de comunicalo pero es un repetir escalacion
 
