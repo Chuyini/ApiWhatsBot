@@ -292,7 +292,7 @@ async function buildInformation(sensorData) {
             text = `📊PRUEBA SIMULADO📈\n\n${text}\n\nNo hacer caso.`;
         }
         if (tags.includes("planta")) {
-            text = text + " ⚡PLANTA ELECTRICA \n";
+            text = text + "⚡PLANTA ELECTRICA\n";
         }
 
 
@@ -303,12 +303,12 @@ async function buildInformation(sensorData) {
         //text = "";
         numbers.push("524441967796"); //el lic
         numbers.push("524442475444"); //Diana
-        if(tags.includes("RB")){
+        if (tags.includes("RB")) {
 
             await db.updateFailMasive(1);
             sensorData.clienId = "0307";// Actualiza el valor a 1 (falla masiva)
         }
-        
+
 
         //numbers.push("524441574990"); //Daysimar
         const { idClient, ticket } = await foundTicket.isThereTicketOnUisp(sensorData);
@@ -367,7 +367,7 @@ async function buildInformation(sensorData) {
                 text = `📊PRUEBA SIMULADO📈\n\n${text}\n\nNo hacer caso.`;
             }
             if (tags.includes("planta")) {
-                text = text + " ⚡PLANTA ELECTRICA \n";
+                text = "⚡PLANTA ELECTRICA\n" + text;
             }
             if ((lowerCaseText.includes("fallo escalación") || lowerCaseText.includes("repetir escalacion")) && !tags.includes("planta")) {
 
@@ -400,7 +400,7 @@ async function buildInformation(sensorData) {
                 text = `📊PRUEBA SIMULADO📈\n\n${text}\n\nNo hacer caso.`;
             }
             if (tags.includes("planta")) {
-                text = text + " ⚡PLANTA ELECTRICA \n";
+                text = "⚡PLANTA ELECTRICA \n" + text;
             }
             if (lowerCaseText.includes("repetir escalacion") || ((priority.includes("Alta") || tags.includes("prioridad:alta")) && lowerCaseText.includes("fallo escalación")) && !tags.includes("planta")) {//si no es de comunicalo pero es un repetir escalacion
 
