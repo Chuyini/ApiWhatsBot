@@ -303,7 +303,7 @@ async function buildInformation(sensorData) {
         //text = "";
         numbers.push("524441967796"); //el lic
         numbers.push("524442475444"); //Diana
-        if (tags.includes("RB")) {
+        /*if (tags.includes("RB")) {
 
             await db.updateFailMasive(1);
             sensorData.clienId = "0307";// Actualiza el valor a 1 (falla masiva)
@@ -317,6 +317,7 @@ async function buildInformation(sensorData) {
 
         const masiveFail = db.isFailMasive(); // <-- Cambié a isFailMasive() para obtener el valor correcto
 
+        console.log("El estatus de la falla  ", statusEmoji).;
 
         if (ticket == null || masiveFail == 0 || !tags.includes("planta") || !lowerCaseText.includes("fallo finalizado")) {//condicion para crear un ticket es que no haya tickets, no haya falla masiva y no sea de planta
 
@@ -331,7 +332,7 @@ async function buildInformation(sensorData) {
             text = `🚮❌ ${sensorData.company}\n *${sensorData.device}* *CANCELADO* \n\n\t\t🖥️ *RETIRAR DE PRTG* \n\n🌐 IP: ${sensorData.ip}\n`;
         } else {
             text = "🎫 Ticket Existente \n" + text;
-        }
+        }*/
 
 
 
