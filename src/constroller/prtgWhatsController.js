@@ -312,7 +312,7 @@ async function buildInformation(sensorData) {
 
         //numbers.push("524441574990"); //Daysimar
         const { idClient, ticket } = await foundTicket.isThereTicketOnUisp(sensorData);
-        console.log("esto dio la resupuesta en cualquier dispositivo menos comunicalo : ", ticket);
+        console.log("esto dio la resupuesta en cualquier dispositivo menos comunicalo : ", sensorData.clienId);
         sensorData.clienId = idClient;
 
         const masiveFail = db.isFailMasive(); // <-- Cambié a isFailMasive() para obtener el valor correcto
@@ -320,9 +320,9 @@ async function buildInformation(sensorData) {
 
         if (ticket == null || masiveFail == 0 || !tags.includes("planta") || statusEmoji.includes("🟢")) {//condicion para crear un ticket es que no haya tickets, no haya falla masiva y no sea de planta
 
-            await ticketUisp.createTicketUisp(sensorData, text, idClient, 1);
+            await ticketUisp.createTicketUisp(sensorData, text, sensorData.clienId, 1);
 
-            console.log(idClient, " id client en el ticket ");
+            console.log(sensorData.clienId, " id client en el ticket ");
             text = "🎫✏️ Ticket Creado \n" + text;
 
 
