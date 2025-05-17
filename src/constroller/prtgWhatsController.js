@@ -318,7 +318,7 @@ async function buildInformation(sensorData) {
         const masiveFail = db.isFailMasive(); // <-- Cambié a isFailMasive() para obtener el valor correcto
 
 
-        if (ticket == null || masiveFail == 0 || !tags.includes("planta") || statusEmoji.includes("🟢")) {//condicion para crear un ticket es que no haya tickets, no haya falla masiva y no sea de planta
+        if (ticket == null || masiveFail == 0 || !tags.includes("planta") || !statusEmoji.includes("🟢")) {//condicion para crear un ticket es que no haya tickets, no haya falla masiva y no sea de planta
 
             await ticketUisp.createTicketUisp(sensorData, text, sensorData.clienId, 1);
 
@@ -378,7 +378,7 @@ async function buildInformation(sensorData) {
                 sensorData.clienId = idClient;
                 const masiveFail = db.isFailMasive();
 
-                if (ticket == null || masiveFail == 0 || !tags.includes("planta")|| statusEmoji.includes("🟢")) {//condicion para crear un ticket es que no haya tickets, no haya falla masiva y no sea de planta
+                if (ticket == null || masiveFail == 0 || !tags.includes("planta")|| !statusEmoji.includes("🟢")) {//condicion para crear un ticket es que no haya tickets, no haya falla masiva y no sea de planta
 
                     await ticketUisp.createTicketUisp(sensorData, text, idClient);
                     text = "🎫✏️ Ticket Creado" + text;
@@ -412,7 +412,7 @@ async function buildInformation(sensorData) {
                 const masiveFail = db.isFailMasive(); // <-- Cambié a isFailMasive() para obtener el valor correcto
 
 
-                if (ticket == null || masiveFail == 0 || !tags.includes("planta") || statusEmoji.includes("🟢")) {//condicion para crear un ticket es que no haya tickets, no haya falla masiva y no sea de planta
+                if (ticket == null || masiveFail == 0 || !tags.includes("planta") || !statusEmoji.includes("🟢")) {//condicion para crear un ticket es que no haya tickets, no haya falla masiva y no sea de planta
 
                     await ticketUisp.createTicketUisp(sensorData, text, idClient, 1);
 
