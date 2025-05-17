@@ -123,7 +123,7 @@ async function buildInformation(sensorData) {
     //global.apiKey = "va lor xs";
 
     //console.log("Valor inicial de prueba de API KEY: ", global.apiKey);
-    
+
 
     try {
         let dirtyComments = sensorData.comments;
@@ -215,9 +215,9 @@ async function buildInformation(sensorData) {
         statusEmoji = "⚠️🔴"
 
     }
-    console.log("entra a la condicion de la falla masiva: ",device);
-    console.log("El estatus es: ",statusEmoji);
-    
+    console.log("entra a la condicion de la falla masiva: ", device);
+    console.log("El estatus es: ", statusEmoji);
+
 
 
     if (device.includes("🚨Falla masiva 20") || device.includes("Falla masiva") || device.includes("🟢 🚨Falla masiva 20")) {
@@ -225,7 +225,7 @@ async function buildInformation(sensorData) {
         if (statusEmoji.includes("☠️🔴")) {
             db.updateFailMasive(1); // Actualiza el valor a 1 (falla masiva)
 
-        } else if(statusEmoji.includes("🟢")) {
+        } else if (statusEmoji.includes("🟢")) {
             console.log("No hay falla masiva, actualizando a 0");
             db.updateFailMasive(0); // Actualiza el valor a 0 (sin falla masiva)
         }
@@ -286,10 +286,13 @@ async function buildInformation(sensorData) {
     ///Sin son de baterias  se alarma 
     ///aqui podriamos definir los dispositivos de alta prioridad
     if (sensorData.batery || priority.includes("MUY ALTA") || tags.includes("critical")) {
-        text = `Criticos ${statusEmoji}:\n🏢 EMPRESA/LUGAR: *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji} ESTADO: *${status}*\n\n🌐 IP: *${ip}*\n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}*\n\n${message}\n\n🔗 LINK UISP: *${linkUisp}*\n\n ${comments}\n\n etiquetas: ${tags}`;
+        text = `Críticos ${statusEmoji}:\n🏢 ENTIDAD: *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji} ESTADO: *${status}*\n\n🌐 IP: *${ip}*\n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}*\n\n${message}\n\n🔗 LINK UISP: *${linkUisp}*\n\n ${comments}\n\n etiquetas: ${tags}`;
 
         if (resumMesagge && resumMesagge.includes("simulado")) {
             text = `📊PRUEBA SIMULADO📈\n\n${text}\n\nNo hacer caso.`;
+        }
+        if (tags.includes("planta")) {
+            text = text + " ⚡PLANTA ELECTRICA \n";
         }
 
 
@@ -300,15 +303,43 @@ async function buildInformation(sensorData) {
         //text = "";
         numbers.push("524441967796"); //el lic
         numbers.push("524442475444"); //Diana
+        if(tags.includes("RB")){
+
+            await db.updateFailMasive(1);
+            sensorData.clienId = "0307";// Actualiza el valor a 1 (falla masiva)
+        }
+        
 
         //numbers.push("524441574990"); //Daysimar
+        const { idClient, ticket } = await foundTicket.isThereTicketOnUisp(sensorData);
+        console.log("esto dio la resupuesta en cualquier dispositivo menos comunicalo : ", ticket);
+        sensorData.clienId = idClient;
+
+        const masiveFail = db.isFailMasive(); // <-- Cambié a isFailMasive() para obtener el valor correcto
+
+
+        if (ticket == null || masiveFail == 0 || !tags.includes("planta")) {//condicion para crear un ticket es que no haya tickets, no haya falla masiva y no sea de planta
+
+            await ticketUisp.createTicketUisp(sensorData, text, idClient, 1);
+
+            console.log(idClient, " id client en el ticket ");
+            text = "🎫✏️ Ticket Creado \n" + text;
+
+
+        } else if (ticket == "Esta suspendido") { //cuando encuentra suspendido, regresa por whats ese mensaje
+
+            text = `🚮❌ ${sensorData.company}\n *${sensorData.device}* *CANCELADO* \n\n\t\t🖥️ *RETIRAR DE PRTG* \n\n🌐 IP: ${sensorData.ip}\n`;
+        } else {
+            text = "🎫 Ticket Existente \n" + text;
+        }
+
 
 
         let textToTemplate = `${statusEmoji} ${device}`;
 
         textToTemplate = textToTemplate.trim();
 
-        textToTemplate = textToTemplate.substring(0, 50);
+        textToTemplate = textToTemplate.substring(0, 56);
 
         const specialNumber = ["524442475444", "524441967796", "524441574990", "524441184908", "524434629327", "524442478772"];
 
@@ -335,6 +366,9 @@ async function buildInformation(sensorData) {
             if (resumMesagge && resumMesagge.includes("simulado")) {
                 text = `📊PRUEBA SIMULADO📈\n\n${text}\n\nNo hacer caso.`;
             }
+            if (tags.includes("planta")) {
+                text = text + " ⚡PLANTA ELECTRICA \n";
+            }
             if ((lowerCaseText.includes("fallo escalación") || lowerCaseText.includes("repetir escalacion")) && !tags.includes("planta")) {
 
 
@@ -344,7 +378,7 @@ async function buildInformation(sensorData) {
                 sensorData.clienId = idClient;
                 const masiveFail = db.isFailMasive();
 
-                if (ticket == null || masiveFail == 0 ||!tags.includes("planta") || !tags.includes("planta")) {
+                if (ticket == null || masiveFail == 0 || !tags.includes("planta") || !tags.includes("planta")) {
 
                     await ticketUisp.createTicketUisp(sensorData, text, idClient);
                     text = "🎫✏️ Ticket Creado" + text;
@@ -361,9 +395,12 @@ async function buildInformation(sensorData) {
             }
         } else {
             // AIresponse = await chatGPTService.GetMessageChatGPT(message); <-- no necesitamos algun reporte cuando este en OK
-            text = `Sensor Alert ${statusEmoji}:\n🏢 EMPRESA/LUGAR: *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji} ESTADO: *${status}*\n\n🌐 IP: *${ip}*\n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}*\n\n${message}\n\n🔗 LINK UISP: *${linkUisp}*\n\n ${comments}\n\n etiquetas: ${tags}`;
+            text = `Sensor Alert ${statusEmoji}:\n🏢 ENTIDAD: *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji} ESTADO: *${status}*\n\n🌐 IP: *${ip}*\n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}*\n\n${message}\n\n🔗 LINK UISP: *${linkUisp}*\n\n ${comments}\n\n etiquetas: ${tags}`;
             if (resumMesagge && resumMesagge.includes("simulado")) {
                 text = `📊PRUEBA SIMULADO📈\n\n${text}\n\nNo hacer caso.`;
+            }
+            if (tags.includes("planta")) {
+                text = text + " ⚡PLANTA ELECTRICA \n";
             }
             if (lowerCaseText.includes("repetir escalacion") || ((priority.includes("Alta") || tags.includes("prioridad:alta")) && lowerCaseText.includes("fallo escalación")) && !tags.includes("planta")) {//si no es de comunicalo pero es un repetir escalacion
 
@@ -377,19 +414,19 @@ async function buildInformation(sensorData) {
                 const masiveFail = db.isFailMasive(); // <-- Cambié a isFailMasive() para obtener el valor correcto
 
 
-                if (ticket == null || masiveFail == 0 ||!tags.includes("planta")) {//condicion para crear un ticket es que no haya tickets, no haya falla masiva y no sea de planta
+                if (ticket == null || masiveFail == 0 || !tags.includes("planta")) {//condicion para crear un ticket es que no haya tickets, no haya falla masiva y no sea de planta
 
                     await ticketUisp.createTicketUisp(sensorData, text, idClient, 1);
 
                     console.log(idClient, "id client en el ticket ");
-                    text = "🎫✏️ Ticket Creado" + text;
+                    text = "🎫✏️ Ticket Creado \n" + text;
 
 
                 } else if (ticket == "Esta suspendido") { //cuando encuentra suspendido, regresa por whats ese mensaje
 
                     text = `🚮❌ ${sensorData.company}\n *${sensorData.device}* *CANCELADO* \n\n\t\t🖥️ *RETIRAR DE PRTG* \n\n🌐 IP: ${sensorData.ip}\n`;
                 } else {
-                    text = "🎫 Ticket Existente" + text;
+                    text = "🎫 Ticket Existente \n" + text;
                 }
 
 
