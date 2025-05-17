@@ -378,7 +378,7 @@ async function buildInformation(sensorData) {
                 sensorData.clienId = idClient;
                 const masiveFail = db.isFailMasive();
 
-                if (ticket == null || masiveFail == 0 || !tags.includes("planta") || !tags.includes("planta")) {
+                if (ticket == null || masiveFail == 0 || !tags.includes("planta") || !tags.includes("planta") || statusEmoji.includes("🟢")) {//condicion para crear un ticket es que no haya tickets, no haya falla masiva y no sea de planta
 
                     await ticketUisp.createTicketUisp(sensorData, text, idClient);
                     text = "🎫✏️ Ticket Creado" + text;
@@ -403,8 +403,6 @@ async function buildInformation(sensorData) {
                 text = "⚡*PLANTA ELECTRICA*\n\n" + text;
             }
             if (lowerCaseText.includes("repetir escalacion") || ((priority.includes("Alta") || tags.includes("prioridad:alta")) && lowerCaseText.includes("fallo escalación")) && !tags.includes("planta")) {//si no es de comunicalo pero es un repetir escalacion
-
-
 
 
                 const { idClient, ticket } = await foundTicket.isThereTicketOnUisp(sensorData);
