@@ -123,7 +123,11 @@ async function buildInformation(sensorData) {
     //global.apiKey = "va lor xs";
 
     //console.log("Valor inicial de prueba de API KEY: ", global.apiKey);
+    const regexIDC = /\b\d{4}\b/;
 
+
+
+    const realIDCompany = tags.match(regexIDC); //Este será el id de de empresa sacado de las etiquetas
 
     try {
         let dirtyComments = sensorData.comments;
@@ -336,7 +340,7 @@ async function buildInformation(sensorData) {
 
 
 
-        let textToTemplate = `${statusEmoji} ${device}`;
+        let textToTemplate = `${statusEmoji} (${realIDCompany}) ${device}`;
 
         textToTemplate = textToTemplate.trim();
 
