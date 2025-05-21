@@ -124,11 +124,14 @@ async function buildInformation(sensorData) {
 
     //console.log("Valor inicial de prueba de API KEY: ", global.apiKey);
     const regexIDC = /\b\d{4}\b/;
+    let realIDCompany = "";
+
+    if (regexIDC != null) {
+        realIDCompany = `(${tags.match(regexIDC)}) - ` || ""; //Este será el id de de empresa sacado de las etiquetas
+
+    } //si no hay id de empresa, lo dejamos vacio  
 
 
-
-    let realIDCompany = `(${tags.match(regexIDC)}) - ` || ""; //Este será el id de de empresa sacado de las etiquetas
-    if (realIDCompany == null) { realIDCompany = ""; } //si no hay id de empresa, lo dejamos vacio  
 
     try {
         let dirtyComments = sensorData.comments;
