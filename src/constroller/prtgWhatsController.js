@@ -127,7 +127,8 @@ async function buildInformation(sensorData) {
 
 
 
-    const realIDCompany = `(${tags.match(regexIDC)}) - ` || ''; //Este será el id de de empresa sacado de las etiquetas
+    let realIDCompany = `(${tags.match(regexIDC)}) - ` || ""; //Este será el id de de empresa sacado de las etiquetas
+    if (realIDCompany == null) { realIDCompany = ""; } //si no hay id de empresa, lo dejamos vacio  
 
     try {
         let dirtyComments = sensorData.comments;
