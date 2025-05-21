@@ -127,7 +127,7 @@ async function buildInformation(sensorData) {
 
 
 
-    const realIDCompany = tags.match(regexIDC) || ''; //Este será el id de de empresa sacado de las etiquetas
+    const realIDCompany = `(${tags.match(regexIDC)})` || ''; //Este será el id de de empresa sacado de las etiquetas
 
     try {
         let dirtyComments = sensorData.comments;
@@ -290,7 +290,7 @@ async function buildInformation(sensorData) {
     ///Sin son de baterias  se alarma 
     ///aqui podriamos definir los dispositivos de alta prioridad
     if (sensorData.batery || priority.includes("MUY ALTA") || tags.includes("critical")) {
-        text = `Críticos (${realIDCompany})\n\n ${statusEmoji}:\n🏢 ENTIDAD: *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji} ESTADO: *${status}*\n\n🌐 IP: *${ip}*\n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}*\n\n${message}\n\n🔗 LINK UISP: *${linkUisp}*\n\n ${comments}\n\n etiquetas: ${tags}`;
+        text = `Críticos ${realIDCompany}\n\n ${statusEmoji}:\n🏢 ENTIDAD: *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji} ESTADO: *${status}*\n\n🌐 IP: *${ip}*\n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}*\n\n${message}\n\n🔗 LINK UISP: *${linkUisp}*\n\n ${comments}\n\n etiquetas: ${tags}`;
 
         if (resumMesagge && resumMesagge.includes("simulado")) {
             text = `📊PRUEBA SIMULADO📈\n\n${text}\n\nNo hacer caso.`;
