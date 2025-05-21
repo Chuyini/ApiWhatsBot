@@ -340,7 +340,7 @@ async function buildInformation(sensorData) {
 
 
 
-        let textToTemplate = `${statusEmoji} (${realIDCompany}) ${device}`;
+        let textToTemplate = `${statusEmoji} ${realIDCompany} ${device}`;
 
         textToTemplate = textToTemplate.trim();
 
