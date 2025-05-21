@@ -127,7 +127,7 @@ async function buildInformation(sensorData) {
 
 
 
-    const realIDCompany = tags.match(regexIDC); //Este será el id de de empresa sacado de las etiquetas
+    const realIDCompany = tags.match(regexIDC) || ''; //Este será el id de de empresa sacado de las etiquetas
 
     try {
         let dirtyComments = sensorData.comments;
