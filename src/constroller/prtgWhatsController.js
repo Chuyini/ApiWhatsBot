@@ -126,7 +126,7 @@ async function buildInformation(sensorData) {
     const regexIDC = /\b\d{4}\b/;
     let realIDCompany = "";
 
-    if (regexIDC != null) {
+    if (tags.match(regexIDC) != null) { //si hay id de empresa en las etiquetas
         realIDCompany = `(${tags.match(regexIDC)}) - ` || ""; //Este será el id de de empresa sacado de las etiquetas
 
     } //si no hay id de empresa, lo dejamos vacio  
