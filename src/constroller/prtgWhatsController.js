@@ -423,10 +423,10 @@ async function buildInformation(sensorData) {
 
                 if (ticket == null || masiveFail == 0 || !tags.includes("planta") || !lowerCaseText.includes("fallo finalizado")) {//condicion para crear un ticket es que no haya tickets, no haya falla masiva y no sea de planta
 
-                    await ticketUisp.createTicketUisp(sensorData, text, idClient, 1);
+                    //await ticketUisp.createTicketUisp(sensorData, text, idClient, 1);
 
                     console.log(idClient, "id client en el ticket ");
-                    text = "🎫✏️ Ticket Creado \n" + text;
+                   // text = "🎫✏️ Ticket Creado \n" + text;
 
 
                 } else if (ticket == "Esta suspendido") { //cuando encuentra suspendido, regresa por whats ese mensaje
