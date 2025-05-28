@@ -293,7 +293,7 @@ async function buildInformation(sensorData) {
 
     ///Sin son de baterias  se alarma 
     ///aqui podriamos definir los dispositivos de alta prioridad
-    if (sensorData.batery || priority.includes("MUY ALTA") || tags.includes("critical")) {
+    if ((sensorData.batery || priority.includes("MUY ALTA") || tags.includes("critical")) && !tags.includes("planta")) {
         text = `Críticos ${statusEmoji}:\n🏢 ENTIDAD: ${realIDCompany} *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji} ESTADO: *${status}*\n\n🌐 IP: *${ip}*\n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}*\n\n${message}\n\n🔗 LINK UISP: *${linkUisp}*\n\n ${comments}\n\n etiquetas: ${tags}`;
 
         if (resumMesagge && resumMesagge.includes("simulado")) {
@@ -426,7 +426,7 @@ async function buildInformation(sensorData) {
                     //await ticketUisp.createTicketUisp(sensorData, text, idClient, 1);
 
                     console.log(idClient, "id client en el ticket ");
-                   // text = "🎫✏️ Ticket Creado \n" + text;
+                    // text = "🎫✏️ Ticket Creado \n" + text;
 
 
                 } else if (ticket == "Esta suspendido") { //cuando encuentra suspendido, regresa por whats ese mensaje
