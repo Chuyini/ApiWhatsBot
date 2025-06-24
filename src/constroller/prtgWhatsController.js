@@ -117,6 +117,7 @@ async function buildInformation(sensorData) {
     let tags = sensorData.tags || ["defaultTag"];
     let resumMesagge = "" || message.toLowerCase();
     let sensorcomment = sensorData.sensorcomment || "No sensor comment";
+    let sensorID = sensorData.sensorid || "No sensorId";
     //por fines de prueba vamos a definir apij¿key global como un valor incorrrecto
     //suponemos que la clave expiro y ebtro un nuevo ticket
 
@@ -362,6 +363,8 @@ async function buildInformation(sensorData) {
             specialNumber.push("524441452315"); //<-- insertamos a ELI
         }
 
+
+        checkTime.sendRBImageTemplate(specialNumber, sensorID);
         checkTime.checkTimeAndGreet(specialNumber, textToTemplate);
 
         return {

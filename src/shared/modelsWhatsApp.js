@@ -240,6 +240,38 @@ function TemplateBatery(number, msgText) {
 }
 
 
+function TemplateRB(number, idSensor) {
+
+    let data = JSON.stringify({
+
+        "messaging_product": "whatsapp",
+        "recipient_type": "individual",
+        "to": number,
+        "type": "template",
+        "template": {
+            "name": "rba",
+            "language": {
+                "code": "en_US"
+            },
+            "components": [
+                {
+                    "parameters": [
+                        {
+                            "type": "image",
+                            "image": {
+                                "link": `http://45.189.154.179:8045/chart.png?type=graph&width=300&height=160&graphid=0&id=${idSensor}&apitoken=${process.env.API_TOKEN_PRTG}`
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    });
+
+    return data;
+}
+
+
 function TemplateWelcome(number) {
 
     let data = JSON.stringify({
@@ -261,7 +293,7 @@ function TemplateWelcome(number) {
 
 }
 
-function CreateServiceReport(clientId,subject,createdAt,commentBody) {
+function CreateServiceReport(clientId, subject, createdAt, commentBody) {
     clientId = Number.parseInt(clientId, 10);
 
     if (isNaN(clientId)) {
@@ -322,5 +354,6 @@ module.exports = {
     MessageVender,
     MessageLocation,
     TemplateContinueConversation,
-    TemplateBatery
+    TemplateBatery,
+    TemplateRB,
 }
