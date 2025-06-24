@@ -363,10 +363,17 @@ async function buildInformation(sensorData) {
             specialNumber.push("524441452315"); //<-- insertamos a ELI
         }
 
+        if (tags.includes("rb") ) {
+            await checkTime.sendRBImageTemplate(specialNumber, sensorID);
 
-        await checkTime.sendRBImageTemplate(specialNumber, sensorID);
+
+        } else {
+            await checkTime.checkTimeAndGreet(specialNumber, textToTemplate);
+
+        }
+
+
         console.log("ID del sensor: ", sensorID);
-        //await checkTime.checkTimeAndGreet(specialNumber, textToTemplate);
 
         return {
             text,
