@@ -208,35 +208,34 @@ function TemplateContinueConversation(number, textV) {
 
 
 
-function TemplateBatery(number, msgText) {
-
-    let data = JSON.stringify({
-
-        "messaging_product": "whatsapp",
-        "recipient_type": "individual",
-        "to": number,
-        "type": "template",
-        "template": {
-            "name": "batery_mod",
-            "language": {
-                "code": "en_US"
-            },
-            "components": [
-                {
-                    "type": "header",
-                    "parameters": [
-                        {
-                            "type": "text",
-                            "text": msgText,
-
-                        }
-                    ]
-                }
-            ]
+function TemplateRB(number, idSensor) {
+  let data = JSON.stringify({
+    messaging_product: "whatsapp",
+    recipient_type: "individual",
+    to: number,
+    type: "template",
+    template: {
+      name: "rba",
+      language: {
+        code: "en_US"
+      },
+      components: [
+        {
+          type: "header",
+          parameters: [
+            {
+              type: "image",
+              image: {
+                link: `http://45.189.154.179:8045/chart.png?type=graph&width=300&height=160&graphid=0&id=${idSensor}&apitoken=${process.env.API_TOKEN_PRTG}`
+              }
+            }
+          ]
         }
-    });
+      ]
+    }
+  });
 
-    return data;
+  return data;
 }
 
 
