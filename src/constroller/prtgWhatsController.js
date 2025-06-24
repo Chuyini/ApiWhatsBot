@@ -118,6 +118,7 @@ async function buildInformation(sensorData) {
     let resumMesagge = "" || message.toLowerCase();
     let sensorcomment = sensorData.sensorcomment || "No sensor comment";
     let sensorID = sensorData.sensorid || "No sensorId";
+    let urlServer = sensorData.server || "no server url";
     //por fines de prueba vamos a definir apij¿key global como un valor incorrrecto
     //suponemos que la clave expiro y ebtro un nuevo ticket
 
@@ -364,7 +365,7 @@ async function buildInformation(sensorData) {
         }
 
         if (tags.includes("rb") && !lowerCaseText.includes("ok")) {
-            await checkTime.sendRBImageTemplate(specialNumber, sensorID);
+            await checkTime.sendRBImageTemplate(specialNumber, sensorID, urlServer);
         } else {
             await checkTime.checkTimeAndGreet(specialNumber, textToTemplate);
 

@@ -240,7 +240,7 @@ function TemplateBatery(number, msgText) {
 }
 
 
-function TemplateRB(number, idSensor) {
+function TemplateRB(number, idSensor, url) {
     let data = JSON.stringify({
         messaging_product: "whatsapp",
         recipient_type: "individual",
@@ -258,7 +258,7 @@ function TemplateRB(number, idSensor) {
                         {
                             type: "image",
                             image: {
-                                link: `http://45.189.154.179:8045/chart.png?type=graph&width=700&height=460&graphid=0&id=${idSensor}&apitoken=${process.env.API_TOKEN_PRTG}`
+                                link: `${url}/chart.png?type=graph&width=700&height=460&graphid=0&id=${idSensor}&apitoken=${process.env.API_TOKEN_PRTG}`
                             }
                         }
                     ]
