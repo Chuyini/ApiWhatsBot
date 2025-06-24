@@ -366,7 +366,7 @@ async function buildInformation(sensorData) {
 
         await checkTime.sendRBImageTemplate(specialNumber, sensorID);
         console.log("ID del sensor: ", sensorID);
-        await checkTime.checkTimeAndGreet(specialNumber, textToTemplate);
+        //await checkTime.checkTimeAndGreet(specialNumber, textToTemplate);
 
         return {
             text,
