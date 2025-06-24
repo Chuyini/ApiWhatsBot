@@ -259,7 +259,7 @@ function TemplateRB(number, idSensor) {
                         {
                             "type": "image",
                             "image": {
-                                "link": `http://45.189.154.179:8045/chart.png?type=graph&width=300&height=160&graphid=0&id=${idSensor}&apitoken=5MVP647FU4GJG67Z32KOP7PKAMY57AOD2AHYMJRIWQ======`
+                                "link": `http://45.189.154.179:8045/chart.png?type=graph&width=300&height=160&graphid=0&id=${idSensor}&apitoken=${process.env.API_TOKEN_PRTG}`
                             }
                         }
                     ]
