@@ -391,7 +391,7 @@ async function buildInformation(sensorData) {
 
             }
         } else {
-            await checkTime.sendClientTemplate(specialNumber, textToTemplate, ip, resumMesagge);
+            await checkTime.sendClientTemplate(specialNumber, textToTemplate, ip,company);
 
         }
 
