@@ -258,11 +258,11 @@ function TemplateClientes(number, msgText, ipSensor) {
                     "parameters": [
                         {
                             "type": "text",
-                            "text": msgText
+                            "text": "*"+msgText+"*"
                         },
                         {
                             "type": "text",
-                            "text": "🌐"+ipSensor
+                            "text": "*🌐"+ipSensor+"*"
                         }
                     ]
                 }
