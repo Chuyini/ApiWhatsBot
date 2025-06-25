@@ -46,16 +46,16 @@ async function checkTimeAndGreet(numbers, textBuilt) {
 }
 
 
-async function sendRBImageTemplate(numbers, idSensor, url) {
+async function sendRBImageTemplate(numbers, idSensor, urlImageRB) {
     //"524442478772" --> Devie
     //524442478574 --> Ruben
 
     let models = [];
-    console.log("Enviando mensajes DESDE: ", url);
+    console.log("Enviando mensajes DESDE: ", urlImageRB);
 
     //Construir los modelos de los templates para cada usuario
     for (const number of numbers) {
-        let model = whatsAppModel.TemplateRB(number, idSensor, url);
+        let model = whatsAppModel.TemplateRB(number, idSensor, urlImageRB);
 
         models.push(model); // Agregar el modelo construido a la lista
     }

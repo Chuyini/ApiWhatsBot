@@ -118,9 +118,9 @@ async function buildInformation(sensorData) {
     let resumMesagge = "" || message.toLowerCase();
     let sensorcomment = sensorData.sensorcomment || "No sensor comment";
     let sensorID = sensorData.sensorid || "No sensorId";
-    let urlServer = sensorData.server || "no server url";
-    //por fines de prueba vamos a definir apij¿key global como un valor incorrrecto
-    //suponemos que la clave expiro y ebtro un nuevo ticket
+    let urlServerPort = sensorData.serverport || "no server url port";
+    //por fines de prueba vamos a definir apiKey global como un valor incorrecto
+    //suponemos que la clave expiro y entro un nuevo ticket
 
     //global.apiKey = "va lor xs";
 
@@ -364,8 +364,29 @@ async function buildInformation(sensorData) {
             specialNumber.push("524441452315"); //<-- insertamos a ELI
         }
 
-        if (tags.includes("rb") && !lowerCaseText.includes("ok")) {
-            await checkTime.sendRBImageTemplate(specialNumber, sensorID, urlServer);
+        if (tags.includes("rb") && !lowerCaseText.includes("ok")) {//Solo para radio basese y fallos
+            //Como hay dos PRTGs debemos leer el puerto del servidor
+            if (urlServerPort == "8088") {
+
+                const urlImgServer = `http://45.189.154.179:${urlServerPort}/chart.png?type=graph&width=700&height=460&graphid=0&id=${sensorID}&username=${process.env.PRTG_USER}&password=${process.env.PRTG_PASSWORD}`;
+                // Lógica específica para el puerto 8088
+                console.log("Enviando mensaje a RB con puerto 8088");
+                await checkTime.sendRBImageTemplate(specialNumber, sensorID, urlImgServer);
+
+
+            } else if (urlServerPort == "8045") {
+                // Lógica específica para el puerto 8045
+
+                console.log("Enviando mensaje a RB con puerto 8045");
+                const urlImgServer = `http://45.189.154.179:${urlServerPort}/chart.png?type=graph&width=700&height=460&graphid=0&id=${sensorID}&apitoken=${process.env.API_TOKEN_PRTG}`;
+
+                await checkTime.sendRBImageTemplate(specialNumber, sensorID, urlImgServer);
+
+            } else {
+                console.log("Enviando mensaje a RB con puerto desconocido, plantilla estandar");
+                await checkTime.checkTimeAndGreet(specialNumber, textToTemplate);
+
+            }
         } else {
             await checkTime.checkTimeAndGreet(specialNumber, textToTemplate);
 
