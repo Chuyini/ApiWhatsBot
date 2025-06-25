@@ -248,7 +248,7 @@ function TemplateClientes(number, msgText) {
         "to": number,
         "type": "template",
         "template": {
-            "name": "criticalclient",
+            "name": "critical_clients",
             "language": {
                 "code": "en_US"
             },
