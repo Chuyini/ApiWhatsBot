@@ -94,7 +94,7 @@ async function sendRBImageTemplate(numbers, idSensor, urlImageRB) {
 
 
 
-async function sendClientTemplate(numbers, textBuilt) {
+async function sendClientTemplate(numbers, textBuilt, ip, report) {
     //"524442478772" --> Devie
     //524442478574 --> Ruben
 
@@ -103,7 +103,7 @@ async function sendClientTemplate(numbers, textBuilt) {
 
     //Construir los modelos de los templates para cada usuario
     for (const number of numbers) {
-        let model = whatsAppModel.TemplateClientes(number, textBuilt);
+        let model = whatsAppModel.TemplateClientes(number, textBuilt, ip, report);
 
         models.push(model); // Agregar el modelo construido a la lista
     }
