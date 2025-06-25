@@ -248,7 +248,7 @@ function TemplateClientes(number, msgText, ipSensor) {
         "to": number,
         "type": "template",
         "template": {
-            "name": "critical_clients",
+            "name": "payment_notice_1",
             "language": {
                 "code": "en_US"
             },
