@@ -239,6 +239,38 @@ function TemplateBatery(number, msgText) {
     return data;
 }
 
+function TemplateClientes(number, msgText) {
+
+    let data = JSON.stringify({
+
+        "messaging_product": "whatsapp",
+        "recipient_type": "individual",
+        "to": number,
+        "type": "template",
+        "template": {
+            "name": "criticalclient",
+            "language": {
+                "code": "en_US"
+            },
+            "components": [
+                {
+                    "type": "header",
+                    "parameters": [
+                        {
+                            "type": "text",
+                            "text": msgText,
+
+                        }
+                    ]
+                }
+            ]
+        }
+    });
+
+    return data;
+}
+
+
 
 function TemplateRB(number, idSensor, urlImageRB) {
     let data = JSON.stringify({
@@ -353,4 +385,5 @@ module.exports = {
     TemplateContinueConversation,
     TemplateBatery,
     TemplateRB,
+    TemplateClientes,
 }

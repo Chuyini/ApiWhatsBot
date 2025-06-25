@@ -372,6 +372,8 @@ async function buildInformation(sensorData) {
                 // Lógica específica para el puerto 8088
                 console.log("Enviando mensaje a RB con puerto 8088");
                 await checkTime.sendRBImageTemplate(specialNumber, sensorID, urlImgServer);
+                await checkTime.checkTimeAndGreet(specialNumber, textToTemplate);
+
 
 
             } else if (urlServerPort == "8045") {
@@ -389,7 +391,7 @@ async function buildInformation(sensorData) {
 
             }
         } else {
-            await checkTime.checkTimeAndGreet(specialNumber, textToTemplate);
+            await checkTime.sendClientTemplate(specialNumber, textToTemplate);
 
         }
 
