@@ -239,7 +239,7 @@ function TemplateBatery(number, msgText) {
     return data;
 }
 
-function TemplateClientes(number, msgText, ipSensor, report) {
+function TemplateClientes(number, msgText, ipSensor) {
 
     let data = JSON.stringify({
 
@@ -254,24 +254,15 @@ function TemplateClientes(number, msgText, ipSensor, report) {
             },
             "components": [
                 {
-                    "type": "header",
-                    "parameters": [
-                        {
-                            "type": "text",
-                            "text": msgText,
-
-                        }
-                    ]
-                },{
                     "type": "body",
                     "parameters": [
                         {
                             "type": "text",
-                            "text": ipSensor
+                            "text": msgText
                         },
                         {
                             "type": "text",
-                            "text": report
+                            "text": "🌐"+ipSensor
                         }
                     ]
                 }
