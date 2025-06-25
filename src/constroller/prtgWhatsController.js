@@ -381,6 +381,7 @@ async function buildInformation(sensorData) {
                 const urlImgServer = `http://45.189.154.179:${urlServerPort}/chart.png?type=graph&width=700&height=460&graphid=0&id=${sensorID}&apitoken=${process.env.API_TOKEN_PRTG}`;
 
                 await checkTime.sendRBImageTemplate(specialNumber, sensorID, urlImgServer);
+                await checkTime.checkTimeAndGreet(specialNumber, textToTemplate);
 
             } else {
                 console.log("Enviando mensaje a RB con puerto desconocido, plantilla estandar");
