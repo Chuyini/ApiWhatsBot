@@ -371,7 +371,7 @@ async function buildInformation(sensorData) {
                 const urlImgServer = `http://45.189.154.179:${urlServerPort}/chart.png?type=graph&width=700&height=460&graphid=0&id=${sensorID}&username=${process.env.PRTG_USER}&password=${process.env.PRTG_PASSWORD}`;
                 // Lógica específica para el puerto 8088
                 console.log("Enviando mensaje a RB con puerto 8088");
-                await checkTime.sendRBImageTemplate(specialNumber, sensorID, urlImgServer);
+                //await checkTime.sendRBImageTemplate(specialNumber, sensorID, urlImgServer);
                 await checkTime.checkTimeAndGreet(specialNumber, textToTemplate);
 
 
@@ -382,7 +382,7 @@ async function buildInformation(sensorData) {
                 console.log("Enviando mensaje a RB con puerto 8045");
                 const urlImgServer = `http://45.189.154.179:${urlServerPort}/chart.png?type=graph&width=700&height=460&graphid=0&id=${sensorID}&apitoken=${process.env.API_TOKEN_PRTG}`;
 
-                await checkTime.sendRBImageTemplate(specialNumber, sensorID, urlImgServer);
+                //await checkTime.sendRBImageTemplate(specialNumber, sensorID, urlImgServer);
                 await checkTime.checkTimeAndGreet(specialNumber, textToTemplate);
 
             } else {
