@@ -30,7 +30,7 @@ async function ProcessToPrtg(textUser, number) {
     
 
     } else {
-        let model = whatsAppModel.MessageText("Hubo un error con la respuesta", number);
+        let model = whatsAppModel.MessageText("Botcito en mantenimiento, gracias por tu mensaje 😁", number);
         models.push(model);
     }
 
