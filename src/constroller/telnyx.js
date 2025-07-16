@@ -78,7 +78,7 @@ const alertaRadiobase = async (req, res) => {
     });
 
   } catch (error) {
-    console.error("❌ Error detallado:", error.response?.data || error.message);
+    console.error("❌ Error detallado:", error.response?.data || error);
     res.status(500).json({
       error: "Error al procesar la llamada",
       details: error.message
