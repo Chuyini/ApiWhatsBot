@@ -54,7 +54,7 @@ const alertaRadiobase = async (req, res) => {
     // Crear la llamada
     const llamada = await telnyx.calls.create({
       connection_id: process.env.CONECTION_ID, // Corregido nombre de variable
-      to: '+18004377950', // Usar número del request en lugar del hardcodeado
+      to: '+524434629327', // Usar número del request en lugar del hardcodeado
       from: '+18337633404' // Formato recomendado sin guiones
     });
 
