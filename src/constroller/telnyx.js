@@ -47,7 +47,7 @@ const alertaRadiobase = async (req, res) => {
     const telnyx = await import('telnyx').then(mod => mod.default(process.env.TELNYX_KEY));
 
     // Verificar variables de entorno
-    if (!process.env.TELNYX_KEY || !process.env.CONNECTION_ID) { // Corregido typo (CONECTION -> CONNECTION)
+    if (!process.env.TELNYX_KEY || !process.env.CONECTION_ID) { // Corregido typo (CONECTION -> CONNECTION)
       throw new Error("Configuración de Telnyx incompleta en variables de entorno");
     }
 
