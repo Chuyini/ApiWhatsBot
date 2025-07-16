@@ -94,7 +94,7 @@ const enviarMensajeTTS = async (callControlId, texto) => {
     payload: {
       voice: "female",
       language: "es-MX",
-      text: texto
+      text: "Hola, ¿qué tal? Soy la inteligencia artificial de Jesús. Te llamo para informarte acerca de las alarmas detectadas en las radiobases del sistema. Esto es una prueba."
     }
   });
 
