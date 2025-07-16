@@ -50,7 +50,7 @@ const alertaRadiobase = async (req, res) => {
 
     // Crear la llamada
     const llamada = await telnyx.calls.create({
-      connection_id: process.env.CONNECTION_ID,
+      connection_id: "2739576484153787994",
       to: numeroDestino,
       from: '+18337633404' // Este número debe estar registrado en tu cuenta Telnyx
     });
