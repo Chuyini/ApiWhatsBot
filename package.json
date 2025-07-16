@@ -24,7 +24,8 @@
     "openai": "^4.52.0",
     "puppeteer": "^23.11.1",
     "redis": "^4.7.0",
-    "string-similarity": "^4.0.4"
+    "string-similarity": "^4.0.4",
+    "telnyx": "^2.0.0"
   },
   "devDependencies": {
     "dotenv": "^16.5.0"
