@@ -54,11 +54,11 @@ const alertaRadiobase = async (req, res) => {
     // Crear la llamada
     const llamada = await telnyx.calls.create({
       connection_id: process.env.CONECTION_ID, // Corregido nombre de variable
-      to: numeroDestino, // Usar número del request en lugar del hardcodeado
+      to: numeroDestino.replace(/[^+0-9]/g, ''), // Usar número del request en lugar del hardcodeado
       from: '+18337633404' // Formato recomendado sin guiones
     });
 
-    const callControlId = llamada.data.call_control_id;
+    const callControlId = llamada.data.id;
 
     // Enviar mensaje de voz
     await telnyx.calls.speak({
@@ -66,7 +66,7 @@ const alertaRadiobase = async (req, res) => {
       payload: {
         voice: "female",
         language: "es-MX",
-        message: mensaje // Usar mensaje del request sin mensaje hardcodeado
+        message:  mensaje.substring(0, 1000)  // Usar mensaje del request sin mensaje hardcodeado
       }
     });
     client.setLogLevel('debug');
