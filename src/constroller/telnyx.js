@@ -40,20 +40,32 @@ const alertaRadiobase = async (req, res) => {
 
     console.log("Llave Telnyx:", process.env.TELNYX_KEY);
     console.log("Conexión ID:", process.env.CONECTION_ID);
+
     const llamada = await telnyx.calls.create({
       connection_id: process.env.CONECTION_ID,
       to: "+524434629327",
       from: '+1-833-763-3404'
     });
 
+    const callControlId = llamada.data.call_control_id;
+
+    await telnyx.calls.speak({
+      call_control_id: callControlId,
+      payload: {
+        voice: "female",
+        language: "es-MX",
+        text: mensaje || "Hola, ¿qué tal? Soy la inteligencia artificial de Jesús. Te llamo para informar acerca de las alarmas detectadas en las radiobases del sistema."
+      }
+    });
+
     console.log("📞 Llamada iniciada:", llamada.data);
+    console.log("🔊 TTS enviado correctamente");
     res.sendStatus(200);
   } catch (error) {
     console.error("❌ Error al iniciar llamada:", error);
     res.status(500).send("Error al lanzar llamada");
   }
 };
-
 module.exports = {
   recibirEventoTelnyx,
   alertaRadiobase
