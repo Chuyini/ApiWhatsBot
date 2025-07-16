@@ -38,6 +38,8 @@ const alertaRadiobase = async (req, res) => {
   try {
     const telnyx = await import('telnyx').then(mod => mod.default(process.env.TELNYX_KEY));
 
+    console.log("Llave Telnyx:", process.env.TELNYX_KEY);
+    console.log("Conexión ID:", process.env.CONECTION_ID);
     const llamada = await telnyx.calls.create({
       connection_id: process.env.CONECTION_ID,
       to: "+52" + "4434629327",
