@@ -8,7 +8,7 @@ const enviarMensajeTTS = async (callControlId, texto) => {
         payload: {
             voice: "female",
             language: "es-MX",
-            text: mensaje
+            text: texto
         }
     });
 
