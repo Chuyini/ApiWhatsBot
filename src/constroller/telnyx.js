@@ -42,7 +42,7 @@ const alertaRadiobase = async (req, res) => {
     console.log("Conexión ID:", process.env.CONECTION_ID);
     const llamada = await telnyx.calls.create({
       connection_id: process.env.CONECTION_ID,
-      to: "+52" + "4434629327",
+      to: "+524434629327",
       from: '+1-833-763-3404'
     });
 
