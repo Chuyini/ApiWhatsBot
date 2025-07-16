@@ -54,7 +54,7 @@ const alertaRadiobase = async (req, res) => {
       payload: {
         voice: "female",
         language: "es-MX",
-        text: mensaje || "Hola, ¿qué tal? Soy la inteligencia artificial de Jesús. Te llamo para informar acerca de las alarmas detectadas en las radiobases del sistema."
+        message: mensaje || "Hola, ¿qué tal? Soy la inteligencia artificial de Jesús. Te llamo para informar acerca de las alarmas detectadas en las radiobases del sistema."
       }
     });
 
