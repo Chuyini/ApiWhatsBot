@@ -50,6 +50,8 @@ const alertaRadiobase = async (req, res) => {
     if (!process.env.TELNYX_KEY || !process.env.CONECTION_ID) { // Corregido typo (CONECTION -> CONNECTION)
       throw new Error("Configuración de Telnyx incompleta en variables de entorno");
     }
+    console.log("Clave:  ", process.env.TELNYX_KEY);
+    console.log("Conexión ID: ", process.env.CONECTION_ID); // Corregido nombre de variable
 
     // Crear la llamada
     const llamada = await telnyx.calls.create({
