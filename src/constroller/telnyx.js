@@ -33,7 +33,7 @@ const recibirEventoTelnyx = async (req, res) => {
 
 const alertaRadiobase = async (req, res) => {
   const numeroDestino = "+524434629327";
-  const mensaje = req.body.mensaje;
+  const mensaje = "Hola, soy la inteligencia artificial de Jesús. Te llamo para informarte acerca de las alarmas detectadas en las radiobases del sistema. Esto es una prueba.";
 
   // Validación básica de parámetros
   if (!numeroDestino || !mensaje) {
