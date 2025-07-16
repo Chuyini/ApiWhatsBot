@@ -5,7 +5,7 @@ const recibirEventoTelnyx = async (req, res) => {
     const event = req.body?.data?.event_type;
     const callControlId = req.body?.data?.payload?.call_control_id;
 
-    if (event === "call.initiated") {
+    if (event === "call.answered") {
       const mensaje = "Hola, ¿qué tal? Soy la inteligencia artificial de Jesús. Te llamo para informar acerca de las alarmas detectadas en las radiobases del sistema. Esto es una prueba.";
       await enviarMensajeTTS.enviarMensajeTTS(callControlId, mensaje);
     }
