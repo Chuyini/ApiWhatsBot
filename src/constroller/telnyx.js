@@ -1,19 +1,19 @@
-const Telnyx = require("telnyx")(process.env.TELNYX_KEY); // Sustituye con tu clave real
-
 const recibirEventoTelnyx = async (req, res) => {
   try {
+    const telnyx = await import('telnyx').then(mod => mod.default(process.env.TELNYX_KEY));
+
     const event = req.body?.data?.event_type;
     const callControlId = req.body?.data?.payload?.call_control_id;
 
     if (event === "call.answered") {
-      const giro = "GR08"; // ← puedes hacer esto dinámico más adelante
+      const giro = "GR08"; // Puedes hacer esto dinámico más adelante
 
-      await Telnyx.calls.speak({
+      await telnyx.calls.speak({
         call_control_id: callControlId,
         payload: {
           voice: "female",
           language: "es-MX",
-          text: "Hola, ¿qué tal? Soy la inteligencia artificial de Jesús. Te llamo para informar acerca de las alarmas detectadas en las radiobases del sistema.Esto es una prueba"
+          text: "Hola, ¿qué tal? Soy la inteligencia artificial de Jesús. Te llamo para informar acerca de las alarmas detectadas en las radiobases del sistema. Esto es una prueba."
         }
       });
 
@@ -28,15 +28,16 @@ const recibirEventoTelnyx = async (req, res) => {
   }
 };
 
-
 const alertaRadiobase = async (req, res) => {
   const numeroDestino = req.body.telefono;
   const mensaje = req.body.mensaje;
 
   try {
-    const llamada = await Telnyx.calls.create({
+    const telnyx = await import('telnyx').then(mod => mod.default(process.env.TELNYX_KEY));
+
+    const llamada = await telnyx.calls.create({
       connection_id: process.env.CONECTION_ID,
-      to: "+52" + "4434629327", // Asegúrate de que el número esté en formato E.164
+      to: "+52" + "4434629327",
       from: '+1-833-763-3404'
     });
 
@@ -49,5 +50,6 @@ const alertaRadiobase = async (req, res) => {
 };
 
 module.exports = {
-  recibirEventoTelnyx, alertaRadiobase
+  recibirEventoTelnyx,
+  alertaRadiobase
 };
