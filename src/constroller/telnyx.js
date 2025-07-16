@@ -51,8 +51,8 @@ const alertaRadiobase = async (req, res) => {
     // Crear la llamada
     const llamada = await telnyx.calls.create({
       connection_id: "2739576484153787994",
-      to: numeroDestino,
-      from: '+18337633404' // Este número debe estar registrado en tu cuenta Telnyx
+      to: "+524434629327",
+      from: "+18337633404" // sin guiones, en formato E.164
     });
 
     const callControlId = llamada.data.call_control_id;
@@ -76,7 +76,7 @@ const alertaRadiobase = async (req, res) => {
     console.error("❌ Error completo:", error);
     res.status(500).json({
       error: "Error al procesar la llamada",
-      details: error.message
+      details: error.raw?.errors ?? error.message
     });
   }
 };
