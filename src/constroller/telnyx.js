@@ -44,7 +44,7 @@ const alertaRadiobase = async (req, res) => {
     const llamada = await telnyx.calls.create({
       connection_id: process.env.CONECTION_ID,
       to: "+524434629327",
-      from: '+1-833-763-3404'
+      from: '+18337633404'
     });
 
     const callControlId = llamada.data.call_control_id;
@@ -60,7 +60,11 @@ const alertaRadiobase = async (req, res) => {
 
     console.log("📞 Llamada iniciada:", llamada.data);
     console.log("🔊 TTS enviado correctamente");
-    res.sendStatus(200);
+     res.status(200).json({
+      status: "success",
+      callId: llamada.data.id,
+      message: "Llamada iniciada correctamente"
+    });
   } catch (error) {
     console.error("❌ Error al iniciar llamada:", error);
     res.status(500).send("Error al lanzar llamada");
