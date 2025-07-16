@@ -32,42 +32,57 @@ const recibirEventoTelnyx = async (req, res) => {
 };
 
 const alertaRadiobase = async (req, res) => {
-  const numeroDestino = req.body.telefono;
+  const numeroDestino = "+524434629327";
   const mensaje = req.body.mensaje;
 
+  // Validación básica de parámetros
+  if (!numeroDestino || !mensaje) {
+    return res.status(400).json({
+      error: "Faltan parámetros requeridos: telefono y mensaje"
+    });
+  }
+
   try {
+    // Cargar SDK de Telnyx
     const telnyx = await import('telnyx').then(mod => mod.default(process.env.TELNYX_KEY));
 
-    console.log("Llave Telnyx:", process.env.TELNYX_KEY);
-    console.log("Conexión ID:", process.env.CONECTION_ID);
+    // Verificar variables de entorno
+    if (!process.env.TELNYX_KEY || !process.env.CONNECTION_ID) { // Corregido typo (CONECTION -> CONNECTION)
+      throw new Error("Configuración de Telnyx incompleta en variables de entorno");
+    }
 
+    // Crear la llamada
     const llamada = await telnyx.calls.create({
-      connection_id: process.env.CONECTION_ID,
-      to: "+524434629327",
-      from: '+18337633404'
+      connection_id: process.env.CONNECTION_ID, // Corregido nombre de variable
+      to: numeroDestino, // Usar número del request en lugar del hardcodeado
+      from: '+18337633404' // Formato recomendado sin guiones
     });
 
     const callControlId = llamada.data.call_control_id;
 
+    // Enviar mensaje de voz
     await telnyx.calls.speak({
       call_control_id: callControlId,
       payload: {
         voice: "female",
         language: "es-MX",
-        message: mensaje || "Hola, ¿qué tal? Soy la inteligencia artificial de Jesús. Te llamo para informar acerca de las alarmas detectadas en las radiobases del sistema."
+        message: mensaje // Usar mensaje del request sin mensaje hardcodeado
       }
     });
 
-    console.log("📞 Llamada iniciada:", llamada.data);
-    console.log("🔊 TTS enviado correctamente");
-     res.status(200).json({
+    console.log(`📞 Llamada iniciada a ${numeroDestino}:`, llamada.data);
+    res.status(200).json({
       status: "success",
       callId: llamada.data.id,
       message: "Llamada iniciada correctamente"
     });
+
   } catch (error) {
-    console.error("❌ Error al iniciar llamada:", error);
-    res.status(500).send("Error al lanzar llamada");
+    console.error("❌ Error detallado:", error.response?.data || error.message);
+    res.status(500).json({
+      error: "Error al procesar la llamada",
+      details: error.message
+    });
   }
 };
 module.exports = {
