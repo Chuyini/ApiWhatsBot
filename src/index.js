@@ -26,6 +26,7 @@ app.use(express.json());
 
 // Rutas
 app.use("/whatsapp", apiRouter);
+app.use("/", apiRouter);
 
 // Manejador de errores global
 app.use((err, req, res, next) => {
