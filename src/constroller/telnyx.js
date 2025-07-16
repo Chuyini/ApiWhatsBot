@@ -1,3 +1,6 @@
+
+require('dotenv').config();
+
 const recibirEventoTelnyx = async (req, res) => {
   try {
     const telnyx = await import('telnyx').then(mod => mod.default(process.env.TELNYX_KEY));
