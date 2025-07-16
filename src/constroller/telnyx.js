@@ -69,6 +69,7 @@ const alertaRadiobase = async (req, res) => {
         message: mensaje // Usar mensaje del request sin mensaje hardcodeado
       }
     });
+    client.setLogLevel('debug');
 
     console.log(`📞 Llamada iniciada a ${numeroDestino}:`, llamada.data);
     res.status(200).json({
