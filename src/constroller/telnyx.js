@@ -12,17 +12,18 @@ const recibirEventoTelnyx = async (req, res) => {
       case "call.answered":
         console.log("☎️ Contestaron la llamada");
         console.log("El call control ID es:", callControlId);
-        console.log("Detalles del payload:", JSON.stringify(req.body?.data, null, 2));
 
 
         // Aquí lanzas tu TTS justo cuando descuelgan
         await telnyx.calls.speak({
           call_control_id: callControlId,
-          payload: "Hola, soy la IA de Jesús. Hay una alerta en radiobase GR08, por favor revisa tu panel.",
+         
+          payload: mensaje,
           payload_type: "text",
-          service_level: "premium",
-          voice: "female",
-          language: "es-MX"
+          service_level: "basic",
+          voice: "Telnyx.neural.EsMx_01"
+
+
         });
         break;
 
@@ -64,17 +65,18 @@ const alertaRadiobase = async (req, res) => {
   }
 
   try {
-    const { data } = await telnyx.calls.speak({
+    const { data } = await telnyx.calls.create({
       connection_id: process.env.CONNECTION_ID,
-      // define +18337633404 en .env
+      to: numeroDestino,
+      from: "+18337633404",      // define +18337633404 en .env
       commands: [
         {
-          call_control_id: payload.call_control_id,
+          name: 'speak',
           payload: mensaje,
-          payload_type: "text",
-          service_level: "premium",
-          voice: "Telnyx.neural.EsMx_01"
-          // ← obligatorio al usar voz genérica
+          payload_type: 'text',
+          service_level: 'premium',
+          voice: 'female',       // ← voz genérica
+          language: 'es-MX'         // ← obligatorio al usar voz genérica
         }
 
       ]
