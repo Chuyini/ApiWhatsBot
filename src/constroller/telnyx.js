@@ -5,15 +5,17 @@ const recibirEventoTelnyx = async (req, res) => {
     .then(mod => mod.default(process.env.TELNYX_KEY));
 
   const { event_type, payload } = req.body.data;
+  const callControlId = req.body?.data?.payload?.call_control_id;
 
   try {
     switch (event_type) {
       case "call.answered":
         console.log("☎️ Contestaron la llamada");
+        
 
         // Aquí lanzas tu TTS justo cuando descuelgan
         await telnyx.calls.speak({
-          call_control_id: payload.call_control_id,
+          call_control_id: callControlId,
           payload: "Hola, soy la IA de Jesús. Hay una alerta en radiobase GR08, por favor revisa tu panel.",
           payload_type: "text",
           service_level: "premium",
