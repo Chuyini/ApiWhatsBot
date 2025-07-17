@@ -90,7 +90,7 @@ const alertaRadiobase = async (req, res) => {
   const telnyx = await import('telnyx')
     .then(mod => mod.default(process.env.TELNYX_KEY));
 
-  const numeroDestino = req.body.telefono || '+524434629327';
+  const numeroDestino = req.body.telefono || '+524441538069';
   const mensaje = req.body.mensaje ||
     'Hola, este es un aviso automático de Copayment. Radiobase GR08 ha detectado actividad irregular.';
 
