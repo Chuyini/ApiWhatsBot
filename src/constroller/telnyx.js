@@ -1,21 +1,32 @@
 const enviarMensajeTTS = require("./enviarMensajeTTS");
 
 const recibirEventoTelnyx = async (req, res) => {
-  try {
-    const event = req.body?.data?.event_type;
-    const callControlId = req.body?.data?.payload?.call_control_id;
+  const { event_type, payload } = req.body.data;
+  console.log('📥 Evento Telnyx recibido:', event_type);
 
-    if (event === "call.answered") {
-      const mensaje = "Hola, ¿qué tal? Soy la inteligencia artificial de Jesús. Te llamo para informar acerca de las alarmas detectadas en las radiobases del sistema. Esto es una prueba.";
-      await enviarMensajeTTS.enviarMensajeTTS(callControlId, mensaje);
-    }
+  switch (event_type) {
+    case 'call.answered':
+      console.log('☎️   Llamada contestada, debería entrar audio ahora.');
+      break;
 
-    console.log("📥 Evento recibido:", JSON.stringify(req.body, null, 2));
-    res.sendStatus(200);
-  } catch (error) {
-    console.error("❌ Error en recibirEventoTelnyx:", error);
-    res.status(500).send("Error procesando evento Telnyx");
+    case 'call.speak.started':
+      console.log('🔊 TTS empezó a reproducirse:', payload);
+      break;
+
+    case 'call.speak.ended':
+      console.log('✅ TTS finalizado:', payload);
+      break;
+
+    case 'call.hangup':
+      console.log('⏹️   Llamada colgada:', payload.hangup_cause);
+      break;
+
+    default:
+      console.log('🔔 Otro evento:', event_type);
   }
+
+  res.sendStatus(200);
+
 };
 
 const alertaRadiobase = async (req, res) => {
