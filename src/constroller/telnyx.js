@@ -11,6 +11,7 @@ const recibirEventoTelnyx = async (req, res) => {
     switch (event_type) {
       case "call.answered":
         console.log("☎️ Contestaron la llamada");
+        console.log("El call control ID es:", callControlId);
         
 
         // Aquí lanzas tu TTS justo cuando descuelgan
