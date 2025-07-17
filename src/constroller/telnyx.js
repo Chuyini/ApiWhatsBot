@@ -50,9 +50,10 @@ const alertaRadiobase = async (req, res) => {
           payload: mensaje,
           payload_type: 'text',
           service_level: 'premium',
-          voice: 'Telnyx.neural.EsMx_01',
-          language: 'es-MX'
+          voice: 'female',       // ← voz genérica
+          language: 'es-MX'         // ← obligatorio al usar voz genérica
         }
+
       ]
     });
 
