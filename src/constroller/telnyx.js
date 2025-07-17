@@ -6,24 +6,22 @@ const recibirEventoTelnyx = async (req, res) => {
 
   switch (event_type) {
     case 'call.answered':
-      console.log('☎️   Llamada contestada, debería entrar audio ahora.');
+      console.log('☎️  Contestaron la llamada');
       break;
-
     case 'call.speak.started':
-      console.log('🔊 TTS empezó a reproducirse:', payload);
+      console.log('🔊  TTS comenzó:', payload);
       break;
-
     case 'call.speak.ended':
-      console.log('✅ TTS finalizado:', payload);
+      console.log('✅  TTS terminó:', payload);
       break;
-
     case 'call.hangup':
-      console.log('⏹️   Llamada colgada:', payload.hangup_cause);
+      console.log('⏹️  Colgaron:', payload.hangup_cause);
       break;
-
     default:
       console.log('🔔 Otro evento:', event_type);
   }
+
+
 
   res.sendStatus(200);
 
@@ -53,7 +51,7 @@ const alertaRadiobase = async (req, res) => {
           payload_type: 'text',
           service_level: 'premium',
           voice: 'Telnyx.neural.EsMx_01',
-          voice_settings: { language: 'es-MX' }
+          language: 'es-MX'
         }
       ]
     });
