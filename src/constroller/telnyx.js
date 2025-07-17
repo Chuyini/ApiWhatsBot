@@ -64,18 +64,17 @@ const alertaRadiobase = async (req, res) => {
   }
 
   try {
-    const { data } = await telnyx.calls.create({
+    const { data } = await telnyx.calls.speak({
       connection_id: process.env.CONNECTION_ID,
-      to: numeroDestino,
-      from: "+18337633404",      // define +18337633404 en .env
+      // define +18337633404 en .env
       commands: [
         {
-          name: 'speak',
+          call_control_id: payload.call_control_id,
           payload: mensaje,
-          payload_type: 'text',
-          service_level: 'premium',
-          voice: 'female',       // ← voz genérica
-          language: 'es-MX'         // ← obligatorio al usar voz genérica
+          payload_type: "text",
+          service_level: "premium",
+          voice: "Telnyx.neural.EsMx_01"
+          // ← obligatorio al usar voz genérica
         }
 
       ]
