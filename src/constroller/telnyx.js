@@ -40,10 +40,12 @@ const recibirEventoTelnyx = async (req, res) => {
 
     res.sendStatus(200);
   } catch (err) {
-    console.error("❌ Error procesando evento:", err);
-    res.status(500).send("Error interno");
+    console.error("❌ TelnyxInvalidParametersError:", JSON.stringify(err.raw?.errors, null, 2));
+    throw err;
+    console.error("❌ Error al procesar el evento Telnyx:", err);
+
   }
-};
+};  
 
 const alertaRadiobase = async (req, res) => {
   const telnyx = await import('telnyx')
