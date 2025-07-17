@@ -17,7 +17,7 @@ const recibirEventoTelnyx = async (req, res) => {
         // Aquí lanzas tu TTS justo cuando descuelgan
         await telnyx.calls.speak({
           call_control_id: callControlId,
-         
+
           payload: mensaje,
           payload_type: "text",
           service_level: "basic",
@@ -42,6 +42,40 @@ const recibirEventoTelnyx = async (req, res) => {
       default:
         console.log("🔔 Evento ignorado:", event_type);
     }
+
+    res.sendStatus(200);
+  } catch (err) {
+    console.error("❌ TelnyxInvalidParametersError:", JSON.stringify(err.raw?.errors, null, 2));
+    throw err;
+    console.error("❌ Error al procesar el evento Telnyx:", err);
+
+  }
+};
+
+const testEvents = async (req, res) => {
+  const telnyx = await import("telnyx")
+    .then(mod => mod.default(process.env.TELNYX_KEY));
+
+  const { callControlId, mensaje } = req.body;
+
+  try {
+
+    console.log("☎️ Contestaron la llamada");
+    console.log("El call control ID es:", callControlId);
+
+
+    // Aquí lanzas tu TTS justo cuando descuelgan
+    await telnyx.calls.speak({
+      call_control_id: callControlId,
+
+      payload: mensaje,
+      payload_type: "text",
+      service_level: "basic",
+      voice: "Telnyx.neural.EsMx_01"
+
+
+    });
+
 
     res.sendStatus(200);
   } catch (err) {
@@ -106,5 +140,6 @@ const alertaRadiobase = async (req, res) => {
 
 module.exports = {
   recibirEventoTelnyx,
-  alertaRadiobase
+  alertaRadiobase,
+  testEvents
 };
