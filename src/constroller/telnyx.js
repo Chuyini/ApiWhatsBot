@@ -6,7 +6,7 @@ const recibirEventoTelnyx = async (req, res) => {
 
   const { event_type, payload } = req.body.data;
   const callControlId = req.body?.data?.payload?.call_control_id;
-
+  const mensaje = "Hola, esta es una.";
   try {
     switch (event_type) {
       case "call.answered":
