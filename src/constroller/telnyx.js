@@ -34,7 +34,7 @@ const alertaRadiobase = async (req, res) => {
     const { data } = await telnyx.calls.create({
       connection_id: process.env.CONNECTION_ID,
       to: numeroDestino,
-      from: process.env.FROM_NUMBER,      // define +18337633404 en .env
+      from: "+18337633404",      // define +18337633404 en .env
       commands: [
         {
           name: 'speak',
