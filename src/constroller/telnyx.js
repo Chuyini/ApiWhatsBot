@@ -12,7 +12,8 @@ const recibirEventoTelnyx = async (req, res) => {
       case "call.answered":
         console.log("☎️ Contestaron la llamada");
         console.log("El call control ID es:", callControlId);
-        
+        console.log("Detalles del payload:", JSON.stringify(req.body?.data, null, 2));
+
 
         // Aquí lanzas tu TTS justo cuando descuelgan
         await telnyx.calls.speak({
@@ -48,7 +49,7 @@ const recibirEventoTelnyx = async (req, res) => {
     console.error("❌ Error al procesar el evento Telnyx:", err);
 
   }
-};  
+};
 
 const alertaRadiobase = async (req, res) => {
   const telnyx = await import('telnyx')
