@@ -1,30 +1,48 @@
 const enviarMensajeTTS = require("./enviarMensajeTTS");
 
 const recibirEventoTelnyx = async (req, res) => {
+  const telnyx = await import("telnyx")
+    .then(mod => mod.default(process.env.TELNYX_KEY));
+
   const { event_type, payload } = req.body.data;
-  console.log('📥 Evento Telnyx recibido:', event_type);
 
-  switch (event_type) {
-    case 'call.answered':
-      console.log('☎️  Contestaron la llamada');
-      break;
-    case 'call.speak.started':
-      console.log('🔊  TTS comenzó:', payload);
-      break;
-    case 'call.speak.ended':
-      console.log('✅  TTS terminó:', payload);
-      break;
-    case 'call.hangup':
-      console.log('⏹️  Colgaron:', payload.hangup_cause);
-      break;
-    default:
-      console.log('🔔 Otro evento:', event_type);
+  try {
+    switch (event_type) {
+      case "call.answered":
+        console.log("☎️ Contestaron la llamada");
+
+        // Aquí lanzas tu TTS justo cuando descuelgan
+        await telnyx.calls.speak({
+          call_control_id: payload.call_control_id,
+          payload: "Hola, soy la IA de Jesús. Hay una alerta en radiobase GR08, por favor revisa tu panel.",
+          payload_type: "text",
+          service_level: "premium",
+          voice: "female",
+          language: "es-MX"
+        });
+        break;
+
+      case "call.speak.started":
+        console.log("🔊 TTS empezó a sonar");
+        break;
+
+      case "call.speak.ended":
+        console.log("✅ TTS terminó de sonar");
+        break;
+
+      case "call.hangup":
+        console.log("⏹️ Colgaron la llamada:", payload.hangup_cause);
+        break;
+
+      default:
+        console.log("🔔 Evento ignorado:", event_type);
+    }
+
+    res.sendStatus(200);
+  } catch (err) {
+    console.error("❌ Error procesando evento:", err);
+    res.status(500).send("Error interno");
   }
-
-
-
-  res.sendStatus(200);
-
 };
 
 const alertaRadiobase = async (req, res) => {
