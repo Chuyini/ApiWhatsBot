@@ -1,4 +1,5 @@
 const enviarMensajeTTS = require("./enviarMensajeTTS");
+const axios = require('axios');
 
 const recibirEventoTelnyx = async (req, res) => {
   const telnyx = await import("telnyx")
@@ -10,22 +11,10 @@ const recibirEventoTelnyx = async (req, res) => {
   try {
     switch (event_type) {
       case "call.answered":
-        console.log("☎️ Contestaron la llamada");
-        console.log("El call control ID es:", callControlId);
 
+      console.log("IA Comenzó a hablar");
 
-        // Aquí lanzas tu TTS justo cuando descuelgan
-        await telnyx.calls.speak({
-          call_control_id: callControlId,
-
-          payload: mensaje,
-          payload_type: "text",
-          service_level: "basic",
-          voice: "Telnyx.neural.EsMx_01"
-
-
-        });
-        break;
+      await callIA(callControlId);
 
       case "call.speak.started":
         console.log("🔊 TTS empezó a sonar");
@@ -47,43 +36,30 @@ const recibirEventoTelnyx = async (req, res) => {
   } catch (err) {
     console.error("❌ TelnyxInvalidParametersError:", JSON.stringify(err.raw?.errors, null, 2));
     throw err;
-    console.error("❌ Error al procesar el evento Telnyx:", err);
 
   }
 };
 
-const testEvents = async (req, res) => {
+const callIA = async (idControl) => {
   const telnyx = await import("telnyx")
-    .then(mod => mod.default(process.env.TELNYX_KEY));
+    .then(mod => mod.default());
+  const telnyxURL = `https://api.telnyx.com/v2/calls/${idControl}/actions/ai_assistant_start`;
 
-  const { callControlId, mensaje } = req.body;
+  const payload = {
+    assistant: {
+      id: 'assistant-4d4b3b30-eeb0-4540-882a-205852e06c5f'
+    },
+  };
 
-  try {
+  axios.post(telnyxURL, payload, {
+    headers: {
+      'Authorization': `Bearer ${process.env.TELNYX_KEY}`,
+      'Content-Type': 'application/json'
+    }
+  })
+    .then(res => console.log('✅ Assistant iniciado:', res.data))
+    .catch(err => console.error('❌ Error:', err.response?.data || err.message));
 
-    console.log("☎️ Contestaron la llamada");
-    console.log("El call control ID es:", callControlId);
-
-
-    // Aquí lanzas tu TTS justo cuando descuelgan
-    await telnyx.calls.speak({
-      call_control_id: callControlId,
-
-      payload: mensaje,
-      payload_type: "text",
-      service_level: "basic",
-      voice: "Telnyx.neural.EsMx_01"
-
-
-    });
-
-
-    res.sendStatus(200);
-  } catch (err) {
-    console.error("❌ TelnyxInvalidParametersError:", JSON.stringify(err.raw?.errors, null, 2));
-    throw err;
-    console.error("❌ Error al procesar el evento Telnyx:", err);
-
-  }
 };
 
 const alertaRadiobase = async (req, res) => {
