@@ -1,4 +1,3 @@
-const enviarMensajeTTS = require("./enviarMensajeTTS");
 const axios = require('axios');
 
 const recibirEventoTelnyx = async (req, res) => {
@@ -12,9 +11,14 @@ const recibirEventoTelnyx = async (req, res) => {
     switch (event_type) {
       case "call.answered":
 
-      console.log("IA Comenzó a hablar");
+        if (!callControlId || !callControlId.startsWith("v3:")) {
+          console.warn("🛑 callControlId inválido:", callControlId);
+          return res.sendStatus(400);
+        }
+        console.log("IA Comenzó a hablar");
 
-      await callIA(callControlId);
+        await callIA(callControlId);
+        break;
 
       case "call.speak.started":
         console.log("🔊 TTS empezó a sonar");
@@ -41,8 +45,7 @@ const recibirEventoTelnyx = async (req, res) => {
 };
 
 const callIA = async (idControl) => {
-  const telnyx = await import("telnyx")
-    .then(mod => mod.default());
+
   const telnyxURL = `https://api.telnyx.com/v2/calls/${idControl}/actions/ai_assistant_start`;
 
   const payload = {
