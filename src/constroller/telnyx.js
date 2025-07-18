@@ -116,6 +116,5 @@ const alertaRadiobase = async (req, res) => {
 
 module.exports = {
   recibirEventoTelnyx,
-  alertaRadiobase,
-  testEvents
+  alertaRadiobase
 };
