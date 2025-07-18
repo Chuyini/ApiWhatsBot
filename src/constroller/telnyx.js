@@ -112,8 +112,6 @@ const alertaRadiobase = async (req, res) => {
 
 
 
-const axios = require('axios');
-
 const activarAsistenteIA = async (req, res) => {
   const callControlId = req.body?.id_control;
 
@@ -126,7 +124,7 @@ const activarAsistenteIA = async (req, res) => {
   const payload = {
     assistant: {
       id: 'assistant-4d4b3b30-eeb0-4540-882a-205852e06c5f',
-     }
+    }
   };
 
   try {
@@ -156,5 +154,5 @@ const activarAsistenteIA = async (req, res) => {
 module.exports = {
   recibirEventoTelnyx,
   alertaRadiobase,
-   activarAsistenteIA
+  activarAsistenteIA
 };
