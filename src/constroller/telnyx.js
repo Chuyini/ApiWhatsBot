@@ -45,26 +45,29 @@ const recibirEventoTelnyx = async (req, res) => {
 };
 
 const callIA = async (idControl) => {
-
   const telnyxURL = `https://api.telnyx.com/v2/calls/${idControl}/actions/ai_assistant_start`;
 
   const payload = {
     assistant: {
       id: 'assistant-4d4b3b30-eeb0-4540-882a-205852e06c5f'
-    },
+    }
   };
 
-  axios.post(telnyxURL, payload, {
-    headers: {
-      'Authorization': `Bearer ${process.env.TELNYX_KEY}`,
-      'Content-Type': 'application/json'
-    }
-  })
-    .then(res => console.log('✅ Assistant iniciado:', res.data))
-    .catch(err => console.error('❌ Error:', err.response?.data || err.message));
+  try {
+    const { data } = await axios.post(telnyxURL, payload, {
+      headers: {
+        Authorization: `Bearer ${process.env.TELNYX_KEY}`,
+        'Content-Type': 'application/json'
+      }
+    });
 
+    console.log('✅ Assistant iniciado:', data);
+    return data;
+  } catch (err) {
+    console.error('❌ Error:', err.response?.data || err.message);
+    throw err;
+  }
 };
-
 const alertaRadiobase = async (req, res) => {
   const telnyx = await import('telnyx')
     .then(mod => mod.default(process.env.TELNYX_KEY));
