@@ -13,6 +13,7 @@ router.post("/prtg", prtgController.Recived); //y para recibir lo mensajes de pr
 router.post("/tickets",railwayController.doTickets);//<-- aqui railway o cualquier servidor notifica que debemos ya hacer los tickets porque ya terminó
 router.post("/webhook/telnyx", telnyxController.alertaRadiobase); //para recibir eventos de telnyx
 router.post("/webhook/tts", telnyxController.recibirEventoTelnyx); //para recibir eventos de telnyx
+router.post("/activateIA", telnyxController.activarAsistenteIA); //para recibir eventos de telnyx para pruebas
 
 
 module.exports = router;

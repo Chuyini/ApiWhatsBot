@@ -112,12 +112,49 @@ const alertaRadiobase = async (req, res) => {
 
 
 
+const axios = require('axios');
 
+const activarAsistenteIA = async (req, res) => {
+  const callControlId = req.body?.id_control;
+
+  if (!callControlId || !callControlId.startsWith("v3:")) {
+    return res.status(400).json({ error: "ID de control inválido o faltante" });
+  }
+
+  const url = `https://api.telnyx.com/v2/calls/${callControlId}/actions/ai_assistant_start`;
+
+  const payload = {
+    assistant: {
+      id: 'assistant-4d4b3b30-eeb0-4540-882a-205852e06c5f',
+     }
+  };
+
+  try {
+    const { data } = await axios.post(url, payload, {
+      headers: {
+        Authorization: `Bearer ${process.env.TELNYX_KEY}`,
+        'Content-Type': 'application/json'
+      }
+    });
+
+    console.log("🧠✅ Assistant lanzado:", data);
+    res.status(200).json({ success: true, resultado: data });
+
+  } catch (err) {
+    console.error("❌ Error en Assistant IA:", err.response?.data || err.message);
+    res.status(500).json({
+      success: false,
+      error: "Fallo al iniciar IA Telnyx",
+      detalle: err.response?.data || err.message
+    });
+  }
+};
 
 
 
 
 module.exports = {
   recibirEventoTelnyx,
-  alertaRadiobase
+  alertaRadiobase,
+   activarAsistenteIA
 };
