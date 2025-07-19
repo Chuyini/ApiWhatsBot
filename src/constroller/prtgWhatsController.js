@@ -366,6 +366,8 @@ async function buildInformation(sensorData) {
             specialNumber.push("524441452315"); //<-- insertamos a ELI
         }
 
+        console.log(`TELNYX tag: ${tags}, TELNYX lowerCaseText: ${lowerCaseText}`);
+
         if (tags.includes("rb") && !lowerCaseText.includes("ok") && lowerCaseText.includes()) {//Solo para radio basese y fallos
             //Como hay dos PRTGs debemos leer el puerto del servidor
             if (urlServerPort == "8088") {
@@ -393,7 +395,9 @@ async function buildInformation(sensorData) {
 
             }
 
-            const onlyNumbersToCall = ["+524434629327","+524442478772"];
+
+
+            const onlyNumbersToCall = ["+524434629327", "+524442478772"];
             await checkTime.checkTimeAndGreet(specialNumber, textToTemplate);
             await telnyx.alertaRadiobaseFunction({ telefonos: onlyNumbersToCall, nameRB: sensorData.name }) // Llamada a la IA de Telnyx
 
