@@ -54,9 +54,10 @@ const callIA = async (idControl) => {
     assistant: {
       id: 'assistant-4d4b3b30-eeb0-4540-882a-205852e06c5f',
 
-    }
-    , variables: {
-      "nameRB": 'Radiobase GR08'
+    },
+    greeting: "Hello, can you tell me your age and where you live?",
+    interruption_settings: {
+      enable: true
     }
 
   };
@@ -96,7 +97,7 @@ const alertaRadiobase = async (req, res) => {
       AIAssistantDynamicVariables: {
         "nameRB": "San Luis Potosí",
       },    // define +18337633404 en .env
-     
+
     });
 
     console.log('📞 Llamada creada y TTS encolado:', data.call_control_id);
