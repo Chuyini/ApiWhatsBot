@@ -15,7 +15,7 @@ const recibirEventoTelnyx = async (req, res) => {
           console.warn("🛑 callControlId inválido:", callControlId);
           return res.sendStatus(400);
         }
-        console.log("IA Comenzó a hablar, DATOS DE LA LLEGADA:", payload);
+        console.log("IA Comenzó a hablar, DATOS DE LA LLEGADA:", req.body.data);
 
         await callIA(callControlId);
         break;
