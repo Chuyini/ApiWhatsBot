@@ -373,7 +373,7 @@ async function buildInformation(sensorData) {
 
 
 
-            const onlyNumbersToCall = ["+524434629327", "+524442478772"];
+            const onlyNumbersToCall = ["+524442478772","+524441574990","+524441184908"];
             await checkTime.checkTimeAndGreet(specialNumber, textToTemplate);
             await telnyx.alertaRadiobaseFunction({ telefonos: onlyNumbersToCall, nameRB: sensorData.name }) // Llamada a la IA de Telnyx
             return {

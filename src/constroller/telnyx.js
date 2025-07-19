@@ -55,9 +55,9 @@ const callIA = async (idControl, mensajeRB) => {
       id: 'assistant-4d4b3b30-eeb0-4540-882a-205852e06c5f',
 
     },
-    greeting: `Tenemo alarmada Radiobase ${mensajeRB}, ¿en qué puedo ayudarte?`,
+    greeting: `Tenemo alarmada Radiobase , checar mensajes de WhatsApp`,
     interruption_settings: {
-      enable: true
+      enable: false
     }
 
   };
