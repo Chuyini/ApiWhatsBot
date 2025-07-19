@@ -167,7 +167,7 @@ const crearLlamadaConTeXML = async ({ to, nameRB }) => {
     From: "+18337633404", // número válido registrado en Telnyx
     To: to,
     AIAssistantDynamicVariables: {
-      nameRB: nameRB
+      "nameRB": nameRB
     }
   };
 
