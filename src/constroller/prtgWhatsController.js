@@ -368,7 +368,7 @@ async function buildInformation(sensorData) {
 
         console.log(`TELNYX tag: ${tags}, TELNYX lowerCaseText: ${lowerCaseText}`);
 
-        if (tags.includes("rb") && !lowerCaseText.includes("ok") && lowerCaseText.includes()) {//Solo para radio basese y fallos
+        if (tags.includes("rb") && !lowerCaseText.includes("ok") && lowerCaseText.includes("fallo escalación")) {//Solo para radio basese y fallos
             //Como hay dos PRTGs debemos leer el puerto del servidor
             if (urlServerPort == "8088") {
 
