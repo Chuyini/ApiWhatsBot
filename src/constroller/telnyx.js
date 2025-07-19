@@ -207,7 +207,7 @@ const alertaRadiobaseFunction = async ({ telefonos, nameRB }) => {
     let éxito = false;
 
     while (intentos < 2 && !éxito) {
-      éxito = await llamarNumero(numero, mensaje);
+      éxito = await llamarNumero({ to: numero, dynamicVariables: nameRB });
       await sleep(30000);
       //esperar 30 segundos 
       intentos++;
