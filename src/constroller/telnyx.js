@@ -155,38 +155,73 @@ const llamarNumero = async (numero, mensaje) => {
   }
 };
 
-const alertaRadiobaseFunction = async ({ telefonos, nameRB }) => {
-  const mensaje = `${nameRB}`;
+const crearLlamadaConTeXML = async ({ to, nameRB }) => {
+  const texmlAppId = process.env.TEXML_APP_ID;
+  const TELNYX_API_KEY = process.env.TELNYX_KEY;
 
-  if (!process.env.TELNYX_KEY || !process.env.CONNECTION_ID) {
-    throw new Error('Falta configuración Telnyx');
+  const payload = {
+    From: "+18337633404", // número válido registrado en Telnyx
+    To: to,
+    AIAssistantDynamicVariables: {
+      nameRB,
+      zona: "San Luis Potosí",
+      empresa: "PoderNET"
+    }
+  };
+
+  try {
+    const { data } = await axios.post(
+      `https://api.telnyx.com/v2/texml/calls/${texmlAppId}`,
+      payload,
+      {
+        headers: {
+          Authorization: `Bearer ${TELNYX_API_KEY}`,
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+
+    console.log(`📞 TeXML llamada creada para ${to}:`, data.data.call_session_id);
+    return true;
+  } catch (err) {
+    console.error(`❌ Error al crear llamada TeXML a ${to}:`, err.response?.data || err.message);
+    return false;
+  }
+};
+
+const alertaRadiobaseFunction = async ({ telefonos, nameRB }) => {
+  if (!process.env.TELNYX_KEY || !process.env.TEXML_APP_ID) {
+    throw new Error('❌ Falta configuración Telnyx');
   }
 
   for (let i = 0; i < telefonos.length; i++) {
     const numero = telefonos[i];
-    console.log(`📡 Intentando llamar a ${numero} (Radiobase ${nameRB})`);
+    console.log(`📡 Intentando llamada TeXML a ${numero} (Radiobase ${nameRB})`);
 
     let intentos = 0;
     let éxito = false;
 
     while (intentos < 2 && !éxito) {
-      éxito = await llamarNumero(numero, mensaje);
-      await sleep(30000);
-      //esperar 30 segundos 
+      éxito = await crearLlamadaConTeXML({ to: numero, nameRB });
       intentos++;
-      if (!éxito) { console.log(`⚠️ Reintentando (${intentos})...`) } else {
+
+      if (!éxito) {
+        console.log(`⚠️ Reintentando (${intentos}) luego de esperar...`);
+        await sleep(30000); // espera 30s antes del próximo intento
+      } else {
         console.log(`✅ Llamada exitosa a ${numero}. Se detiene el ciclo.`);
-
-        return;
-      };//No marcara mas si hubo exito para no gastar innesesariamente créditos
+        return numero;
+      }
     }
-
-
   }
 
-  console.log('❌ Ningún número respondió exitosamente tras 2 intentos cada uno.');
+  console.log('❌ Ningún número respondió tras 2 intentos cada uno.');
   return null;
 };
+
+
+
+
 const activarAsistenteIA = async (req, res) => {
   const callControlId = req.body?.id_control;
 
