@@ -194,7 +194,7 @@ const crearLlamadaConTeXML = async ({ to, nameRB }) => {
 
 
 const alertaRadiobaseFunction = async ({ telefonos, nameRB }) => {
-  const mensaje = `${nameRB}`;
+  const mensaje = `${nameRB}` || "Radiobase GR08";
 
   if (!process.env.TELNYX_KEY || !process.env.CONNECTION_ID) {
     throw new Error('Falta configuración Telnyx');
