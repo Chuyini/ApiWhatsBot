@@ -53,8 +53,8 @@ const callIA = async (idControl) => {
   const payload = {
     assistant: {
       id: 'assistant-4d4b3b30-eeb0-4540-882a-205852e06c5f',
-      variables: {
-        nameRB: nameRB
+      AIAssistantDynamicVariables: {
+        nameRB: "San Luis Potosí",
 
       }
 
