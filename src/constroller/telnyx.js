@@ -53,10 +53,6 @@ const callIA = async (idControl) => {
   const payload = {
     assistant: {
       id: 'assistant-4d4b3b30-eeb0-4540-882a-205852e06c5f',
-      AIAssistantDynamicVariables: {
-        nameRB: "San Luis Potosí",
-
-      }
 
     }
   };
@@ -92,7 +88,12 @@ const alertaRadiobase = async (req, res) => {
     const { data } = await telnyx.calls.create({
       connection_id: process.env.CONNECTION_ID,
       to: numeroDestino,
-      from: "+18337633404",      // define +18337633404 en .env
+      from: "+18337633404",
+      AIAssistantDynamicVariables: {
+        nameRB: "San Luis Potosí",
+
+
+      },    // define +18337633404 en .env
       commands: [
         {
           name: 'speak',
@@ -132,6 +133,11 @@ const llamarNumero = async (numero, mensaje) => {
       connection_id: process.env.CONNECTION_ID,
       to: numero,
       from: "+18337633404",
+      AIAssistantDynamicVariables: {
+        nameRB: "San Luis Potosí",
+
+
+      },
       commands: [{
         name: 'speak',
         payload: mensaje,
