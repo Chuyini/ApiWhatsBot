@@ -126,7 +126,7 @@ const llamarNumero = async ({ to, dynamicVariables }) => {
     to,
     from: "+18337633404", // número configurado en tu cuenta
     AIAssistantDynamicVariables: {
-      nameRB: dynamicVariables.nameRB || "Radiobase GR08" // nombre de la radi
+      nameRB: dynamicVariables || "Radiobase GR08" // nombre de la radi
     }
   };
 
