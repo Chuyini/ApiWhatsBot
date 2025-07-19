@@ -369,52 +369,32 @@ async function buildInformation(sensorData) {
         console.log(`TELNYX tag: ${tags}, TELNYX lowerCaseText: ${lowerCaseText}`);
 
         if (tags.includes("rb") && !lowerCaseText.includes("ok") && lowerCaseText.includes("fallo escalación")) {//Solo para radio basese y fallos
-            //Como hay dos PRTGs debemos leer el puerto del servidor
-            if (urlServerPort == "8088") {
 
-                const urlImgServer = `http://45.189.154.179:${urlServerPort}/chart.png?type=graph&width=700&height=460&graphid=0&id=${sensorID}&username=${process.env.PRTG_USER}&password=${process.env.PRTG_PASSWORD}`;
-                // Lógica específica para el puerto 8088
-                console.log("Enviando mensaje a RB con puerto 8088");
-                //await checkTime.sendRBImageTemplate(specialNumber, sensorID, urlImgServer);
-
-
-
-
-            } else if (urlServerPort == "8045") {
-                // Lógica específica para el puerto 8045
-
-                console.log("Enviando mensaje a RB con puerto 8045");
-                const urlImgServer = `http://45.189.154.179:${urlServerPort}/chart.png?type=graph&width=700&height=460&graphid=0&id=${sensorID}&apitoken=${process.env.API_TOKEN_PRTG}`;
-
-                //await checkTime.sendRBImageTemplate(specialNumber, sensorID, urlImgServer);
-
-
-            } else {
-                console.log("Enviando mensaje a RB con puerto desconocido, plantilla estandar");
-
-
-            }
 
 
 
             const onlyNumbersToCall = ["+524434629327", "+524442478772"];
             await checkTime.checkTimeAndGreet(specialNumber, textToTemplate);
             await telnyx.alertaRadiobaseFunction({ telefonos: onlyNumbersToCall, nameRB: sensorData.name }) // Llamada a la IA de Telnyx
+            return {
+                text,
+                numbers
+            };
 
 
 
         } else {
             await checkTime.checkTimeAndGreet(specialNumber, textToTemplate);
 
+            return {
+                text,
+                numbers
+            };
         }
 
 
-        console.log("ID del sensor: ", sensorID);
 
-        return {
-            text,
-            numbers
-        };
+
     } else {
         if (lowerCaseComuni.includes("comunicalo") || tags.includes("comunicalo") /*&& !/^192\.168\./.test(lowerCaseIp)*/) {
             AIresponse = await chatGPTService.GetMessageChatGPT("Puedes resumir lo siguiente es para mandarlo como reporte solo pon algo sencillo no agregues codigos de error, además pregunta si sucede algo con la electricidad o alguna afectacion ya que es comunicalo y ellos son un isp. No agreges emogies :" + message);
