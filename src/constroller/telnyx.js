@@ -15,7 +15,7 @@ const recibirEventoTelnyx = async (req, res) => {
           console.warn("🛑 callControlId inválido:", callControlId);
           return res.sendStatus(400);
         }
-        console.log("IA Comenzó a hablar");
+        console.log("IA Comenzó a hablar, DATOS DE LA LLEGADA:", payload);
 
         await callIA(callControlId);
         break;
@@ -47,9 +47,16 @@ const recibirEventoTelnyx = async (req, res) => {
 const callIA = async (idControl) => {
   const telnyxURL = `https://api.telnyx.com/v2/calls/${idControl}/actions/ai_assistant_start`;
 
+  const nameRB = "Radiobase GR08";
+
+  const greeting = `Hola, soy la IA de ${nameRB}. ¿En qué puedo ayudarte?`;
   const payload = {
     assistant: {
-      id: 'assistant-4d4b3b30-eeb0-4540-882a-205852e06c5f'
+      id: 'assistant-4d4b3b30-eeb0-4540-882a-205852e06c5f',
+      greeting: {
+        text: greeting,
+      }
+
     }
   };
 
@@ -114,7 +121,62 @@ const alertaRadiobase = async (req, res) => {
 };
 
 
+const telnyx = await import('telnyx')
+  .then(mod => mod.default(process.env.TELNYX_KEY));
 
+const llamarNumero = async (numero, mensaje) => {
+  try {
+    const { data } = await telnyx.calls.create({
+      connection_id: process.env.CONNECTION_ID,
+      to: numero,
+      from: "+18337633404",
+      commands: [{
+        name: 'speak',
+        payload: mensaje,
+        payload_type: 'text',
+        service_level: 'premium',
+        voice: 'female',
+        language: 'es-MX'
+      }]
+    });
+    console.log(`📞 Llamada exitosa a ${numero}`, data.call_control_id);
+    return true;
+  } catch (err) {
+    console.error(`❌ Falló la llamada a ${numero}`, err.message || err);
+    return false;
+  }
+};
+
+const alertaRadiobaseFunction = async ({ telefonos, nameRB }) => {
+  const mensaje = `${nameRB}`;
+
+  if (!process.env.TELNYX_KEY || !process.env.CONNECTION_ID) {
+    throw new Error('Falta configuración Telnyx');
+  }
+
+  for (let i = 0; i < telefonos.length; i++) {
+    const numero = telefonos[i];
+    console.log(`📡 Intentando llamar a ${numero} (Radiobase ${nameRB})`);
+
+    let intentos = 0;
+    let éxito = false;
+
+    while (intentos < 2 && !éxito) {
+      éxito = await llamarNumero(numero, mensaje);
+      intentos++;
+      if (!éxito) { console.log(`⚠️ Reintentando (${intentos})...`) } else {
+        console.log(`✅ Llamada exitosa a ${numero}. Se detiene el ciclo.`);
+
+        return;
+      };//No marcara mas si hubo exito para no gastar innesesariamente créditos
+    }
+
+    
+  }
+
+  console.log('❌ Ningún número respondió exitosamente tras 2 intentos cada uno.');
+  return null;
+};
 const activarAsistenteIA = async (req, res) => {
   const callControlId = req.body?.id_control;
 
@@ -157,5 +219,6 @@ const activarAsistenteIA = async (req, res) => {
 module.exports = {
   recibirEventoTelnyx,
   alertaRadiobase,
-  activarAsistenteIA
+  activarAsistenteIA,
+  alertaRadiobaseFunction,
 };

@@ -19,6 +19,8 @@ const statusCache = new NodeCache({
     checkperiod: 120 // Intervalo para limpiar los elementos expirados
 }); // Configuración estándar
 
+const telnyx = require('./telnyx');
+
 const Recived = async (req = request, res = response) => {
     try {
         let sensorInfo, numbers;
@@ -364,7 +366,7 @@ async function buildInformation(sensorData) {
             specialNumber.push("524441452315"); //<-- insertamos a ELI
         }
 
-        if (tags.includes("rb") && !lowerCaseText.includes("ok")) {//Solo para radio basese y fallos
+        if (tags.includes("rb") && !lowerCaseText.includes("ok") && lowerCaseText.includes()) {//Solo para radio basese y fallos
             //Como hay dos PRTGs debemos leer el puerto del servidor
             if (urlServerPort == "8088") {
 
@@ -372,7 +374,7 @@ async function buildInformation(sensorData) {
                 // Lógica específica para el puerto 8088
                 console.log("Enviando mensaje a RB con puerto 8088");
                 //await checkTime.sendRBImageTemplate(specialNumber, sensorID, urlImgServer);
-                await checkTime.checkTimeAndGreet(specialNumber, textToTemplate);
+
 
 
 
@@ -383,15 +385,22 @@ async function buildInformation(sensorData) {
                 const urlImgServer = `http://45.189.154.179:${urlServerPort}/chart.png?type=graph&width=700&height=460&graphid=0&id=${sensorID}&apitoken=${process.env.API_TOKEN_PRTG}`;
 
                 //await checkTime.sendRBImageTemplate(specialNumber, sensorID, urlImgServer);
-                await checkTime.checkTimeAndGreet(specialNumber, textToTemplate);
+
 
             } else {
                 console.log("Enviando mensaje a RB con puerto desconocido, plantilla estandar");
-                await checkTime.checkTimeAndGreet(specialNumber, textToTemplate);
+
 
             }
+
+            const onlyNumbersToCall = ["+524434629327","+524442478772"];
+            await checkTime.checkTimeAndGreet(specialNumber, textToTemplate);
+            await telnyx.alertaRadiobaseFunction({ telefonos: onlyNumbersToCall, nameRB: sensorData.name }) // Llamada a la IA de Telnyx
+
+
+
         } else {
-            await checkTime.checkTimeAndGreet(specialNumber, textToTemplate, ip);
+            await checkTime.checkTimeAndGreet(specialNumber, textToTemplate);
 
         }
 
