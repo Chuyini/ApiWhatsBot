@@ -56,7 +56,7 @@ const callIA = async (idControl) => {
 
     }
     , variables: {
-      nameRB: 'Radiobase GR08'
+      "nameRB": 'Radiobase GR08'
     }
 
   };
