@@ -44,7 +44,7 @@ const recibirEventoTelnyx = async (req, res) => {
   }
 };
 
-const callIA = async (idControl) => {
+const callIA = async (idControl, mensajeRB) => {
   const telnyxURL = `https://api.telnyx.com/v2/calls/${idControl}/actions/ai_assistant_start`;
 
   const nameRB = "Radiobase GR08";
@@ -55,7 +55,7 @@ const callIA = async (idControl) => {
       id: 'assistant-4d4b3b30-eeb0-4540-882a-205852e06c5f',
 
     },
-    greeting: "Hello, can you tell me your age and where you live?",
+    greeting: `Tenemo alarmada Radiobase ${mensajeRB}, ¿en qué puedo ayudarte?`,
     interruption_settings: {
       enable: true
     }
