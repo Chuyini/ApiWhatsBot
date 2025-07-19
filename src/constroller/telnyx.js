@@ -126,7 +126,7 @@ const llamarNumero = async (numero, mensaje) => {
       to: numero,
       from: "+18337633404",
       AIAssistantDynamicVariables: {
-        nameRB: "San Luis Potosí",
+        "nameRB": "San Luis Potosí",
 
 
       },
@@ -189,7 +189,7 @@ const alertaRadiobaseFunction = async ({ telefonos, nameRB }) => {
     let éxito = false;
 
     while (intentos < 2 && !éxito) {
-      éxito = await crearLlamadaConTeXML(numero, mensaje);
+      éxito = await llamarNumero(numero, mensaje);
       await sleep(30000);
       //esperar 30 segundos 
       intentos++;
