@@ -94,21 +94,9 @@ const alertaRadiobase = async (req, res) => {
       to: numeroDestino,
       from: "+18337633404",
       AIAssistantDynamicVariables: {
-        nameRB: "San Luis Potosí",
-
-
+        "nameRB": "San Luis Potosí",
       },    // define +18337633404 en .env
-      commands: [
-        {
-          name: 'speak',
-          payload: mensaje,
-          payload_type: 'text',
-          service_level: 'premium',
-          voice: 'female',       // ← voz genérica
-          language: 'es-MX'         // ← obligatorio al usar voz genérica
-        }
-
-      ]
+     
     });
 
     console.log('📞 Llamada creada y TTS encolado:', data.call_control_id);
