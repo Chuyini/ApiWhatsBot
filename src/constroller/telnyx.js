@@ -142,14 +142,7 @@ const llamarNumero = async (numero, mensaje) => {
 
 
       },
-      commands: [{
-        name: 'speak',
-        payload: mensaje,
-        payload_type: 'text',
-        service_level: 'premium',
-        voice: 'female',
-        language: 'es-MX'
-      }]
+
     });
     console.log(`📞 Llamada exitosa a ${numero}`, data.call_control_id);
     return true;
@@ -168,13 +161,13 @@ const crearLlamadaConTeXML = async ({ to, nameRB }) => {
     From: "+18337633404", // número válido registrado en Telnyx
     To: to,
     AIAssistantDynamicVariables: {
-      nameRB
+      nameRB: nameRB
     }
   };
 
   try {
     const { data } = await axios.post(
-      `https://api.telnyx.com/v2/texml/calls/${texmlAppId}`,
+      `https://api.telnyx.com/v2/calls/${texmlAppId}`,
       payload,
       {
         headers: {
@@ -208,7 +201,7 @@ const alertaRadiobaseFunction = async ({ telefonos, nameRB }) => {
     let éxito = false;
 
     while (intentos < 2 && !éxito) {
-      éxito = await llamarNumero(numero, mensaje);
+      éxito = await crearLlamadaConTeXML(numero, mensaje);
       await sleep(30000);
       //esperar 30 segundos 
       intentos++;
