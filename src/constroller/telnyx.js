@@ -117,28 +117,46 @@ const alertaRadiobase = async (req, res) => {
 
 
 
-const llamarNumero = async (numero, mensaje) => {
-  const telnyx = await import('telnyx')
-    .then(mod => mod.default(process.env.TELNYX_KEY));
+const llamarNumero = async ({ to, dynamicVariables }) => {
+  const TELNYX_API_KEY = process.env.TELNYX_KEY;
+  const CONNECTION_ID = process.env.CONNECTION_ID;
+
+  const payload = {
+    connection_id: CONNECTION_ID,
+    to,
+    from: "+18337633404", // número configurado en tu cuenta
+    AIAssistantDynamicVariables: {
+      nameRB: dynamicVariables.nameRB || "Radiobase GR08" // nombre de la radi
+    }
+  };
+
   try {
-    const { data } = await telnyx.calls.create({
-      connection_id: process.env.CONNECTION_ID,
-      to: numero,
-      from: "+18337633404",
-      AIAssistantDynamicVariables: {
-        "nameRB": "San Luis Potosí",
+    const { data } = await axios.post(
+      'https://api.telnyx.com/v2/calls',
+      payload,
+      {
+        headers: {
+          Authorization: `Bearer ${TELNYX_API_KEY}`,
+          'Content-Type': 'application/json'
+        }
+      }
+    );
 
-
-      },
-
-    });
-    console.log(`📞 Llamada exitosa a ${numero}`, data.call_control_id);
-    return true;
+    console.log(`📞 Llamada creada para ${to}. Call Control ID:`, data.data.call_control_id);
+    return {
+      success: true,
+      call_control_id: data.data.call_control_id
+    };
   } catch (err) {
-    console.error(`❌ Falló la llamada a ${numero}`, err.message || err);
-    return false;
+    console.error(`❌ Falló la llamada a ${to}`, err.response?.data || err.message);
+    return {
+      success: false,
+      error: err.response?.data || err.message
+    };
   }
 };
+
+
 
 
 const crearLlamadaConTeXML = async ({ to, nameRB }) => {
