@@ -1,5 +1,5 @@
 const axios = require('axios');
-
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 const recibirEventoTelnyx = async (req, res) => {
   const telnyx = await import("telnyx")
     .then(mod => mod.default(process.env.TELNYX_KEY));
@@ -53,8 +53,9 @@ const callIA = async (idControl) => {
   const payload = {
     assistant: {
       id: 'assistant-4d4b3b30-eeb0-4540-882a-205852e06c5f',
-      greeting: {
-        text: greeting,
+      variables: {
+        nameRB: nameRB,
+
       }
 
     }
@@ -164,6 +165,8 @@ const alertaRadiobaseFunction = async ({ telefonos, nameRB }) => {
 
     while (intentos < 2 && !éxito) {
       éxito = await llamarNumero(numero, mensaje);
+      await sleep(30000);
+      //esperar 30 segundos 
       intentos++;
       if (!éxito) { console.log(`⚠️ Reintentando (${intentos})...`) } else {
         console.log(`✅ Llamada exitosa a ${numero}. Se detiene el ciclo.`);
