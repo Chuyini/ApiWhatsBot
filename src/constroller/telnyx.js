@@ -121,10 +121,11 @@ const alertaRadiobase = async (req, res) => {
 };
 
 
-const telnyx = await import('telnyx')
-  .then(mod => mod.default(process.env.TELNYX_KEY));
+
 
 const llamarNumero = async (numero, mensaje) => {
+  const telnyx = await import('telnyx')
+    .then(mod => mod.default(process.env.TELNYX_KEY));
   try {
     const { data } = await telnyx.calls.create({
       connection_id: process.env.CONNECTION_ID,
@@ -171,7 +172,7 @@ const alertaRadiobaseFunction = async ({ telefonos, nameRB }) => {
       };//No marcara mas si hubo exito para no gastar innesesariamente créditos
     }
 
-    
+
   }
 
   console.log('❌ Ningún número respondió exitosamente tras 2 intentos cada uno.');
