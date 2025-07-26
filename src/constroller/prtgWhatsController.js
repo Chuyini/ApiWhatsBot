@@ -297,7 +297,7 @@ async function buildInformation(sensorData) {
 
     ///Sin son de baterias  se alarma 
     ///aqui podriamos definir los dispositivos de alta prioridad
-    if ((sensorData.batery || priority.includes("MUY ALTA") || tags.includes("critical")) && !tags.includes("planta")) {
+    if ((sensorData.batery || priority.includes("MUY ALTA") || tags.includes("critical")) && !tags.includes("planta") && !lowerCaseText.includes("desconocido")) {
         text = `Críticos ${statusEmoji}:\n🏢 ENTIDAD: ${realIDCompany} *${company}*\n\nDISPOSITIVO: *${device}*\n\n${statusEmoji} ESTADO: *${status}*\n\n🌐 IP: *${ip}*\n\nTIEMPO: *${time}*\n\nPRIORIDAD: *${priority}*\n\n${message}\n\n🔗 LINK UISP: *${linkUisp}*\n\n ${comments}\n\n etiquetas: ${tags}`;
 
         if (resumMesagge && resumMesagge.includes("simulado")) {
