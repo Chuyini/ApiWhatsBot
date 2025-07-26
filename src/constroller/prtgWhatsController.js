@@ -213,7 +213,7 @@ async function buildInformation(sensorData) {
         } else {
             statusEmoji = "🟢";
         }
-    } else if (lowerCaseText.includes("desconocido")) {
+    } else if (lowerCaseText.includes("fallo (anterior: desconocido) repetir escalación")) {
         statusEmoji = "⚪⏬";
         numbers = numbers.filter(number => number !== "524442478772");; // Sacamos a Debie para que no siga alarmando
     } else if (lowerCaseText.includes("ok")) {
