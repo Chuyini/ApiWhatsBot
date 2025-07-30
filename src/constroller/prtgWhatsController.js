@@ -385,6 +385,7 @@ async function buildInformation(sensorData) {
 
             // Solo agrega la alerta si está fuera del horario laboral
             if (!estaEnHorarioLaboral(new Date())) {
+                console.log("Fuera del horario laboral, agregando alerta de radiobase");
                 tareas.push(
                     telnyx.alertaRadiobaseFunction({
                         telefonos: onlyNumbersToCall,
