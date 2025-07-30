@@ -392,6 +392,8 @@ async function buildInformation(sensorData) {
                         nameRB: sensorData.name
                     })
                 );
+            }else{
+                console.log("Dentro del horario laboral, no se agrega alerta de radiobase, horario laboral: ", new Date());
             }
 
             // Ejecuta todas las tareas en paralelo
