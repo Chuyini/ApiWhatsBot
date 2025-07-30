@@ -8,20 +8,26 @@ async function Process(textUser, number) {
     let models = []; // Arreglo de modelos
 
 
-   let resultChatGPT = await chatGPTService.GetMessageChatGPT(textUser);
-   console.log(resultChatGPT);
+    if (textUser.includes("#alertas")) {
+        let model = whatsAppModel.MessageText("Haz solicitado petición de alertas", number);
+        models.push(model);
+    }
 
-//ok
+
+    let resultChatGPT = await chatGPTService.GetMessageChatGPT(textUser);
+    console.log(resultChatGPT);
+
+
     if (resultChatGPT != null) {
 
-        let model = whatsAppModel.MessageText(resultChatGPT,number);
+        let model = whatsAppModel.MessageText(resultChatGPT, number);
         models.push(model);
 
-       // let model = whatsAppModel.MessageText(textUser,number);
+        // let model = whatsAppModel.MessageText(textUser,number);
         //models.push(model);
-    }else{
+    } else {
 
-        let model = whatsAppModel.MessageText("Botcito en mantenimiento, gracias por tu mensaje 😁",number);
+        let model = whatsAppModel.MessageText("Botcito en mantenimiento, gracias por tu mensaje 😁", number);
         models.push(model);
     }
     /*
@@ -85,6 +91,13 @@ async function Process(textUser, number) {
     } catch (error) {
         console.error("Error sending message:", error);
     }
+
+}
+
+
+async function getAlerts() {
+
+
 
 }
 

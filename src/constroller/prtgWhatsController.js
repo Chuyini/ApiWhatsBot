@@ -354,7 +354,11 @@ async function buildInformation(sensorData) {
 
         textToTemplate = textToTemplate.substring(0, 56);
 
-        const specialNumber = ["524442475444", "524441967796", "524441574990", "524441184908", "524434629327", "524442478772"];
+        const specialNumber = ["524441574990", "524441184908", "524434629327", "524442478772"];
+
+        if (estaEnHorarioLaboral(new Date())) {
+            specialNumber.push("524442475444"); //Diana
+        }
 
         //const testNumbers = ["524434629327","524442478772","524441967796","524442475444","524401050937", "524441171133", "526643671066"];//yo,Debie, Lic, diana,yo trabajo,mama,itzel
         //numbers.push("524441184908"); //Ceron
@@ -375,13 +379,23 @@ async function buildInformation(sensorData) {
 
             const onlyNumbersToCall = ["+524442478772", "+524441574990", "+524441184908"];
 
-            await Promise.all([
-                checkTime.checkTimeAndGreet(specialNumber, textToTemplate),
-                telnyx.alertaRadiobaseFunction({
-                    telefonos: onlyNumbersToCall,
-                    nameRB: sensorData.name
-                })
-            ]);
+            const tareas = [
+                checkTime.checkTimeAndGreet(specialNumber, textToTemplate)
+            ];
+
+            // Solo agrega la alerta si está fuera del horario laboral
+            if (!estaEnHorarioLaboral(new Date())) {
+                tareas.push(
+                    telnyx.alertaRadiobaseFunction({
+                        telefonos: onlyNumbersToCall,
+                        nameRB: sensorData.name
+                    })
+                );
+            }
+
+            // Ejecuta todas las tareas en paralelo
+            await Promise.all(tareas);
+
 
             return {
                 text,
@@ -543,6 +557,23 @@ async function masiveFaildBuild(statusAndDevices) {
 
 
 
+}
+
+function estaEnHorarioLaboral(fechaStr) {
+    // Convierte la cadena a objeto Date
+    const fecha = new Date(fechaStr);
+    const dia = fecha.getDay(); // 0 = domingo, 6 = sábado
+    const hora = fecha.getHours();
+    const minutos = fecha.getMinutes();
+
+    // Define rango laboral por día
+    if (dia >= 1 && dia <= 5) { // lunes a viernes
+        return hora >= 9 && hora < 19;
+    } else if (dia === 6) { // sábado
+        return hora >= 9 && hora < 14;
+    }
+
+    return false; // domingo o fuera de rango
 }
 
 
