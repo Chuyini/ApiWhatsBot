@@ -216,7 +216,7 @@ async function buildInformation(sensorData) {
     } else if (lowerCaseText.includes("fallo (anterior: desconocido) repetir escalación")) {
         statusEmoji = "⚪⏬";
         numbers = numbers.filter(number => number !== "524442478772");; // Sacamos a Debie para que no siga alarmando
-    } else if (lowerCaseText.includes("ok")) {
+    } else if (lowerCaseText.includes("ok") || lowerCaseText.includes("up")) {
 
         statusEmoji = "🟢";
 
@@ -385,7 +385,7 @@ async function buildInformation(sensorData) {
 
             // Solo agrega la alerta si está fuera del horario laboral
             if (!estaEnHorarioLaboral(new Date())) {
-                console.log("Fuera del horario laboral, agregando alerta de radiobase");
+                console.log("Fuera del horario laboral, agregando alerta de radiobase:", new Date());
                 tareas.push(
                     telnyx.alertaRadiobaseFunction({
                         telefonos: onlyNumbersToCall,
