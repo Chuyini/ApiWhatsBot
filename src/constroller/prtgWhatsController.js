@@ -408,7 +408,7 @@ async function buildInformation(sensorData) {
 
 
         } else {
-            await checkTime.checkTimeAndGreet(specialNumber, textToTemplate);
+            //await checkTime.checkTimeAndGreet(specialNumber, textToTemplate);
 
             return {
                 text,
