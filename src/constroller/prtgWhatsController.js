@@ -338,7 +338,7 @@ async function buildInformation(sensorData) {
             console.log(sensorData.clienId, " id client en el ticket ");
             text = "🎫✏️ Ticket Creado \n" + text;
 
-
+ 
         } else if (ticket == "Esta suspendido") { //cuando encuentra suspendido, regresa por whats ese mensaje
 
             text = `🚮❌ ${sensorData.company}\n *${sensorData.device}* *CANCELADO* \n\n\t\t🖥️ *RETIRAR DE PRTG* \n\n🌐 IP: ${sensorData.ip}\n`;
