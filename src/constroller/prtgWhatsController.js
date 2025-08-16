@@ -571,8 +571,10 @@ function estaEnHorarioLaboral(fechaStr) {
 
     // Define rango laboral por día
     if (dia >= 1 && dia <= 5) { // lunes a viernes
+        console.log("Dentro del horario laboral:", fecha);
         return hora >= 9 && hora < 19;
     } else if (dia === 6) { // sábado
+        console.log("Dentro del horario laboral sábado:", fecha);
         return hora >= 9 && hora < 14;
     }
 
