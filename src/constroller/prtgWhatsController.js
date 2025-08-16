@@ -372,7 +372,7 @@ async function buildInformation(sensorData) {
 
         console.log(`TELNYX tag: ${tags}, TELNYX lowerCaseText: ${lowerCaseText}`);
 
-        if (tags.includes("rb") && !lowerCaseText.includes("ok") && lowerCaseText.includes("fallo escalación")) {//Solo para radio basese y fallos
+        if ((tags.includes("rb") && !lowerCaseText.includes("ok") && lowerCaseText.includes("fallo escalación")) || lowerCaseText.includes("ok")) {//Solo para radio basese y fallos
 
 
 
@@ -408,7 +408,7 @@ async function buildInformation(sensorData) {
 
 
         } else {
-            if (lowerCaseText.includes("fallo escalación")) {
+            if (lowerCaseText.includes("fallo escalación") || lowerCaseText.includes("ok")) {
                 await checkTime.checkTimeAndGreet(specialNumber, textToTemplate);
 
             }
