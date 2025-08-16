@@ -392,7 +392,7 @@ async function buildInformation(sensorData) {
                         nameRB: sensorData.name
                     })
                 );
-            }else{
+            } else {
                 console.log("Dentro del horario laboral, no se agrega alerta de radiobase, horario laboral: ", new Date());
             }
 
@@ -408,7 +408,10 @@ async function buildInformation(sensorData) {
 
 
         } else {
-            //await checkTime.checkTimeAndGreet(specialNumber, textToTemplate);
+            if (lowerCaseText.includes("fallo escalación")) {
+                await checkTime.checkTimeAndGreet(specialNumber, textToTemplate);
+
+            }
 
             return {
                 text,
