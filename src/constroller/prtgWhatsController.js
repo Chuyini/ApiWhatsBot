@@ -356,7 +356,7 @@ async function buildInformation(sensorData) {
 
         const specialNumber = ["524441574990", "524441184908", "524434629327", "524442478772"];
 
-        if (estaEnHorarioLaboral(new Date())) {
+        if (estaEnHorarioLaboral(new Date()) != false) {
             specialNumber.push("524442475444"); //Diana
         }
 
@@ -410,9 +410,7 @@ async function buildInformation(sensorData) {
         } else {
             if (lowerCaseText.includes("fallo escalación") || lowerCaseText.includes("ok")) {
                 await checkTime.checkTimeAndGreet(specialNumber, textToTemplate);
-
             }
-
             return {
                 text,
                 numbers
