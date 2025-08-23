@@ -403,10 +403,6 @@ async function buildInformation(sensorData) {
             await Promise.all(tareas);
 
 
-            return {
-                text,
-                numbers
-            };
 
 
 
@@ -414,11 +410,13 @@ async function buildInformation(sensorData) {
             if (lowerCaseText.includes("fallo") || lowerCaseText.includes("ok")) {
                 await checkTime.checkTimeAndGreet(specialNumber, textToTemplate);
             }
-            return {
-                text,
-                numbers
-            };
+
         }
+
+        return {
+            text,
+            numbers
+        };
 
 
 
