@@ -356,9 +356,12 @@ async function buildInformation(sensorData) {
 
         const specialNumber = ["524441574990", "524441184908", "524434629327", "524442478772"];
 
-        if (estaEnHorarioLaboral(new Date()) != false) {
+        /*if (estaEnHorarioLaboral(new Date()) != false) {
             specialNumber.push("524442475444"); //Diana
-        }
+        }*/
+
+        specialNumber.push("524442475444"); //Diana
+
 
         //const testNumbers = ["524434629327","524442478772","524441967796","524442475444","524401050937", "524441171133", "526643671066"];//yo,Debie, Lic, diana,yo trabajo,mama,itzel
         //numbers.push("524441184908"); //Ceron
@@ -407,8 +410,8 @@ async function buildInformation(sensorData) {
 
 
 
-        } else {
-            if (lowerCaseText.includes("fallo escalación") || lowerCaseText.includes("ok")) {
+        } else {//Aqui entran Farmacias y  comunicalo pero no radiobases
+            if (lowerCaseText.includes("fallo") || lowerCaseText.includes("ok")) {
                 await checkTime.checkTimeAndGreet(specialNumber, textToTemplate);
             }
             return {
