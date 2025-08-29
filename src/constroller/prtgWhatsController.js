@@ -3,6 +3,7 @@ const {
     response
 } = require("express");
 
+
 const processMessageR = require("../shared/processToPrtg");
 const chatGPTService = require("../service/chatGPT-service");
 const checkTime = require("../shared/checkTime");
@@ -407,7 +408,7 @@ async function buildInformation(sensorData) {
 
 
         } else {//Aqui entran Farmacias y  comunicalo pero no radiobases
-            if (lowerCaseText.includes("fallo") || lowerCaseText.includes("ok")) {
+            if (lowerCaseText.includes("fallo") || lowerCaseText.includes("ok") || owerCaseText.includes("down")) {
                 await checkTime.checkTimeAndGreet(specialNumber, textToTemplate);
             }
 
