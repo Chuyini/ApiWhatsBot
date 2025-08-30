@@ -376,7 +376,7 @@ async function buildInformation(sensorData) {
 
         console.log(`TELNYX tag: ${tags}, TELNYX lowerCaseText: ${lowerCaseText}`);
 
-        if ((tags.includes("rb") && !lowerCaseText.includes("ok") && lowerCaseText.includes("fallo")) || lowerCaseText.includes("ok")) {//Solo para radio basese y fallos
+        if (sensorData.batery || (tags.includes("rb") && !lowerCaseText.includes("ok") && lowerCaseText.includes("fallo")) || lowerCaseText.includes("ok")) {//Solo para radio basese y fallos
 
 
 
