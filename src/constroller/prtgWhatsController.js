@@ -376,7 +376,7 @@ async function buildInformation(sensorData) {
 
         console.log(`TELNYX tag: ${tags}, TELNYX lowerCaseText: ${lowerCaseText}`);
 
-        if (sensorData.batery || (tags.includes("rb") && !lowerCaseText.includes("ok") && lowerCaseText.includes("fallo")) || lowerCaseText.includes("ok")) {//Solo para radio basese y fallos
+        if ((sensorData.batery == true) || (tags.includes("rb") && !lowerCaseText.includes("ok") && lowerCaseText.includes("fallo")) || lowerCaseText.includes("ok")) {//Solo para radio basese y fallos
 
 
 
@@ -408,7 +408,7 @@ async function buildInformation(sensorData) {
 
 
         } else {//Aqui entran Farmacias y  comunicalo pero no radiobases
-            if (lowerCaseText.includes("fallo") || lowerCaseText.includes("ok") ) {
+            if (lowerCaseText.includes("fallo") || lowerCaseText.includes("ok")) {
                 await checkTime.checkTimeAndGreet(specialNumber, textToTemplate);
             }
 
