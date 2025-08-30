@@ -408,7 +408,7 @@ async function buildInformation(sensorData) {
 
 
         } else {//Aqui entran Farmacias y  comunicalo pero no radiobases
-            if (lowerCaseText.includes("fallo") || lowerCaseText.includes("ok") || lowerCaseText.includes("down")) {
+            if (lowerCaseText.includes("fallo") || lowerCaseText.includes("ok") ) {
                 await checkTime.checkTimeAndGreet(specialNumber, textToTemplate);
             }
 
