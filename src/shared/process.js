@@ -10,15 +10,17 @@ async function Process(textUser, number) {
 
     if (textUser.includes("#alertas")) {
         let model = whatsAppModel.MessageText("Haz solicitado petición de alertas", number);
-        model = await apiPRTG.getFaHorro();
+        const text = await apiPRTG.getFaHorro();
+        model = whatsAppModel.MessageText(text, number);    
         models.push(model);
 
     } else {
         if (resultChatGPT != null) {
 
-            let model = whatsAppModel.MessageText(resultChatGPT, number);
+            
             models.push(model);
             let resultChatGPT = await chatGPTService.GetMessageChatGPT(textUser);
+            let model = whatsAppModel.MessageText(resultChatGPT, number);
             console.log(resultChatGPT);
 
             // let model = whatsAppModel.MessageText(textUser,number);
