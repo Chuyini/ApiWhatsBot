@@ -13,17 +13,19 @@ async function Process(textUser, number) {
         model = await apiPRTG.getFaHorro();
         models.push(model);
 
-    } else if (resultChatGPT != null) {
-
-        let model = whatsAppModel.MessageText(resultChatGPT, number);
-        models.push(model);
-
-        // let model = whatsAppModel.MessageText(textUser,number);
-        //models.push(model);
     } else {
+        if (resultChatGPT != null) {
 
-        let model = whatsAppModel.MessageText("Botcito en mantenimiento, gracias por tu mensaje 😁", number);
-        models.push(model);
+            let model = whatsAppModel.MessageText(resultChatGPT, number);
+            models.push(model);
+
+            // let model = whatsAppModel.MessageText(textUser,number);
+            //models.push(model);
+        } else {
+
+            let model = whatsAppModel.MessageText("Botcito en mantenimiento, gracias por tu mensaje 😁", number);
+            models.push(model);
+        }
     }
 
 
