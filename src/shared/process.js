@@ -11,6 +11,7 @@ async function Process(textUser, number) {
     if (textUser.includes("#alertas")) {
         let model = whatsAppModel.MessageText("Haz solicitado petición de alertas", number);
         models.push(model);
+        
     }
 
 

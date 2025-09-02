@@ -1,9 +1,10 @@
 const { request, response } = require("express");
 const processMessage = require("../shared/process");
+const axios = require("axios");
 
 const VerifyToken = (req = request, res = response) => {
     try {
-        const accesToken = "rwer23werw";    
+        const accesToken = "rwer23werw";
         const token = req.query["hub.verify_token"];
         const challenge = req.query["hub.challenge"];
 
@@ -15,9 +16,9 @@ const VerifyToken = (req = request, res = response) => {
     } catch (error) {
         console.error("Error verifying token:", error);
         return res.status(500).send("Server error.");
-    } 
+    }
 
-    
+
 };
 
 const Recived = async (req = request, res = response) => {
@@ -56,14 +57,18 @@ const Recived = async (req = request, res = response) => {
             console.log(number);
             console.log(`Sending message: "El usuario dijo: ${text}" to number: ${number}`);
 
+
+
+            TypingIndicator(messages.id);
+
+
             // Llama a la función Process de manera asincrónica
             await processMessage.Process(text, number);//se tiene que esperar a que termine
-            
 
 
 
 
-            return res.status(200).send("EVENT_RECEIVED");  
+            return res.status(200).send("EVENT_RECEIVED");
         } else if (statusObject && statusObject.length > 0) {
             console.log("Received a status update:", statusObject);
             return res.status(200).send("STATUS_RECEIVED");
@@ -78,6 +83,50 @@ const Recived = async (req = request, res = response) => {
 };
 
 
+
+const https = require("https");
+
+function TypingIndicator(messageId) {
+    const data = JSON.stringify({
+        messaging_product: "whatsapp",
+        status: "read",
+        message_id: messageId,
+        typing_indicator: {
+            type: "text",
+        },
+    });
+
+    const options = {
+        host: "graph.facebook.com",
+        path: "/v19.0/396300430223838/messages",
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + process.env.WHATSAPP_API_KEY,
+            "Content-Length": Buffer.byteLength(data),
+        },
+        timeout: 100000,
+    };
+
+    const req = https.request(options, (res) => {
+        let responseBody = "";
+
+        res.on("data", (chunk) => {
+            responseBody += chunk;
+        });
+
+        res.on("end", () => {
+            console.log("✅ Respuesta de WhatsApp:", responseBody);
+        });
+    });
+
+    req.on("error", (error) => {
+        console.error("❌ Error al enviar typing indicator:", error);
+    });
+
+    req.write(data);
+    req.end();
+}
 
 function GetTextUser(message) {
     const typeMessage = message.type;
