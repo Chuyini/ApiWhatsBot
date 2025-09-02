@@ -20,13 +20,14 @@ async function getFaHorro() {
       httpsAgent: agent,
       timeout: 30000,
     });
+    console.log("✅ Datos PRTG:", apiResponsePRTG);
+
 
     let textSensors = "";
 
     for (const sensor of apiResponsePRTG.sensors) {
       textSensors += `Dispositivo: ${sensor.device}, Estado: Fallo\n`;
     }
-    console.log("✅ Datos PRTG:", apiResponsePRTG.sensors);
 
     // Puedes combinar o procesar los datos aquí
     return {
