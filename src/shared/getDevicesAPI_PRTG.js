@@ -9,23 +9,32 @@ const agent = new https.Agent({
 // URLs y tokens
 
 async function getFaHorro() {
-  
+
   const apiUrlDevicePRTG = `http://45.189.154.179:8045/api/table.json?apitoken=${process.env.API_TOKEN_PRTG}&columns=device&content=sensors&filter_tags=0982&filter_status=5${process.env.API_TOKEN_PRTG}`;
 
   try {
 
     // Llamada a PRTG
     const apiResponsePRTG = await axios.get(apiUrlDevicePRTG, {
-     
+
       httpsAgent: agent,
       timeout: 30000,
     });
 
-    console.log("✅ Datos PRTG:", apiResponsePRTG.data);
+    let textSensors = "";
+
+    for (const sensor of apiResponsePRTG.sensors) {
+
+      
+      textSensors += `Dispositivo: ${sensor.device}, Estado: Fallo\n`;
+
+    }
+
+    console.log("✅ Datos PRTG:", apiResponsePRTG.sensors);
 
     // Puedes combinar o procesar los datos aquí
     return {
-      prtg: apiResponsePRTG.data,
+      prtg: textSensors,
     };
   } catch (error) {
     console.error("❌ Error al obtener datos:", error.response?.data || error.message);
