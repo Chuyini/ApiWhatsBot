@@ -19,7 +19,7 @@ async function Process(textUser, number) {
             let model = whatsAppModel.MessageText(resultChatGPT, number);
             models.push(model);
             let resultChatGPT = await chatGPTService.GetMessageChatGPT(textUser);
-
+            console.log(resultChatGPT);
 
             // let model = whatsAppModel.MessageText(textUser,number);
             //models.push(model);
@@ -32,7 +32,7 @@ async function Process(textUser, number) {
     }
 
 
-    console.log(resultChatGPT);
+
 
 
 
