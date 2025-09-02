@@ -36,7 +36,7 @@ async function getFaHorro() {
     }
 
     return {
-      prtg: textSensors,
+      prtg: textSensors.toString(),
     };
   } catch (error) {
     console.error("❌ Error al obtener datos:", error.response?.data || error.message);
