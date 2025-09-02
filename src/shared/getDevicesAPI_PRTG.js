@@ -35,9 +35,7 @@ async function getFaHorro() {
       textSensors = "No hay sensores caídos en este momento.";
     }
 
-    return {
-      prtg: textSensors.toString(),
-    };
+    return textSensors;
   } catch (error) {
     console.error("❌ Error al obtener datos:", error.response?.data || error.message);
     throw error;
