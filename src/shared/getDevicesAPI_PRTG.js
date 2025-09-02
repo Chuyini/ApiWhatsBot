@@ -25,8 +25,12 @@ async function getFaHorro() {
 
     let textSensors = "";
 
-    for (const sensor of apiResponsePRTG.data.sensors) {
-      textSensors += `Dispositivo: ${sensor.device}, Estado: Fallo\n`;
+    if (apiResponsePRTG.data.sensors.length === 0) {
+      textSensors = "No hay sensores caídos en este momento.";
+    } else {
+      for (const sensor of apiResponsePRTG.data.sensors) {
+        textSensors += `Dispositivo: ${sensor.device}, Estado: Fallo\n`;
+      }
     }
 
     // Puedes combinar o procesar los datos aquí
