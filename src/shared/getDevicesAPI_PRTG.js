@@ -35,6 +35,7 @@ async function getFaHorro() {
       textSensors = "No hay sensores caídos en este momento.";
     }
 
+    console.log("✅ Texto de Sensores:", textSensors);  
     return textSensors;
   } catch (error) {
     console.error("❌ Error al obtener datos:", error.response?.data || error.message);
