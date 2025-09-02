@@ -24,12 +24,8 @@ async function getFaHorro() {
     let textSensors = "";
 
     for (const sensor of apiResponsePRTG.sensors) {
-
-      
       textSensors += `Dispositivo: ${sensor.device}, Estado: Fallo\n`;
-
     }
-
     console.log("✅ Datos PRTG:", apiResponsePRTG.sensors);
 
     // Puedes combinar o procesar los datos aquí
