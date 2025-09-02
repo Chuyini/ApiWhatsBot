@@ -29,7 +29,7 @@ async function getFaHorro() {
 
     if (Array.isArray(sensores) && sensores.length > 0) {
       for (const sensor of sensores) {
-        textSensors += `Dispositivo: ${sensor.device.toString().trim()}, Estado: Fallo\n`;
+        textSensors += `📡Dispositivo: ${sensor.device.toString().trim()}, Estado: 🟥Fallo\n`;
       }
     } else {
       textSensors = "No hay sensores caídos en este momento.";
