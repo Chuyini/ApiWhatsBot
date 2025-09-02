@@ -20,7 +20,7 @@ async function getFaHorro() {
       httpsAgent: agent,
       timeout: 30000,
     });
-    console.log("✅ Datos PRTG:", apiResponsePRTG.data.sensors);
+    console.log("✅ Datos PRTG:", apiResponsePRTG.data);
 
 
     let textSensors = "";
