@@ -13,14 +13,7 @@ async function Process(textUser, number) {
         model = await apiPRTG.getFaHorro();
         models.push(model);
 
-    }
-
-
-    let resultChatGPT = await chatGPTService.GetMessageChatGPT(textUser);
-    console.log(resultChatGPT);
-
-
-    if (resultChatGPT != null) {
+    } else if (resultChatGPT != null) {
 
         let model = whatsAppModel.MessageText(resultChatGPT, number);
         models.push(model);
@@ -32,6 +25,13 @@ async function Process(textUser, number) {
         let model = whatsAppModel.MessageText("Botcito en mantenimiento, gracias por tu mensaje 😁", number);
         models.push(model);
     }
+
+
+    let resultChatGPT = await chatGPTService.GetMessageChatGPT(textUser);
+    console.log(resultChatGPT);
+
+
+
     /*
     if (textUser.includes("hola")) {
         // comprar
