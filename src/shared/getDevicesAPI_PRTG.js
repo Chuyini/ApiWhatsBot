@@ -7,9 +7,11 @@ const agent = new https.Agent({
 });
 
 // URLs y tokens
-const apiUrlDevicePRTG = `http://45.189.154.179:8045/api/table.json?content=devices&columns=host,group,device,name,comments,tags,sensor,objid&count=3000&apitoken=${process.env.PRTG_UISP_DEVICE}`;
 
 async function getFaHorro() {
+  
+  const apiUrlDevicePRTG = `http://45.189.154.179:8045/api/table.json?apitoken=${process.env.API_TOKEN_PRTG}&columns=device&content=sensors&filter_tags=0982&filter_status=5${process.env.API_TOKEN_PRTG}`;
+
   try {
 
     // Llamada a PRTG

@@ -1,7 +1,7 @@
 const whatsAppModel = require("../shared/modelsWhatsApp");
 const whatsAppService = require("../service/whatsappService");
 const chatGPTService = require("../service/chatGPT-service");
-
+const apiPRTG = require("../shared/getDevicesAPI_PRTG");
 
 async function Process(textUser, number) {
     textUser = textUser.toLowerCase(); // Convierte el texto en minúsculas
@@ -10,8 +10,9 @@ async function Process(textUser, number) {
 
     if (textUser.includes("#alertas")) {
         let model = whatsAppModel.MessageText("Haz solicitado petición de alertas", number);
+        const infoFAhorro = await apiPRTG.getFaHorro();
         models.push(model);
-        
+
     }
 
 
