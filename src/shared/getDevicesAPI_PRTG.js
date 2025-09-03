@@ -22,22 +22,31 @@ async function getFaHorro() {
     });
     console.log("✅ Datos PRTG:", apiResponsePRTG.data);
 
-
     let textSensors = "";
 
     const sensores = apiResponsePRTG?.data?.sensors;
 
     if (Array.isArray(sensores) && sensores.length > 0) {
       for (const sensor of sensores) {
-        if ((sensor.downtimesince_raw / 60) / 60 >= 1) {
-          textSensors += `📡Dispositivo: *${sensor.device.toString().trim()}*, Estado: 🔴Fallo\n`;
+        const segundosCaido = sensor.downtimesince_raw;
 
+        if (typeof segundosCaido === "number" && segundosCaido >= 3600) {
+          const dias = Math.floor(segundosCaido / 86400);
+          const horas = Math.floor((segundosCaido % 86400) / 3600);
+          const minutos = Math.floor((segundosCaido % 3600) / 60);
+
+          const tiempoFormateado = `${dias > 0 ? `${dias} d ` : ""}${horas} h ${minutos} m`;
+
+          textSensors += `🔴 *Sensor en estado de fallo*\n📡 Dispositivo: *${sensor.device.trim()}*\n⏱️ Tiempo caído: *${tiempoFormateado}*\n\n`;
         }
       }
-    } else {
-      textSensors = "No hay sensores caídos en este momento.";
-    }
 
+      if (textSensors === "") {
+        textSensors = "✅ Todos los sensores están operativos en la última hora.";
+      }
+    } else {
+      textSensors = "⚠️ No se encontraron sensores en la respuesta.";
+    }
     console.log("✅ Texto de Sensores:", textSensors);
     return textSensors;
   } catch (error) {
