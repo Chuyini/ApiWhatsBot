@@ -10,7 +10,7 @@ const agent = new https.Agent({
 
 async function getFaHorro() {
 
-  const apiUrlDevicePRTG = `http://45.189.154.179:8045/api/table.json?apitoken=${process.env.API_TOKEN_PRTG}&columns=device&content=sensors&filter_tags=0982&filter_status=5&count=10`;
+  const apiUrlDevicePRTG = `http://45.189.154.179:8045/api/table.json?apitoken=${process.env.API_TOKEN_PRTG}&columns=device,downtimetime&content=sensors&filter_tags=0982&filter_status=5&count=10`;
 
   try {
 
@@ -29,13 +29,33 @@ async function getFaHorro() {
 
     if (Array.isArray(sensores) && sensores.length > 0) {
       for (const sensor of sensores) {
-        textSensors += `📡Dispositivo: *${sensor.device.toString().trim()}*, Estado: 🔴Fallo\n`;
+        if ((sensor.downtimetime_raw / 60) / 60 >= 1) {
+          textSensors += `📡Dispositivo: *${sensor.device.toString().trim()}*, Estado: 🔴Fallo\n`;
+          let textSensors = "";
+
+          if (Array.isArray(sensores) && sensores.length > 0) {
+            const sensoresFallidos = sensores.filter(sensor => {
+              return typeof sensor.downtimetime_raw === "number" && (sensor.downtimetime_raw / 3600) >= 1;
+            });
+
+            if (sensoresFallidos.length > 0) {
+              for (const sensor of sensoresFallidos) {
+                const horasCaido = (sensor.downtimetime_raw / 3600).toFixed(1);
+                textSensors += `📡 Dispositivo: *${sensor.device.trim()}*\n⏱️ Tiempo caído: ${horasCaido} h\n🔴 Estado: Fallo\n\n`;
+              }
+            } else {
+              textSensors = "Todos los sensores están operativos en la última hora.";
+            }
+          } else {
+            textSensors = "No hay sensores disponibles en la respuesta.";
+          }
+        }
       }
     } else {
       textSensors = "No hay sensores caídos en este momento.";
     }
 
-    console.log("✅ Texto de Sensores:", textSensors);  
+    console.log("✅ Texto de Sensores:", textSensors);
     return textSensors;
   } catch (error) {
     console.error("❌ Error al obtener datos:", error.response?.data || error.message);
