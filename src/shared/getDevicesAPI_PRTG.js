@@ -10,7 +10,7 @@ const agent = new https.Agent({
 
 async function getFaHorro() {
 
-  const apiUrlDevicePRTG = `http://45.189.154.179:8045/api/table.json?apitoken=${process.env.API_TOKEN_PRTG}&columns=device,downtimetime&content=sensors&filter_tags=0982&filter_status=5&count=10`;
+  const apiUrlDevicePRTG = `http://45.189.154.179:8045/api/table.json?apitoken=${process.env.API_TOKEN_PRTG}&columns=device,downtimesince&content=sensors&filter_tags=0982&filter_status=5&count=10`;
 
   try {
 
@@ -29,7 +29,7 @@ async function getFaHorro() {
 
     if (Array.isArray(sensores) && sensores.length > 0) {
       for (const sensor of sensores) {
-        if ((sensor.downtimetime_raw / 60) / 60 >= 1) {
+        if ((sensor.downtimesince_raw / 60) / 60 >= 1) {
           textSensors += `📡Dispositivo: *${sensor.device.toString().trim()}*, Estado: 🔴Fallo\n`;
 
         }
