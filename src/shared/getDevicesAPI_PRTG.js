@@ -31,24 +31,7 @@ async function getFaHorro() {
       for (const sensor of sensores) {
         if ((sensor.downtimetime_raw / 60) / 60 >= 1) {
           textSensors += `📡Dispositivo: *${sensor.device.toString().trim()}*, Estado: 🔴Fallo\n`;
-          
 
-          if (Array.isArray(sensores) && sensores.length > 0) {
-            const sensoresFallidos = sensores.filter(sensor => {
-              return typeof sensor.downtimetime_raw === "number" && (sensor.downtimetime_raw / 3600) >= 1;
-            });
-
-            if (sensoresFallidos.length > 0) {
-              for (const sensor of sensoresFallidos) {
-                const horasCaido = (sensor.downtimetime_raw / 3600).toFixed(1);
-                textSensors += `📡 Dispositivo: *${sensor.device.trim()}*\n⏱️ Tiempo caído: ${horasCaido} h\n🔴 Estado: Fallo\n\n`;
-              }
-            } else {
-              textSensors = "Todos los sensores están operativos en la última hora.";
-            }
-          } else {
-            textSensors = "No hay sensores disponibles en la respuesta.";
-          }
         }
       }
     } else {
