@@ -31,7 +31,7 @@ async function getFaHorro() {
       for (const sensor of sensores) {
         if ((sensor.downtimetime_raw / 60) / 60 >= 1) {
           textSensors += `📡Dispositivo: *${sensor.device.toString().trim()}*, Estado: 🔴Fallo\n`;
-          let textSensors = "";
+          
 
           if (Array.isArray(sensores) && sensores.length > 0) {
             const sensoresFallidos = sensores.filter(sensor => {
