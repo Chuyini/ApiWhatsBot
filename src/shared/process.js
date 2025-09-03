@@ -11,11 +11,13 @@ async function Process(textUser, number) {
     if (textUser.includes("#alertas")) {
         let model = whatsAppModel.MessageText("Haz solicitado petición de alertas", number);
         const text = await apiPRTG.getFaHorro();
-        model = whatsAppModel.MessageText(text, number);    
+        model = whatsAppModel.MessageText(text, number);
         models.push(model);
 
     } else {
-        if (resultChatGPT != null) {
+        let model = whatsAppModel.MessageText("Botcito en mantenimiento, gracias por tu mensaje 😁", number);
+        models.push(model);
+        /*if (resultChatGPT != null) {
 
             
             models.push(model);
@@ -30,7 +32,7 @@ async function Process(textUser, number) {
             let model = whatsAppModel.MessageText("Botcito en mantenimiento, gracias por tu mensaje 😁", number);
             models.push(model);
 
-        }
+        }*/
     }
 
 
