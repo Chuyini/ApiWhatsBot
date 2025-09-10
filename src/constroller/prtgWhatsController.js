@@ -116,7 +116,7 @@ async function buildInformation(sensorData) {
     let AIresponse = sensorData.AIresponse || "Default AI response";
     let idUispService = extractNumberFromCompany(company);
     let bandera = sensorData.bandera || "default";
-    let numbers = ["524401050937", "524442478772", "524434629327", "524442309641"]; //Yo de trabajo, Debie, yo personal, Armando
+    let numbers = ["524401050937", "524442478772", "524434629327", "524442309641","524441574990", "524441184908"]; //Yo de trabajo, Debie, yo personal, Armando
     let tags = sensorData.tags || ["defaultTag"];
     let resumMesagge = "" || message.toLowerCase();
     let sensorcomment = sensorData.sensorcomment || "No sensor comment";
