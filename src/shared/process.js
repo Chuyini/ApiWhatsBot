@@ -12,7 +12,7 @@ async function Process(textUser, number) {
     if (textUser.includes("#alertas")) {
         if (number === "524441452315") {
 
-            const text = "_____________💖*SOLO FARMACIAS*💖_____________\n\n"+await apiPRTG.getFaHorro();
+            const text = "_____________💖*SOLO FARMACIAS*_____________\n\n"+await apiPRTG.getFaHorro();
             let model = whatsAppModel.MessageText(text, number);
             models.push(model);
 
