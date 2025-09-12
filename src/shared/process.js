@@ -16,7 +16,6 @@ async function Process(textUser, number) {
             models.push(model);
 
         } else {
-            const text1 = await apiPRTG.getFaHorro();
             const text2 = await apiPRTG.getAllClients();
             const text3 = await apiPRTG.getAllRBs();
             let model = whatsAppModel.MessageText(text1, number);
