@@ -9,10 +9,24 @@ async function Process(textUser, number) {
 
 
     if (textUser.includes("#alertas")) {
-        let model = whatsAppModel.MessageText("Haz solicitado petición de alertas", number);
-        const text = await apiPRTG.getFaHorro();
-        model = whatsAppModel.MessageText(text, number);
-        models.push(model);
+        if (number === "524441452315") {
+
+            const text = await apiPRTG.getFaHorro();
+            model = whatsAppModel.MessageText(text, number);
+            models.push(model);
+
+        } else {
+            const text1 = await apiPRTG.getFaHorro();
+            const text2 = await apiPRTG.getAllClients();
+            const text3 = await apiPRTG.getAllRBs();
+            let model = whatsAppModel.MessageText(text1, number);
+            let model2 = whatsAppModel.MessageText(text2, number);
+            let model3 = whatsAppModel.MessageText(text3, number);
+            models.push(model);
+            models.push(model2);
+            models.push(model3);
+
+        }
 
     } else {
         let model = whatsAppModel.MessageText("Botcito en mantenimiento, gracias por tu mensaje 😁", number);
