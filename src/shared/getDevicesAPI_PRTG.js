@@ -16,7 +16,7 @@ async function getFaHorro() {
   //si no hay id de empresa, lo dejamos vacio  
 
 
-  const apiUrlDevicePRTG = `http://45.189.154.179:8045/api/table.json?apitoken=${process.env.API_TOKEN_PRTG}&columns=device,downtimesince,tags&content=sensors&filter_tags=0982&filter_status=5&count=10`;
+  const apiUrlDevicePRTG = `http://45.189.154.179:8045/api/table.json?apitoken=${process.env.API_TOKEN_PRTG}&columns=device,downtimesince&content=sensors&filter_tags=0982&filter_status=5&count=10`;
 
   try {
 
