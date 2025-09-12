@@ -18,7 +18,7 @@ async function Process(textUser, number) {
 
         } else {
             const text2 = await apiPRTG.getAllClients();
-            const text3 = "\t\t\t RADIO BASES\n"+ await apiPRTG.getAllRBs();
+            const text3 = "\t\t\t********* *RADIO BASES/BATERIAS* *********\n"+ await apiPRTG.getAllRBs();
             let model2 = whatsAppModel.MessageText(text2, number);
             let model3 = whatsAppModel.MessageText(text3, number);
             
