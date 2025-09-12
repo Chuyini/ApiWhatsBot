@@ -6,7 +6,7 @@ const apiPRTG = require("../shared/getDevicesAPI_PRTG");
 async function Process(textUser, number) {
     textUser = textUser.toLowerCase(); // Convierte el texto en minúsculas
     let models = []; // Arreglo de modelos
-    
+
 
 
     if (textUser.includes("#alertas")) {
@@ -17,11 +17,11 @@ async function Process(textUser, number) {
             models.push(model);
 
         } else {
-            const text2 = await apiPRTG.getAllClients();
-            const text3 = " __________*RADIO BASES/BATERIAS*__________\n\n"+ await apiPRTG.getAllRBs();
+            const text2 = "_____________*PRTG CLIENTES*_____________\n\n" + await apiPRTG.getAllClients();
+            const text3 = " _____________*RADIO BASES/BATERIAS*_____________\n\n" + await apiPRTG.getAllRBs();
             let model2 = whatsAppModel.MessageText(text2, number);
             let model3 = whatsAppModel.MessageText(text3, number);
-            
+
             models.push(model2);
             models.push(model3);
 
