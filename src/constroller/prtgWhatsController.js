@@ -116,7 +116,7 @@ async function buildInformation(sensorData) {
     let AIresponse = sensorData.AIresponse || "Default AI response";
     let idUispService = extractNumberFromCompany(company);
     let bandera = sensorData.bandera || "default";
-    let numbers = ["524401050937", "524442478772", "524434629327", "524442309641","524441574990", "524441184908"]; //Yo de trabajo, Debie, yo personal, Armando
+    let numbers = ["524401050937", "524442478772", "524434629327", "524442309641"]; //Yo de trabajo, Debie, yo personal, Armando, Eli Gallegos
     let tags = sensorData.tags || ["defaultTag"];
     let resumMesagge = "" || message.toLowerCase();
     let sensorcomment = sensorData.sensorcomment || "No sensor comment";
@@ -375,38 +375,40 @@ async function buildInformation(sensorData) {
         }
 
         console.log(`TELNYX tag: ${tags}, TELNYX lowerCaseText: ${lowerCaseText}`);
-        if ((sensorData.batery == "true") || (tags.includes("rb") && !lowerCaseText.includes("ok") && lowerCaseText.includes("fallo")) || lowerCaseText.includes("ok")) {//Solo para radio basese y fallos
+        if ((sensorData.batery == "true") || (tags.includes("rb"))) {//Solo para radio basese y fallos
 
 
+            if (lowerCaseText.includes("fallo") || lowerCaseText.includes("ok")) {
+                const onlyNumbersToCall = ["+524442478772", "+524441574990", "+524441184908"];
 
+                const tareas = [
+                    checkTime.checkTimeAndGreet(specialNumber, textToTemplate)
+                ];
 
-            const onlyNumbersToCall = ["+524442478772", "+524441574990", "+524441184908"];
+                // Solo agrega la alerta si está fuera del horario laboral
+                if (!estaEnHorarioLaboral(new Date())) {
+                    console.log("Fuera del horario laboral, agregando alerta de radiobase:", new Date());
+                    tareas.push(
+                        telnyx.alertaRadiobaseFunction({
+                            telefonos: onlyNumbersToCall,
+                            nameRB: sensorData.name
+                        })
+                    );
+                } else {
+                    console.log("Dentro del horario laboral, no se agrega alerta de radiobase, horario laboral: ", new Date());
+                }
 
-            const tareas = [
-                checkTime.checkTimeAndGreet(specialNumber, textToTemplate)
-            ];
-
-            // Solo agrega la alerta si está fuera del horario laboral
-            if (!estaEnHorarioLaboral(new Date())) {
-                console.log("Fuera del horario laboral, agregando alerta de radiobase:", new Date());
-                tareas.push(
-                    telnyx.alertaRadiobaseFunction({
-                        telefonos: onlyNumbersToCall,
-                        nameRB: sensorData.name
-                    })
-                );
-            } else {
-                console.log("Dentro del horario laboral, no se agrega alerta de radiobase, horario laboral: ", new Date());
+                // Ejecuta todas las tareas en paralelo
+                await Promise.all(tareas);
             }
 
-            // Ejecuta todas las tareas en paralelo
-            await Promise.all(tareas);
 
 
 
 
 
-        } else {//Aqui entran Farmacias y  comunicalo pero no radiobases
+
+        } else {//Aqui entran Farmacias y  comunicalo pero no radiobases y criyticos    
             if (lowerCaseText.includes("fallo") || lowerCaseText.includes("ok")) {
                 await checkTime.checkTimeAndGreet(specialNumber, textToTemplate);
             }
