@@ -58,7 +58,7 @@ async function getFaHorro() {
 
 async function getAllClients() {
 
-  const apiUrlDevicePRTG = `http://45.189.154.179:8045/api/table.json?apitoken=${process.env.API_TOKEN_PRTG}&columns=device,downtimesince&content=sensors&filter_status=5`;
+  const apiUrlDevicePRTG = `http://45.189.154.179:8045/api/table.json?apitoken=${process.env.API_TOKEN_PRTG}&columns=device,downtimesince,group&content=sensors&filter_status=5`;
 
   try {
 
@@ -85,7 +85,7 @@ async function getAllClients() {
 
           const tiempoFormateado = `${dias > 0 ? `${dias} d ` : ""}${horas} h ${minutos} m`;
 
-          textSensors += `🔴 *Sensor en estado de fallo*\n📡 Dispositivo: *${sensor.device.trim()}*\n⏱️ Tiempo caído: *${tiempoFormateado}*\n\n`;
+          textSensors += `🔴 *Sensor en estado de fallo*\nEntidad: *${sensor.group.trim()}* \n📡 Dispositivo: *${sensor.device.trim()}*\n⏱️ Tiempo caído: *${tiempoFormateado}*\n\n`;
         }
       }
 
