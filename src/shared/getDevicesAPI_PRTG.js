@@ -69,7 +69,7 @@ async function getFaHorro() {
 
 async function getAllClients() {
 
-  const apiUrlDevicePRTG = `http://45.189.154.179:8045/api/table.json?apitoken=${process.env.API_TOKEN_PRTG}&columns=device,downtimesince,group&content=sensors&filter_status=5`;
+  const apiUrlDevicePRTG = `http://45.189.154.179:8045/api/table.json?apitoken=${process.env.API_TOKEN_PRTG}&columns=device,downtimesince,group,tags&content=sensors&filter_status=5`;
   const regexIDC = /\b\d{4}\b/;
   let realIDCompany = "";
 
