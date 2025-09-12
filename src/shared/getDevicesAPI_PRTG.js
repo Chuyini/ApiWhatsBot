@@ -10,9 +10,7 @@ const agent = new https.Agent({
 
 async function getFaHorro() {
 
-  const regexIDC = /\b\d{4}\b/;
-  let realIDCompany = "";
-
+ 
   //si no hay id de empresa, lo dejamos vacio  
 
 
@@ -34,10 +32,7 @@ async function getFaHorro() {
 
     if (Array.isArray(sensores) && sensores.length > 0) {
       for (const sensor of sensores) {
-        if (tags.match(regexIDC) != null) { //si hay id de empresa en las etiquetas
-          realIDCompany = `(${sensor.tags.match(regexIDC)}) - ` || ""; //Este será el id de de empresa sacado de las etiquetas
-
-        }
+        
 
         const segundosCaido = sensor.downtimesince_raw;
 
