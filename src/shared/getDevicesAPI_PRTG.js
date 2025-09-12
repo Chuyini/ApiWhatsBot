@@ -10,7 +10,13 @@ const agent = new https.Agent({
 
 async function getFaHorro() {
 
-  const apiUrlDevicePRTG = `http://45.189.154.179:8045/api/table.json?apitoken=${process.env.API_TOKEN_PRTG}&columns=device,downtimesince&content=sensors&filter_tags=0982&filter_status=5&count=10`;
+  const regexIDC = /\b\d{4}\b/;
+  let realIDCompany = "";
+
+  //si no hay id de empresa, lo dejamos vacio  
+
+
+  const apiUrlDevicePRTG = `http://45.189.154.179:8045/api/table.json?apitoken=${process.env.API_TOKEN_PRTG}&columns=device,downtimesince,tags&content=sensors&filter_tags=0982&filter_status=5&count=10`;
 
   try {
 
@@ -28,6 +34,11 @@ async function getFaHorro() {
 
     if (Array.isArray(sensores) && sensores.length > 0) {
       for (const sensor of sensores) {
+        if (tags.match(regexIDC) != null) { //si hay id de empresa en las etiquetas
+          realIDCompany = `(${sensor.tags.match(regexIDC)}) - ` || ""; //Este será el id de de empresa sacado de las etiquetas
+
+        }
+
         const segundosCaido = sensor.downtimesince_raw;
 
         if (typeof segundosCaido === "number" && (segundosCaido >= 3600 && segundosCaido <= 259200)) {//Mayor a una hora
@@ -59,6 +70,9 @@ async function getFaHorro() {
 async function getAllClients() {
 
   const apiUrlDevicePRTG = `http://45.189.154.179:8045/api/table.json?apitoken=${process.env.API_TOKEN_PRTG}&columns=device,downtimesince,group&content=sensors&filter_status=5`;
+  const regexIDC = /\b\d{4}\b/;
+  let realIDCompany = "";
+
 
   try {
 
@@ -76,6 +90,10 @@ async function getAllClients() {
 
     if (Array.isArray(sensores) && sensores.length > 0) {
       for (const sensor of sensores) {
+        if (sensor.tags.match(regexIDC) != null) { //si hay id de empresa en las etiquetas
+          realIDCompany = `(${sensor.tags.match(regexIDC)}) - ` || ""; //Este será el id de de empresa sacado de las etiquetas
+
+        }
         const segundosCaido = sensor.downtimesince_raw;
 
         if (typeof segundosCaido === "number" && (segundosCaido >= 3600 && segundosCaido <= 259200)) {
@@ -85,7 +103,7 @@ async function getAllClients() {
 
           const tiempoFormateado = `${dias > 0 ? `${dias} d ` : ""}${horas} h ${minutos} m`;
 
-          textSensors += `🔴 *Sensor en estado de fallo*\nEntidad: *${sensor.group.trim()}* \n📡 Dispositivo: *${sensor.device.trim()}*\n⏱️ Tiempo caído: *${tiempoFormateado}*\n\n`;
+          textSensors += `🔴 *Sensor en estado de fallo*\n🏢Entidad: *${sensor.group.trim()}* \n📡 Dispositivo: *${sensor.device.trim()}* - ${realIDCompany}\n⏱️ Tiempo caído: *${tiempoFormateado}*\n\n`;
         }
       }
 

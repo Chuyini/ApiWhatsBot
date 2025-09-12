@@ -6,6 +6,7 @@ const apiPRTG = require("../shared/getDevicesAPI_PRTG");
 async function Process(textUser, number) {
     textUser = textUser.toLowerCase(); // Convierte el texto en minúsculas
     let models = []; // Arreglo de modelos
+    
 
 
     if (textUser.includes("#alertas")) {
