@@ -361,7 +361,7 @@ async function buildInformation(sensorData) {
             specialNumber.push("524442475444"); //Diana
         }*/
 
-        specialNumber.push("524442475444"); //Diana
+
 
 
         //const testNumbers = ["524434629327","524442478772","524441967796","524442475444","524401050937", "524441171133", "526643671066"];//yo,Debie, Lic, diana,yo trabajo,mama,itzel
@@ -369,6 +369,10 @@ async function buildInformation(sensorData) {
 
         //Identificar el id de cliente
         const idService = toolsPostUISPPrtg.identifyIDClient(sensorData);
+        if (tags.includes("rb")) {
+            specialNumber.push("524444044840"); //<-- insertamos a ELI
+
+        }
         if (idService == "886") {//<-- si es farmacia
 
             specialNumber.push("524441452315"); //<-- insertamos a ELI
