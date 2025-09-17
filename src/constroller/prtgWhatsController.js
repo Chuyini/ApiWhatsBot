@@ -357,9 +357,10 @@ async function buildInformation(sensorData) {
 
         const specialNumber = ["524441574990", "524441184908", "524434629327", "524442478772"];
 
-        /*if (estaEnHorarioLaboral(new Date()) != false) {
+        
+        
             specialNumber.push("524442475444"); //Diana
-        }*/
+        
 
 
 
