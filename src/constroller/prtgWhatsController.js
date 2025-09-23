@@ -378,7 +378,7 @@ async function buildInformation(sensorData) {
 
             specialNumber.push("524441452315"); //<-- insertamos a ELI
         }
-
+ 
         console.log(`TELNYX tag: ${tags}, TELNYX lowerCaseText: ${lowerCaseText}`);
         if ((sensorData.batery == "true") || (tags.includes("rb"))) {//Solo para radio basese y fallos
 
