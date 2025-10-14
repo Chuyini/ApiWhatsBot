@@ -22,7 +22,7 @@ const VerifyToken = (req = request, res = response) => {
 
 };
 
-const Recived = async (req = request, res = response) => {
+const  Recived = async (req = request, res = response) => {
     try {
         console.log("Request body:", JSON.stringify(req.body, null, 2));
 

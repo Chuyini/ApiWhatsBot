@@ -116,7 +116,7 @@ async function buildInformation(sensorData) {
     let AIresponse = sensorData.AIresponse || "Default AI response";
     let idUispService = extractNumberFromCompany(company);
     let bandera = sensorData.bandera || "default";
-    let numbers = ["524401050937", "524442478772", "524434629327", "524442309641"]; //Yo de trabajo, Debie, yo personal, Armando, Eli Gallegos
+    let numbers = ["524401050937", "524442478772", "524434629327", "524442309641", "524444044840"]; //Yo de trabajo, Debie, yo personal, Armando, Eli Gallegos
     let tags = sensorData.tags || ["defaultTag"];
     let resumMesagge = "" || message.toLowerCase();
     let sensorcomment = sensorData.sensorcomment || "No sensor comment";
@@ -408,25 +408,16 @@ async function buildInformation(sensorData) {
             }
 
 
-
-
-
-
-
         } else {//Aqui entran Farmacias y  comunicalo pero no radiobases y criyticos    
             if (lowerCaseText.includes("fallo") || lowerCaseText.includes("ok")) {
                 await checkTime.checkTimeAndGreet(specialNumber, textToTemplate);
             }
-
         }
 
         return {
             text,
             numbers
         };
-
-
-
 
     } else {
         if (lowerCaseComuni.includes("comunicalo") || tags.includes("comunicalo") /*&& !/^192\.168\./.test(lowerCaseIp)*/) {
