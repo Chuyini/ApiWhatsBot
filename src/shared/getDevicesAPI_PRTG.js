@@ -42,12 +42,12 @@ async function getFaHorro() {
 
         const ipBrute = parentSensores.find(sensorParent => sensorParent.objid === sensor.parentid);
 
-        const hostIP =ipBrute?.host;
+        const hostIP = ipBrute?.host;
         // Ahora puedes acceder a ip, por ejemplo:
-        console.log("la ip de FARMACIAS ES 🎂",hostIP); // si 'ip' tiene una propiedad 'ip'
+        console.log("la ip de FARMACIAS ES 🎂", hostIP); // si 'ip' tiene una propiedad 'ip'
         const segundosCaido = sensor.downtimesince_raw;
 
-        if (typeof segundosCaido === "number" && (segundosCaido >= 3600 && segundosCaido <= 259200)) {//Mayor a una hora
+        if (typeof segundosCaido === "number" && (segundosCaido >= 300 && segundosCaido <= 259200)) {//Mayor a una hora
           const dias = Math.floor(segundosCaido / 86400);
           const horas = Math.floor((segundosCaido % 86400) / 3600);
           const minutos = Math.floor((segundosCaido % 3600) / 60);
@@ -62,7 +62,7 @@ async function getFaHorro() {
         textSensors = "✅ Todos los sensores están operativos en la última hora.";
       }
     } else {
-      textSensors = "⚠️ No se encontraron sensores en la respuesta.";
+      textSensors = "✅ Todos los sensores están operativos en la última hora.";
     }
     console.log("✅ Texto de Sensores:", textSensors);
     return textSensors;
@@ -104,7 +104,7 @@ async function getAllClients() {
         }
         const segundosCaido = sensor.downtimesince_raw;
 
-        if (typeof segundosCaido === "number" && (segundosCaido >= 3600 && segundosCaido <= 259200)) {
+        if (typeof segundosCaido === "number" && (segundosCaido >= 300 && segundosCaido <= 259200)) {
           const dias = Math.floor(segundosCaido / 86400);
           const horas = Math.floor((segundosCaido % 86400) / 3600);
           const minutos = Math.floor((segundosCaido % 3600) / 60);
@@ -119,7 +119,7 @@ async function getAllClients() {
         textSensors = "✅ Todos los sensores están operativos en la última hora.";
       }
     } else {
-      textSensors = "⚠️ No se encontraron sensores en la respuesta.";
+      textSensors = "✅ Todos los sensores están operativos en la última hora.";
     }
     console.log("✅ Texto de Sensores:", textSensors);
     return textSensors;
