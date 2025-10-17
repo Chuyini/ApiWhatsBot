@@ -45,7 +45,7 @@ async function getFaHorro() {
 
         const hostIP = ipBrute?.host;
         // Ahora puedes acceder a ip, por ejemplo:
-        console.log("la ip de FARMACIAS ES 🎂", hostIP); // si 'ip' tiene una propiedad 'ip'
+        console.log("la ip de FARMACIAS ES 🎂", ipBrute); // si 'ip' tiene una propiedad 'ip'
         const segundosCaido = sensor.downtimesince_raw;
 
         if (typeof segundosCaido === "number" && (segundosCaido >= 300 && segundosCaido <= 259200)) {//Mayor a una hora
