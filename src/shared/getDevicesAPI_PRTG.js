@@ -10,8 +10,10 @@ const agent = new https.Agent({
 
 async function getFaHorro() {
 
- 
+
   //si no hay id de empresa, lo dejamos vacio  
+
+  const apiURLParentsDevicePRTGFarmacias = `http://45.189.154.179:8045/api/table.json?apitoken=${process.env.API_TOKEN_PRTG}&columns=device,downtimesince,group,tags,objid,host&content=devices&filter_tags=@tag(0982)`;
 
 
   const apiUrlDevicePRTG = `http://45.189.154.179:8045/api/table.json?apitoken=${process.env.API_TOKEN_PRTG}&columns=device,downtimesince&content=sensors&filter_tags=0982&filter_status=5&count=10`;
@@ -24,16 +26,25 @@ async function getFaHorro() {
       httpsAgent: agent,
       timeout: 30000,
     });
+    const apiResponsePRTG2 = await axios.get(apiURLParentsDevicePRTGFarmacias, {
+
+      httpsAgent: agent,
+      timeout: 30000,
+    });
     console.log("✅ Datos PRTG:", apiResponsePRTG.data);
 
     let textSensors = "";
-
+    const parentSensores = apiResponsePRTG2?.data?.devices;
     const sensores = apiResponsePRTG?.data?.sensors;
 
     if (Array.isArray(sensores) && sensores.length > 0) {
       for (const sensor of sensores) {
-        
 
+        const ipBrute = parentSensores.find(sensorParent => sensorParent.objid === sensor.parentid);
+
+        const hostIP =ipBrute?.host;
+        // Ahora puedes acceder a ip, por ejemplo:
+        console.log("la ip de FARMACIAS ES 🎂",hostIP); // si 'ip' tiene una propiedad 'ip'
         const segundosCaido = sensor.downtimesince_raw;
 
         if (typeof segundosCaido === "number" && (segundosCaido >= 3600 && segundosCaido <= 259200)) {//Mayor a una hora
@@ -43,7 +54,7 @@ async function getFaHorro() {
 
           const tiempoFormateado = `${dias > 0 ? `${dias} d ` : ""}${horas} h ${minutos} m`;
 
-          textSensors += `🔴 *Sensor en estado de fallo*\n📡 Dispositivo: *${sensor.device.trim()}*\n⏱️ Tiempo caído: *${tiempoFormateado}*\n\n`;
+          textSensors += `🔴 *Sensor en estado de fallo*\n📡 Dispositivo: *${sensor.device.trim()}*\n⏱️ Tiempo caído: *${tiempoFormateado}*\n*🌐IP: *${hostIP}*\n\n`;
         }
       }
 
@@ -64,7 +75,7 @@ async function getFaHorro() {
 
 async function getAllClients() {
 
-  const apiUrlDevicePRTG = `http://45.189.154.179:8045/api/table.json?apitoken=${process.env.API_TOKEN_PRTG}&columns=device,downtimesince,group,tags&content=sensors&filter_status=5`;
+  const apiUrlDevicePRTG = `http://45.189.154.179:8045/api/table.json?apitoken=${process.env.API_TOKEN_PRTG}&columns=device,downtimesince,group,tags,parentid&content=sensors&filter_status=5`;
   const regexIDC = /\b\d{4}\b/;
   let realIDCompany = "";
 
@@ -77,11 +88,13 @@ async function getAllClients() {
       httpsAgent: agent,
       timeout: 30000,
     });
+
     console.log("✅ Datos PRTG:", apiResponsePRTG.data);
 
     let textSensors = "";
 
     const sensores = apiResponsePRTG?.data?.sensors;
+
 
     if (Array.isArray(sensores) && sensores.length > 0) {
       for (const sensor of sensores) {
