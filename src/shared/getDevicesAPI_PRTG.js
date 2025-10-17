@@ -32,6 +32,7 @@ async function getFaHorro() {
       timeout: 30000,
     });
     console.log("✅ Datos PRTG:", apiResponsePRTG.data);
+    console.log("✅ Datos PRTG2:", apiResponsePRTG2.data);
 
     let textSensors = "";
     const parentSensores = apiResponsePRTG2?.data?.devices;
