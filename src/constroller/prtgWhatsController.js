@@ -376,7 +376,7 @@ async function buildInformation(sensorData) {
         }
         if (idService == "886") {//<-- si es farmacia
 
-            //specialNumber.push("524441452315"); //<-- insertamos a ELI
+            specialNumber.push("524441452315"); //<-- insertamos a ELI
         }
  
         console.log(`TELNYX tag: ${tags}, TELNYX lowerCaseText: ${lowerCaseText}`);
