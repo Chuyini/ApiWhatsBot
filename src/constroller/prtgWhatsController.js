@@ -126,6 +126,7 @@ async function buildInformation(sensorData) {
     //suponemos que la clave expiro y entro un nuevo ticket
 
     //global.apiKey = "va lor xs";
+    numbers.push("524442475444"); //Diana
 
     //console.log("Valor inicial de prueba de API KEY: ", global.apiKey);
     const regexIDC = /\b\d{4}\b/;
@@ -315,7 +316,7 @@ async function buildInformation(sensorData) {
         // checkTime.checkTimeAndGreet();
         //text = "";
         numbers.push("524441967796"); //el lic
-        numbers.push("524442475444"); //Diana
+        
         /*if (tags.includes("RB")) {
 
             await db.updateFailMasive(1);
@@ -357,28 +358,24 @@ async function buildInformation(sensorData) {
 
         const specialNumber = ["524441574990", "524441184908", "524434629327", "524442478772"];
 
-        
-        
-            specialNumber.push("524442475444"); //Diana
-        
 
 
-
+        //specialNumber.push("524442475444"); //Diana
 
         //const testNumbers = ["524434629327","524442478772","524441967796","524442475444","524401050937", "524441171133", "526643671066"];//yo,Debie, Lic, diana,yo trabajo,mama,itzel
         //numbers.push("524441184908"); //Ceron
 
         //Identificar el id de cliente
         const idService = toolsPostUISPPrtg.identifyIDClient(sensorData);
-        if (tags.includes("rb")) {
-            specialNumber.push("524444044840"); //<-- insertamos a ELI
+        /*if (tags.includes("rb")) {
+            specialNumber.push("524444044840"); //<-- insertamos a ABEL
 
-        }
+        }*/
         if (idService == "886") {//<-- si es farmacia
 
             specialNumber.push("524441452315"); //<-- insertamos a ELI
         }
- 
+
         console.log(`TELNYX tag: ${tags}, TELNYX lowerCaseText: ${lowerCaseText}`);
         if ((sensorData.batery == "true") || (tags.includes("rb"))) {//Solo para radio basese y fallos
 
