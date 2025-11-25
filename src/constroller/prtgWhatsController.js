@@ -383,9 +383,9 @@ async function buildInformation(sensorData) {
             if (lowerCaseText.includes("fallo") || lowerCaseText.includes("ok")) {
                 const onlyNumbersToCall = ["+524442478772", "+524441574990", "+524441184908"];
 
-                /*const tareas = [
+                const tareas = [
                     checkTime.checkTimeAndGreet(specialNumber, textToTemplate)
-                ];*/
+                ];
 
                 // Solo agrega la alerta si está fuera del horario laboral
                 if (!estaEnHorarioLaboral(new Date())) {
