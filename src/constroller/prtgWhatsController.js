@@ -386,7 +386,7 @@ async function buildInformation(sensorData) {
                 const tareas = [
                     checkTime.checkTimeAndGreet(specialNumber, textToTemplate)
                 ];
-
+ 
                 // Solo agrega la alerta si está fuera del horario laboral
                 if (!estaEnHorarioLaboral(new Date())) {
                     console.log("Fuera del horario laboral, agregando alerta de radiobase:", new Date());
@@ -407,7 +407,7 @@ async function buildInformation(sensorData) {
 
         } else {//Aqui entran Farmacias y  comunicalo pero no radiobases y criyticos    
             if (lowerCaseText.includes("fallo") || lowerCaseText.includes("ok")) {
-                //await checkTime.checkTimeAndGreet(specialNumber, textToTemplate);
+                await checkTime.checkTimeAndGreet(specialNumber, textToTemplate);
             }
         }
 
